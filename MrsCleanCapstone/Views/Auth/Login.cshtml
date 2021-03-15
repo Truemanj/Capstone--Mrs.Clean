@@ -59,13 +59,15 @@
                 options.success = function (employee) {
 
                     console.log(employee);
+                    alert("Login Successful");
                     localStorage.setItem("myJwtToken", employee.token);
                 };
                 console.log($('#UserName').val());
                 console.log("****");
 
                 options.error = function () {
-                    $("#msg").html("Error while calling the Web API!");
+                    alert("Invalid Login");
+                    console.log(error);
                 };
                 $.ajax(options);
             });

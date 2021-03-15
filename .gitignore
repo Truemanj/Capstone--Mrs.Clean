@@ -341,6 +341,6 @@ healthchecksdb
 
 .dockerignore
 .vs
-docker-compose.dev.yml
+docker-compose.yml
 appSettings.json
 appSettings.development.json
