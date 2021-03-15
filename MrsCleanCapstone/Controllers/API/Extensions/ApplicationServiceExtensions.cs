@@ -15,9 +15,16 @@ namespace MrsCleanCapstone.Controllers.API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration Configuration)
         {
+            var server = Configuration["DbServer"]??"localhost";
+            var port = Configuration["DBPort"] ?? "1433";
+            var user = Configuration["DBUser"];
+            var password = Configuration["DBPassword"];
+            var database = Configuration["Database"] ?? "MrsCleancapstone";
+
+            Console.WriteLine(server + "\n" + port + "\n" + user + "\n" + password + "\n" + database);
+
             services.AddDbContext<ApplicationDbContext>(options =>
-              options.UseSqlServer(
-                  Configuration.GetConnectionString("DefaultConnection")));
+              options.UseSqlServer($"Server={server}, {port};Initial Catalog={database};User ID={user};Password={password}"));
 
             services.AddScoped<ITokenService, TokenService>();
 
