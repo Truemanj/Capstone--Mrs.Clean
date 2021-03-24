@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using MrsCleanCapstone.Controllers.API.Extensions;
 using MrsCleanCapstone.Controllers.API.Interfaces;
 using MrsCleanCapstone.Data;
+using MrsCleanCapstone.Middlewares;
 using MrsCleanCapstone.Services;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,9 @@ namespace MrsCleanCapstone
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
             services.AddIdentityServices(Configuration);
-           
+            services.AddMaintenance(() => false,
+             Encoding.UTF8.GetBytes("<div>Doing Maintenance Yo!</div>"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +56,8 @@ namespace MrsCleanCapstone
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseMaintenanceMiddleware();
+
             app.UseStaticFiles();
 
             app.UseRouting();
