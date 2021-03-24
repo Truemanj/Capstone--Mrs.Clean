@@ -23,10 +23,10 @@ namespace MrsCleanCapstone.Controllers.API.Extensions
                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"])),
                        ValidateIssuer = false,
                        ValidateAudience = false
-                   };
+                   }; 
                });
 
             return services;
-        }
+        } 
     }
 }
