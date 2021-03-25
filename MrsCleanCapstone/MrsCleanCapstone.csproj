@@ -24,12 +24,9 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
 
-  <ItemGroup>
-<<<<<<< HEAD
+	<ItemGroup>
     <Folder Include="Migrations\" />
-=======
-    <Folder Include="wwwroot\images\" />
->>>>>>> 515784a928e7dd3d5a8bf6a7a51d308cc398a6aa
-  </ItemGroup>
+		<Folder Include="wwwroot\images\" />
+	</ItemGroup>
 
 </Project>
