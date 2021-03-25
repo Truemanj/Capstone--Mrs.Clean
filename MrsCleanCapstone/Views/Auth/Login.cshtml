@@ -1,11 +1,11 @@
 ﻿@model Login
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Log In";
 }
 
-<h2>@ViewBag.Title</h2>
-<div class="row">
-    <div class="col-md-8">
+<h2 class="text-center">@ViewBag.Title</h2>
+<div class="mc-login-box">
+    <div >
         <section id="loginForm">
             @Html.AntiForgeryToken()
             <form asp-action="Login" asp-controller="Auth" method="POST">
@@ -60,12 +60,22 @@
         //        });
         //        options.success = function (employee) {
 
+<<<<<<< HEAD
         //            console.log(employee);
         //            alert("Login Successful");
         //            localStorage.setItem("myJwtToken", employee.token);
         //        };
         //        console.log($('#UserName').val());
         //        console.log("****");
+=======
+                    console.log(employee);
+                    alert("Login Successful");
+
+                    localStorage.setItem("myJwtToken", employee.token);
+                };
+                console.log($('#UserName').val());
+                console.log("****");
+>>>>>>> 515784a928e7dd3d5a8bf6a7a51d308cc398a6aa
 
         //        options.error = function () {
         //            alert("Invalid Login");
