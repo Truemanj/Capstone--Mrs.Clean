@@ -45,35 +45,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-            //$(document).ready(function () {
-            //    $('.emp').click(function () {
-            //        var UserName = $('#UserName').val().toString();
-            //        var Password = $('#Password').val().toString();
-            //        var options = {};
-            //        options.url = "/api/account/register";
-            //        options.type = "POST";
-            //        options.contentType = "application/json";
-            //        options.dataType = "json";
-            //        options.data = JSON.stringify({
-            //            "UserName": UserName,
-            //            "Password": Password
-            //        });
-            //        options.success = function (employee) {
-
-            //            console.log(employee);
-            //            alert("Employee registered")
-            //            localStorage.setItem("myJwtToken", employee.token);
-
-            //        };
-            //        console.log($('#UserName').val());
-            //        options.error = function (error) {
-            //            alert("Invalid Register");
-            //            console.log(error);
-            //        };
-            //        $.ajax(options);
-            //    });
-            //});
-
-    </script>
 }

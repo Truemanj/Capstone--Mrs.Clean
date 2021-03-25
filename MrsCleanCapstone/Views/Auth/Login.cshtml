@@ -44,46 +44,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        //$(document).ready(function () {
-        //    $('.emp').click(function () {
-        //        var UserName = $('#UserName').val().toString();
-        //        var Password = $('#Password').val().toString();
-        //        var options = {};
-        //        options.url = "/api/account/login";
-        //        options.type = "POST";
-        //        options.contentType = "application/json";
-        //        options.dataType = "json";
-        //        options.data = JSON.stringify({
-        //            "UserName": UserName,
-        //            "Password": Password
-        //        });
-        //        options.success = function (employee) {
-
-<<<<<<< HEAD
-        //            console.log(employee);
-        //            alert("Login Successful");
-        //            localStorage.setItem("myJwtToken", employee.token);
-        //        };
-        //        console.log($('#UserName').val());
-        //        console.log("****");
-=======
-                    console.log(employee);
-                    alert("Login Successful");
-
-                    localStorage.setItem("myJwtToken", employee.token);
-                };
-                console.log($('#UserName').val());
-                console.log("****");
->>>>>>> 515784a928e7dd3d5a8bf6a7a51d308cc398a6aa
-
-        //        options.error = function () {
-        //            alert("Invalid Login");
-        //            console.log(error);
-        //        };
-        //        $.ajax(options);
-        //    });
-        //});
-
-    </script>
 }
