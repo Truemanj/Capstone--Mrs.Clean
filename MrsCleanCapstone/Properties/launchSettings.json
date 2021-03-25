@@ -14,8 +14,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DBUser": "SA",
-        "DBPassword": "Mrsclean@capstone",
-        "TokenKey": "group04capstoneproject"
+        "DBPassword": "Mrsclean@capstone"
       }
     },
     "MrsCleanCapstone": {
@@ -24,8 +23,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "DBUser": "SA",
-        "DBPassword": "Mrsclean@capstone",
-        "TokenKey": "group04capstoneproject"
+        "DBPassword": "Mrsclean@capstone"
       },
       "dotnetRunMessages": "true",
       "applicationUrl": "https://localhost:5001;http://localhost:5000"

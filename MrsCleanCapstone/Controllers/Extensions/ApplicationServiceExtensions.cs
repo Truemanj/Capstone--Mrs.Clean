@@ -1,15 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MrsCleanCapstone.Controllers.API.Interfaces;
 using MrsCleanCapstone.Data;
-using MrsCleanCapstone.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MrsCleanCapstone.Controllers.API.Extensions
+namespace MrsCleanCapstone.Controllers.Extensions
 {
     public static class ApplicationServiceExtensions
     {
@@ -17,8 +15,8 @@ namespace MrsCleanCapstone.Controllers.API.Extensions
         {
             var server = Configuration["DbServer"]??"localhost";
             var port = Configuration["DBPort"] ?? "1433";
-            var user = Configuration["DBUser"];
-            var password = Configuration["DBPassword"];
+            var user = Configuration["DBUser"] ?? "SA";
+            var password = Configuration["DBPassword"] ?? "Mrsclean@capstone";
             var database = Configuration["Database"] ?? "MrsCleancapstone";
 
             Console.WriteLine(server + "\n" + port + "\n" + user + "\n" + password + "\n" + database);
@@ -26,7 +24,7 @@ namespace MrsCleanCapstone.Controllers.API.Extensions
             services.AddDbContext<ApplicationDbContext>(options =>
               options.UseSqlServer($"Server={server}, {port};Initial Catalog={database};User ID={user};Password={password}"));
 
-            services.AddScoped<ITokenService, TokenService>();
+            //services.AddScoped<ITokenService, TokenService>();
 
             return services;
 

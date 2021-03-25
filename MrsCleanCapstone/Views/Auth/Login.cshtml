@@ -8,27 +8,29 @@
     <div class="col-md-8">
         <section id="loginForm">
             @Html.AntiForgeryToken()
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+            <form asp-action="Login" asp-controller="Auth" method="POST">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                <div class="col-md-10">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Log in" class="btn btn-primary emp" />
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-primary" />
+                    </div>
                 </div>
-            </div>
+            </form>
             @*<p>
                     @Html.ActionLink("Register as a new user", "Register")
                 </p>*@
@@ -43,35 +45,35 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-        $(document).ready(function () {
-            $('.emp').click(function () {
-                var UserName = $('#UserName').val().toString();
-                var Password = $('#Password').val().toString();
-                var options = {};
-                options.url = "/api/account/login";
-                options.type = "POST";
-                options.contentType = "application/json";
-                options.dataType = "json";
-                options.data = JSON.stringify({
-                    "UserName": UserName,
-                    "Password": Password
-                });
-                options.success = function (employee) {
+        //$(document).ready(function () {
+        //    $('.emp').click(function () {
+        //        var UserName = $('#UserName').val().toString();
+        //        var Password = $('#Password').val().toString();
+        //        var options = {};
+        //        options.url = "/api/account/login";
+        //        options.type = "POST";
+        //        options.contentType = "application/json";
+        //        options.dataType = "json";
+        //        options.data = JSON.stringify({
+        //            "UserName": UserName,
+        //            "Password": Password
+        //        });
+        //        options.success = function (employee) {
 
-                    console.log(employee);
-                    alert("Login Successful");
-                    localStorage.setItem("myJwtToken", employee.token);
-                };
-                console.log($('#UserName').val());
-                console.log("****");
+        //            console.log(employee);
+        //            alert("Login Successful");
+        //            localStorage.setItem("myJwtToken", employee.token);
+        //        };
+        //        console.log($('#UserName').val());
+        //        console.log("****");
 
-                options.error = function () {
-                    alert("Invalid Login");
-                    console.log(error);
-                };
-                $.ajax(options);
-            });
-        });
+        //        options.error = function () {
+        //            alert("Invalid Login");
+        //            console.log(error);
+        //        };
+        //        $.ajax(options);
+        //    });
+        //});
 
     </script>
 }

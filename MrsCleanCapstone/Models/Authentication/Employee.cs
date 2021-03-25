@@ -1,18 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MrsCleanCapstone.Models.Authentication
 {
-    public class Employee
+    public class Employee:IdentityUser
     {
-        public int Id { get; set; }
-
-        public string UserName { get; set; }
-
-        public byte[] PasswordHash { get; set; }
-
-        public byte[] PasswordSalt { get; set; }
     }
 }
