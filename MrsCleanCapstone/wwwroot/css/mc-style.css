@@ -19,3 +19,26 @@
     width: 40%;
     margin : auto;
 }
+
+.mc-product-wrapper {
+    border: 1px solid gray;
+    
+   
+   
+}
+
+.mc-products {
+    border: 1px solid black;
+    width: 300px;
+    height: 300px;
+}
+
+.mc-nav {
+    
+}
+
+.placeholder {
+
+    height: 150px;
+    width: 150px;
+}
