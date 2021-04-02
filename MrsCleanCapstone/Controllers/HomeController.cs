@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MrsCleanCapstone.GenericRepository;
 using MrsCleanCapstone.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,21 +15,19 @@ namespace MrsCleanCapstone.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController()
         {
-            _logger = logger;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(nameof(Index));
         }
 
         public IActionResult Products()
         {
-            return View();
+            return View(nameof(Products));
         }
 
         [Authorize]

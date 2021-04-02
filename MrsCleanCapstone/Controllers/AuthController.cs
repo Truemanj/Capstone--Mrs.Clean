@@ -12,14 +12,12 @@ namespace MrsCleanCapstone.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly UserManager<Employee> _userManager;
         private readonly SignInManager<Employee> _signInManager;
-        public AuthController(ApplicationDbContext context, 
+        public AuthController(
             SignInManager<Employee> signInManager,
             UserManager<Employee> userManager)
         {
-            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
         }

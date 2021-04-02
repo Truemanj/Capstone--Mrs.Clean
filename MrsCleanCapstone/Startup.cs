@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MrsCleanCapstone.Controllers.Extensions;
 using MrsCleanCapstone.Data;
+using MrsCleanCapstone.GenericRepository;
 using MrsCleanCapstone.Middlewares;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,7 @@ namespace MrsCleanCapstone
             services.AddApplicationServices(Configuration);
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddIdentityServices(Configuration);
             services.AddMaintenance(() => false,
              Encoding.UTF8.GetBytes("<div>Doing Maintenance Yo!</div>"));
