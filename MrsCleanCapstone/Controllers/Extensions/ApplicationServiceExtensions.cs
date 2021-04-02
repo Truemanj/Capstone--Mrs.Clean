@@ -24,8 +24,6 @@ namespace MrsCleanCapstone.Controllers.Extensions
             services.AddDbContext<ApplicationDbContext>(options =>
               options.UseSqlServer($"Server={server}, {port};Initial Catalog={database};User ID={user};Password={password}"));
 
-            //services.AddScoped<ITokenService, TokenService>();
-
             return services;
 
         }

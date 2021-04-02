@@ -8,9 +8,9 @@ namespace MrsCleanCapstone.Models
 {
     public class ProductRepository : InterfaceProductRepo
     {
-        private ProductDbContext context;
+        private ApplicationDbContext context;
 
-        public ProductRepository(ProductDbContext ctx)
+        public ProductRepository(ApplicationDbContext ctx)
         {
             context = ctx;
         }

@@ -42,7 +42,7 @@ namespace MrsCleanCapstone.Controllers
             }
 
             var product = await _repository
-                .FirstOrDefault(m => m.ProductId == id);
+                .FirstOrDefault(m => m.ProductID == id);
             if (product == null)
             {
                 return NotFound();
@@ -62,7 +62,7 @@ namespace MrsCleanCapstone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddProduct([Bind("ProductId,ProductName,ProductPrice,ProductDescription,ProductImageName, ProductImage")] Product product)
+        public async Task<IActionResult> AddProduct([Bind("ProductID,ProductName,Quantity,Price,Category,description,ProductImageName, ProductImage")] Product product)
         {
                 if (ModelState.IsValid)
                 {
@@ -110,7 +110,7 @@ namespace MrsCleanCapstone.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductPrice,ProductDescription,ProductImageName")] Product product)
         {
-            if (id != product.ProductId)
+            if (id != product.ProductID)
             {
                 return NotFound();
             }
@@ -123,7 +123,7 @@ namespace MrsCleanCapstone.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.ProductId))
+                    if (!ProductExists(product.ProductID))
                     {
                         return NotFound();
                     }
@@ -145,7 +145,7 @@ namespace MrsCleanCapstone.Controllers
                 return NotFound();
             }
 
-            var product = await _repository.FirstOrDefault(m => m.ProductId == id);
+            var product = await _repository.FirstOrDefault(m => m.ProductID == id);
             if (product == null)
             {
                 return NotFound();
@@ -166,7 +166,7 @@ namespace MrsCleanCapstone.Controllers
 
         private bool ProductExists(int id)
         {
-            return _repository.GetExists(e => e.ProductId == id);
+            return _repository.GetExists(e => e.ProductID == id);
         }
     }
 }

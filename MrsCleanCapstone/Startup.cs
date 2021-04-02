@@ -40,10 +40,6 @@ namespace MrsCleanCapstone
             services.AddMaintenance(() => false,
              Encoding.UTF8.GetBytes("<div>Doing Maintenance Yo!</div>"));
 
-            services.AddDbContext<ProductDbContext>(opts =>
-            {
-                opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
-            });
             services.AddScoped<InterfaceProductRepo, ProductRepository>();
 
         }

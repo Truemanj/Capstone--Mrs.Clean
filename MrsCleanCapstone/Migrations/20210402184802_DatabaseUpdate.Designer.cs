@@ -10,8 +10,8 @@ using MrsCleanCapstone.Data;
 namespace MrsCleanCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210325150449_UpdatedDbContext")]
-    partial class UpdatedDbContext
+    [Migration("20210402184802_DatabaseUpdate")]
+    partial class DatabaseUpdate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -221,6 +221,36 @@ namespace MrsCleanCapstone.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("MrsCleanCapstone.Models.Product", b =>
+                {
+                    b.Property<int>("ProductID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(8,2)");
+
+                    b.Property<string>("ProductImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductID");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("MrsCleanCapstone.Models.Authentication.Employee", b =>

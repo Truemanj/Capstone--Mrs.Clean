@@ -68,6 +68,11 @@ namespace MrsCleanCapstone.GenericRepository
             return Context.Set<T>().Any(predicate);
         }
 
+        public DbSet<T> Get()
+        {
+            return Context.Set<T>();
+        }
+
         #endregion
 
     }

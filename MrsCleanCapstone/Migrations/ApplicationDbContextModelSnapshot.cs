@@ -223,13 +223,16 @@ namespace MrsCleanCapstone.Migrations
 
             modelBuilder.Entity("MrsCleanCapstone.Models.Product", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProductID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ProductDescription")
+                    b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(8,2)");
 
                     b.Property<string>("ProductImageName")
                         .HasColumnType("nvarchar(max)");
@@ -237,10 +240,13 @@ namespace MrsCleanCapstone.Migrations
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("ProductPrice")
-                        .HasColumnType("float");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
-                    b.HasKey("ProductId");
+                    b.Property<string>("description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductID");
 
                     b.ToTable("Products");
                 });

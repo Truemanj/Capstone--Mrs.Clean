@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace MrsCleanCapstone.Models
 {
@@ -20,6 +21,11 @@ namespace MrsCleanCapstone.Models
         public string Category { get; set; }
 
         public string description { get; set; }
+
+        public string ProductImageName { get; set; }
+
+        [NotMapped]
+        public IFormFile ProductImage { get; set; }
 
 
     }

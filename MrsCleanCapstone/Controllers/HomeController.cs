@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MrsCleanCapstone.Models.ViewModels;
+using MrsCleanCapstone.GenericRepository;
 
 namespace MrsCleanCapstone.Controllers
 {
@@ -17,14 +18,13 @@ namespace MrsCleanCapstone.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private InterfaceProductRepo repository;
+        private readonly IGenericRepository<Product> _repository;
         public int PageSize = 4;
 
-
-        public HomeController(ILogger<HomeController> logger, InterfaceProductRepo productRepository)
+        public HomeController(ILogger<HomeController> logger, IGenericRepository<Product> repository)
         {
             _logger = logger;
-            repository = productRepository;
+            _repository = repository;
         }
 
         public IActionResult Index()
@@ -34,7 +34,7 @@ namespace MrsCleanCapstone.Controllers
 
         public IActionResult Products(string category, int productPage = 1) => View(new ProductListViewModel
         {
-            Products = repository.Products
+            Products = _repository.Get()
             .Where(b => category == null || b.Category == category)
             .OrderBy(b => b.ProductID)
             .Skip((productPage - 1) * PageSize)
@@ -44,8 +44,8 @@ namespace MrsCleanCapstone.Controllers
                 CurrentPage = productPage,
                 ItemsPerPage = PageSize,
                 TotalItems = category == null ?
-                repository.Products.Count() :
-                repository.Products.Where(b =>
+                _repository.Get().Count() :
+                _repository.Get().Where(b =>
                     b.Category == category).Count()
 
             },

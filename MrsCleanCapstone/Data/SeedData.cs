@@ -10,9 +10,9 @@ namespace MrsCleanCapstone.Data
     {
         public static void EnsurePopulated(IApplicationBuilder app)
         {
-            ProductDbContext context = app.ApplicationServices
+            ApplicationDbContext context = app.ApplicationServices
                                         .CreateScope().ServiceProvider
-                                        .GetRequiredService<ProductDbContext>();
+                                        .GetRequiredService<ApplicationDbContext>();
 
             if (context.Database.GetPendingMigrations().Any())
             {
@@ -27,7 +27,8 @@ namespace MrsCleanCapstone.Data
                         Quantity = 10,
                         Price = 25,
                         Category = "CleaningSolutions",
-                        description = "Cleans the outside of your car"
+                        description = "Cleans the outside of your car",
+                        ProductImageName="1.jpg"
                     },
                     new Product
                     {

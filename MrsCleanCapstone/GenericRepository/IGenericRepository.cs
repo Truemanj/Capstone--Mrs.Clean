@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -14,7 +15,7 @@ namespace MrsCleanCapstone.GenericRepository
         Task Add(T entity);
         Task Update(T entity);
         Task Remove(T entity);
-
+        DbSet<T> Get();
         Task<IEnumerable<T>> GetAll();
         Task<IEnumerable<T>> GetWhere(Expression<Func<T, bool>> predicate);
 
