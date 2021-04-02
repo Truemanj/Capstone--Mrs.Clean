@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MrsCleanCapstone.Models;
 
 namespace MrsCleanCapstone
 {
@@ -38,6 +39,12 @@ namespace MrsCleanCapstone
             services.AddIdentityServices(Configuration);
             services.AddMaintenance(() => false,
              Encoding.UTF8.GetBytes("<div>Doing Maintenance Yo!</div>"));
+
+            services.AddDbContext<ProductDbContext>(opts =>
+            {
+                opts.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]);
+            });
+            services.AddScoped<InterfaceProductRepo, ProductRepository>();
 
         }
 
@@ -67,12 +74,30 @@ namespace MrsCleanCapstone
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapDefaultControllerRoute();
+
+                endpoints.MapControllerRoute(
+                    "catpage", "{category}/Page/{productPage:int}",
+                    new { Controller = "Home", action = "Products" });
+                
+                endpoints.MapControllerRoute(
+                    "page", "Products/Page/{productPage:int}",
+                    new { Controller = "Home", action = "Products", productPage = 1 });
+
+                endpoints.MapControllerRoute(
+                    "category", "Products/{category}",
+                    new { Controller = "Home", action = "Products" });
+
+                endpoints.MapControllerRoute(
+                    "pagination", "Products/Page/{productPage:int}",
+                    new { Controller = "Home", action = "Products" });
+                    
+
+                
             });
+
+            SeedData.EnsurePopulated(app);
         }
     }
 }

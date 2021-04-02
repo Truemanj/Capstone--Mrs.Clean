@@ -1,24 +1,26 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace MrsCleanCapstone.Models
 {
-    
     public class Product
     {
-        public int ProductId { get; set; }
+        [Key] 
+        public int ProductID { get; set; }
         public string ProductName { get; set; }
-        public double ProductPrice { get; set; }
+        public int Quantity { get; set; }
+        
+        [Column (TypeName = "decimal(8,2)")]
+        public decimal Price { get; set; }
 
-        public string ProductDescription { get; set; }
+        public string Category { get; set; }
 
-        public string ProductImageName { get; set; }
+        public string description { get; set; }
 
-        [NotMapped]
-        public IFormFile ProductImage { get; set; }
+
     }
 }
