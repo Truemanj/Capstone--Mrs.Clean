@@ -21,24 +21,44 @@
 }
 
 .mc-product-wrapper {
-    border: 1px solid gray;
     
-   
-   
 }
 
 .mc-products {
-    border: 1px solid black;
-    width: 300px;
+    border: 1px solid gray;
+    width: 100%;
     height: 300px;
-}
-
-.mc-nav {
+    margin-bottom: 10px;
     
 }
 
-.placeholder {
+.mc-nav {
+    border: 1px solid gray;
+    width: 300px;
+    margin-bottom: 10px;
+    background: #309EFF;
+    background: -moz-linear-gradient(top, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
+    background: -webkit-linear-gradient(top, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
+    background: linear-gradient(to bottom, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
+    margin-left: auto;
+    margin-right: auto;
+}
 
-    height: 150px;
-    width: 150px;
+.p-image {
+    height: 100%;
+    width: 300px;
+    float: left;
+    margin-right: 10px;
+}
+
+.mc-name {
+    padding-left: 5px;
+    background: lightblue;
+    border: 1px solid gray;
+    
+}
+.mc-desc {
+    
+    height: 260px;
+    
 }
