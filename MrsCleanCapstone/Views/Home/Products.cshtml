@@ -20,11 +20,19 @@
     {
 
         <div class="mc-products">
-            <img class="p-image" src="~/images/placeholder.png" />
+            @if (b.ProductImageName == null)
+            {
+                <img class="p-image" src="~/images/placeholder.png" />
+            }
+            else
+            {
+                <img class="p-image" src="~/images/@b.ProductImageName" />
+
+            }
             <div class="mc-name">
                 <h5>
                     @b.ProductName
-                    <span class="badge badge-pill badge-primary" style="float:right" >
+                    <span class="badge badge-pill badge-primary" style="float:right">
                         <small>@b.Price.ToString("c")</small>
                     </span>
                 </h5>

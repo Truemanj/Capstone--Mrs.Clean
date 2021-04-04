@@ -24,11 +24,10 @@ namespace MrsCleanCapstone.Data
                     new Product
                     {
                         ProductName = "Cleaning Solution A",
-                        Quantity = 10,
+                        Quantity = 30,
                         Price = 25,
                         Category = "CleaningSolutions",
-                        description = "Cleans the outside of your car",
-                        ProductImageName="1.jpg"
+                        description = "Cleans the outside of your car"
                     },
                     new Product
                     {
