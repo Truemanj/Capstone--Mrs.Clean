@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MrsCleanCapstone.Models;
 
+
 namespace MrsCleanCapstone
 {
     public class Startup
@@ -39,6 +40,7 @@ namespace MrsCleanCapstone
             services.AddIdentityServices(Configuration);
             services.AddMaintenance(() => false,
              Encoding.UTF8.GetBytes("<div>Doing Maintenance Yo!</div>"));
+           
 
             services.AddScoped<InterfaceProductRepo, ProductRepository>();
 
