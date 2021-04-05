@@ -21,18 +21,17 @@ namespace MrsCleanCapstone.Controllers
         private readonly IGenericRepository<Product> _repository;
         public int PageSize = 4;
 
-        public HomeController(ILogger<HomeController> logger, IGenericRepository<Product> repository)
+        public HomeController(IGenericRepository<Product> repository)
         {
-            _logger = logger;
             _repository = repository;
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(nameof(Index));
         }
 
-        public IActionResult Products(string category, int productPage = 1) => View(new ProductListViewModel
+        public IActionResult Products(string category, int productPage = 1) => View(nameof(Products),new ProductListViewModel
         {
             Products = _repository.Get()
             .Where(b => category == null || b.Category == category)
@@ -56,12 +55,12 @@ namespace MrsCleanCapstone.Controllers
         [Authorize]
         public IActionResult Privacy()
         {
-            return View();
+            return View(nameof(Privacy));
         }
 
         public IActionResult Checklist()
         {
-            return View();
+            return View(nameof(Checklist));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

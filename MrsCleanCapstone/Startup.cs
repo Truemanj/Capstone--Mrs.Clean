@@ -1,23 +1,14 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using MrsCleanCapstone.Controllers.Extensions;
 using MrsCleanCapstone.Data;
 using MrsCleanCapstone.GenericRepository;
 using MrsCleanCapstone.Middlewares;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using MrsCleanCapstone.Models;
-
+ 
 namespace MrsCleanCapstone
 {
     public class Startup
@@ -39,9 +30,6 @@ namespace MrsCleanCapstone
             services.AddIdentityServices(Configuration);
             services.AddMaintenance(() => false,
              Encoding.UTF8.GetBytes("<div>Doing Maintenance Yo!</div>"));
-
-            services.AddScoped<InterfaceProductRepo, ProductRepository>();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,7 +64,7 @@ namespace MrsCleanCapstone
                 endpoints.MapControllerRoute(
                     "catpage", "{category}/Page/{productPage:int}",
                     new { Controller = "Home", action = "Products" });
-                
+
                 endpoints.MapControllerRoute(
                     "page", "Products/Page/{productPage:int}",
                     new { Controller = "Home", action = "Products", productPage = 1 });
@@ -88,9 +76,10 @@ namespace MrsCleanCapstone
                 endpoints.MapControllerRoute(
                     "pagination", "Products/Page/{productPage:int}",
                     new { Controller = "Home", action = "Products" });
-                    
 
-                
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
             SeedData.EnsurePopulated(app);

@@ -16,11 +16,11 @@ namespace MrsCleanCapstone.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<ProductsController> _logger;
         private readonly IWebHostEnvironment _hostEnvironment;
         private IGenericRepository<Product> _repository = null;
 
-        public ProductsController(ILogger<HomeController> logger, IWebHostEnvironment hostEnvironment, IGenericRepository<Product> repository)
+        public ProductsController(ILogger<ProductsController> logger, IWebHostEnvironment hostEnvironment, IGenericRepository<Product> repository)
         {
             _hostEnvironment = hostEnvironment;
             _logger = logger;
@@ -164,7 +164,7 @@ namespace MrsCleanCapstone.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProductExists(int id)
+        public bool ProductExists(int id)
         {
             return _repository.GetExists(e => e.ProductID == id);
         }
