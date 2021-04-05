@@ -63,6 +63,11 @@ namespace MrsCleanCapstone.Controllers
             return View(nameof(Checklist));
         }
 
+        public IActionResult Services()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

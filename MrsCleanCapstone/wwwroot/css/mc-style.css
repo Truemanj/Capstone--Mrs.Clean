@@ -13,26 +13,26 @@
 
 .mc-login-box {
     border: 1px solid gray;
-    background-color: bisque;
+    background-color: floralwhite;
     text-align: left;
     justify-content: center;
     width: 40%;
-    margin : auto;
+    margin: auto;
 }
 
-.mc-product-wrapper {
-    
-}
 
 .mc-products {
+    
     border: 1px solid gray;
-    width: 100%;
+    width: 70%;
     height: 300px;
     margin-bottom: 10px;
+    float: right;
     
 }
 
 .mc-nav {
+   
     border: 1px solid gray;
     width: 300px;
     margin-bottom: 10px;
@@ -40,8 +40,15 @@
     background: -moz-linear-gradient(top, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
     background: -webkit-linear-gradient(top, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
     background: linear-gradient(to bottom, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
-    margin-left: auto;
-    margin-right: auto;
+    float : left;
+}
+.mc-page-button {
+    
+    position: relative;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    vertical-align: middle;
+    float: initial;
 }
 
 .p-image {
@@ -58,7 +65,112 @@
     
 }
 .mc-desc {
-    
+    background-color: floralwhite;
     height: 260px;
+}
+
+.mc-cat {
+
+    color: antiquewhite;
+}
+
+.mc-tables {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-gap: 20px;
     
+}
+
+.mc-interior {
+    background-color: lightblue;
+    border: 1px solid gray;
+    width: 45%;
+    margin: auto;
+    float: left;
+    text-align: center;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row: 1;
+}
+
+.mc-exterior {
+    background-color: lightblue;
+    border: 1px solid gray;
+    width: 45%;
+    margin: auto;
+    float: right;
+    text-align: center;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row: 1;
+}
+.mc-exterior-interior {
+    background-color: lightblue;
+    border: 1px solid gray;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    float: initial;
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+
+
+.mc-table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: floralwhite;
+}
+
+.mc-td, .mc-th {
+    border: 1px solid gray;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+@media (max-width: 992px) {
+
+    .p-image {
+        height: 100%;
+        width: 150px;
+        float: left;
+        margin-right: 10px;
+    }
+
+    .mc-nav {
+        border: 1px solid gray;
+        width: 300px;
+        background: #309EFF;
+        background: -moz-linear-gradient(top, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
+        background: -webkit-linear-gradient(top, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
+        background: linear-gradient(to bottom, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
+        
+    }
+
+    .mc-products {
+        border: 1px solid gray;
+        width: 100%;
+        height: 200px;
+        margin-bottom: 10px;
+        
+    }
+
+    .mc-page-button {
+        position: relative;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        vertical-align: middle;
+        float: initial;
+        margin: auto;
+        
+    }
+
+    .mc-desc {
+        background-color: floralwhite;
+        height: 169px;
+    }
+
+
 }

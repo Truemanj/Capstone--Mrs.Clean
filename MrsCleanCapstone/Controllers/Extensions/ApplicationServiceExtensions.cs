@@ -22,7 +22,8 @@ namespace MrsCleanCapstone.Controllers.Extensions
             Console.WriteLine(server + "\n" + port + "\n" + user + "\n" + password + "\n" + database);
 
             services.AddDbContext<ApplicationDbContext>(options =>
-              options.UseSqlServer($"Server={server}, {port};Initial Catalog={database};User ID={user};Password={password}"));
+            options.UseSqlServer($"Server=(localdb)\\mssqllocaldb;Database=MrsCleanCapstone;Trusted_Connection=True;MultipleActiveResultSets=true"));
+              //options.UseSqlServer($"Server={server}, {port};Initial Catalog={database};User ID={user};Password={password}"));
 
             return services;
 
