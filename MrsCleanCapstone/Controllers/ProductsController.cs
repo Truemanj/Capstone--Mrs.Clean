@@ -28,35 +28,35 @@ namespace MrsCleanCapstone.Controllers
             _repository = repository;
         }
 
-        // GET: Products
-        public async Task<IActionResult> Index()
-        {
-            return View(await _repository.GetAll());
-        }
+        //// GET: Products
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _repository.GetAll());
+        //}
 
         // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var product = await _repository
-                .FirstOrDefault(m => m.ProductID == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+        //    var product = await _repository
+        //        .FirstOrDefault(m => m.ProductID == id);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(product);
-        }
+        //    return View(product);
+        //}
 
         // GET: Products/AddProduct
         [Authorize]
         public IActionResult AddProduct()
         {
-            return View();
+            return View(nameof(AddProduct));
         }
 
         // POST: Products/Create
@@ -91,81 +91,81 @@ namespace MrsCleanCapstone.Controllers
         }
 
         // GET: Products/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var product = await _repository.GetById((int)id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
+        //    var product = await _repository.GetById((int)id);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(product);
+        //}
 
         // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductPrice,ProductDescription,ProductImageName")] Product product)
-        {
-            if (id != product.ProductID)
-            {
-                return NotFound();
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductPrice,ProductDescription,ProductImageName")] Product product)
+        //{
+        //    if (id != product.ProductID)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                   await _repository.Update(product);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductExists(product.ProductID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(product);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //           await _repository.Update(product);
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!ProductExists(product.ProductID))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(product);
+        //}
 
         // GET: Products/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var product = await _repository.FirstOrDefault(m => m.ProductID == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+        //    var product = await _repository.FirstOrDefault(m => m.ProductID == id);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(product);
-        }
+        //    return View(product);
+        //}
 
-        // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var product = await _repository.GetById(id);
-            await _repository.Remove(product);
-            return RedirectToAction(nameof(Index));
-        }
+        //// POST: Products/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var product = await _repository.GetById(id);
+        //    await _repository.Remove(product);
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         public bool ProductExists(int id)
         {

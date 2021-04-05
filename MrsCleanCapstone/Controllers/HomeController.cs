@@ -63,7 +63,7 @@ namespace MrsCleanCapstone.Controllers
 
         public IActionResult Services()
         {
-            return View();
+            return View(nameof(Services));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
