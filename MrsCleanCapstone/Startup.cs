@@ -40,9 +40,6 @@ namespace MrsCleanCapstone
             services.AddIdentityServices(Configuration);
             services.AddMaintenance(() => false,
              Encoding.UTF8.GetBytes("<div>Doing Maintenance Yo!</div>"));
-           
-
-            services.AddScoped<InterfaceProductRepo, ProductRepository>();
 
         }
 
@@ -90,9 +87,11 @@ namespace MrsCleanCapstone
                 endpoints.MapControllerRoute(
                     "pagination", "Products/Page/{productPage:int}",
                     new { Controller = "Home", action = "Products" });
-                    
 
-                
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
             });
 
             SeedData.EnsurePopulated(app);

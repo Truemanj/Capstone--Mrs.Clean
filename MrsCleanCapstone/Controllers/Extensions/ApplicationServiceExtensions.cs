@@ -13,6 +13,7 @@ namespace MrsCleanCapstone.Controllers.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration Configuration)
         {
+            //Docker sql server configuration
             var server = Configuration["DbServer"]??"localhost";
             var port = Configuration["DBPort"] ?? "1433";
             var user = Configuration["DBUser"] ?? "SA";
@@ -22,11 +23,10 @@ namespace MrsCleanCapstone.Controllers.Extensions
             Console.WriteLine(server + "\n" + port + "\n" + user + "\n" + password + "\n" + database);
 
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer($"Server=(localdb)\\mssqllocaldb;Database=MrsCleanCapstone;Trusted_Connection=True;MultipleActiveResultSets=true"));
-              //options.UseSqlServer($"Server={server}, {port};Initial Catalog={database};User ID={user};Password={password}"));
+            //options.UseSqlServer($"Server=(localdb)\\mssqllocaldb;Database=MrsCleanCapstone;Trusted_Connection=True;MultipleActiveResultSets=true"));
+              options.UseSqlServer($"Server={server}, {port};Initial Catalog={database};User ID={user};Password={password}"));
 
             return services;
-
         }
     }
 }

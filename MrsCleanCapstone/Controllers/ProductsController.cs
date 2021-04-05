@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -52,6 +53,7 @@ namespace MrsCleanCapstone.Controllers
         }
 
         // GET: Products/AddProduct
+        [Authorize]
         public IActionResult AddProduct()
         {
             return View();
@@ -62,6 +64,7 @@ namespace MrsCleanCapstone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> AddProduct([Bind("ProductID,ProductName,Quantity,Price,Category,description,ProductImageName, ProductImage")] Product product)
         {
                 if (ModelState.IsValid)
@@ -81,7 +84,7 @@ namespace MrsCleanCapstone.Controllers
                     }
 
                     await _repository.Add(product);
-                    return RedirectToAction("Index","Home");
+                    return RedirectToAction("Products","Home");
                 }
 
                 return View();

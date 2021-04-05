@@ -16,8 +16,6 @@ namespace MrsCleanCapstone.Controllers
 
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
         private readonly IGenericRepository<Product> _repository;
         public int PageSize = 4;
 
