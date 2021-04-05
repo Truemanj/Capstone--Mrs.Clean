@@ -1,87 +1,124 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Moq;
 using MrsCleanCapstone.Controllers;
+using MrsCleanCapstone.GenericRepository;
+using MrsCleanCapstone.Models;
 using System;
 using Xunit;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.EntityFrameworkCore;
+using MrsCleanCapstone.Data;
 
 namespace MrsCleanCapstone.Test
 {
     public class HomeControllerTests
     {
-        //[Fact()]
-        //public void Index_Returns_View()
-        //{
-        //    //Arrange
-        //    HomeController controller = new HomeController();
+        [Fact()]
+        public void Index_Returns_View()
+        {
+            //Arrange
+            var repo = new Mock<IGenericRepository<Product>>();
 
-        //    //Act
-        //    ViewResult result = (ViewResult)controller.Index();
+            HomeController controller = new HomeController(repo.Object);
 
-        //    //Assert
-        //    Assert.NotNull(result);
-        //}
+            //Act
+            ViewResult result = (ViewResult)controller.Index();
 
-        //[Fact]
-        //public void Index_Returns_IndexView()
-        //{
+            //Assert
+            Assert.NotNull(result);
+        }
 
-        //    //Arrange
-        //    HomeController controller = new HomeController();
-        //    string expectedViewName = "Index";
+        [Fact]
+        public void Index_Returns_IndexView()
+        {
 
-        //    //Act
-        //    ViewResult result = (ViewResult)controller.Index();
-        //    string actualViewName = result.ViewName;
+            //Arrange
+            var repo = new Mock<IGenericRepository<Product>>();
 
-        //    //Assert
-        //    Assert.Equal(expectedViewName, actualViewName);
-        //}
+            HomeController controller = new HomeController(repo.Object);
+            string expectedViewName = "Index";
 
-        //[Fact]
-        //public void Product_Returns_ProductsView()
-        //{
+            //Act
+            ViewResult result = (ViewResult)controller.Index();
+            string actualViewName = result.ViewName;
 
-        //    //Arrange
-        //    HomeController controller = new HomeController();
-        //    string expectedViewName = "Products";
+            //Assert
+            Assert.Equal(expectedViewName, actualViewName);
+        }
 
-        //    //Act
-        //    ViewResult result = (ViewResult)controller.Products("");
-        //    string actualViewName = result.ViewName;
+        [Fact]
+        public void CheckList_Returns_ChecklistView()
+        {
 
-        //    //Assert
-        //    Assert.Equal(expectedViewName, actualViewName);
-        //}
+            //Arrange
+            var repo = new Mock<IGenericRepository<Product>>();
+            HomeController controller = new HomeController(repo.Object);
+            string expectedViewName = "Checklist";
 
-        //[Fact]
-        //public void Privacy_Returns_NullException()
-        //{
+            //Act
+            ViewResult result = (ViewResult)controller.Checklist();
+            string actualViewName = result.ViewName;
 
-        //    //Arrange
-        //    HomeController controller = new HomeController();
-        //    //string expectedViewName = "Privacy";
+            //Assert
+            Assert.Equal(expectedViewName, actualViewName);
+        }
 
-        //    ////Act
-        //    ViewResult result = (ViewResult)controller.Privacy();
-        //    //string actualViewName = result.ViewName;
+        [Fact]
+        public void Product_Returns_ProductsView()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "MrsCleanDatabase").Options;
 
-        //    //Assert
-        //    Assert.Null(result.ViewName);
-        //}
+            using(var context = new ApplicationDbContext(options))
+            {
+                context.Database.EnsureDeleted();
+                context.Products.AddRange(
+                    new Product
+                    {
+                        ProductName = "Cleaning Solution A",
+                        Quantity = 30,
+                        Price = 25,
+                        Category = "CleaningSolutions",
+                        description = "Cleans the outside of your car"
+                    },
+                    new Product
+                    {
+                        ProductName = "Cleaning Solution B",
+                        Quantity = 40,
+                        Price = 20,
+                        Category = "CleaningSolutions",
+                        description = "Cleans the interior of your car"
+                    },
+                    new Product
+                    {
+                        ProductName = "Cleaning Solution C",
+                        Quantity = 17,
+                        Price = 35.50M,
+                        Category = "CleaningSolutions",
+                        description = "Deeps cleans the inside your car"
+                    });
+            }
 
-        //[Fact]
-        //public void Privacy_AccessAuthorized()
-        //{
+            
+            using (var context = new ApplicationDbContext(options))
+            {
+                //Arrange
+                var repo = new Mock<IGenericRepository<Product>>();
+                repo.Setup(x => x.Get()).Returns(context.Products);
+                HomeController controller = new HomeController(repo.Object);
+                string expectedViewName = "Products";
 
-        //    //Arrange
-        //    HomeController controller = new HomeController();
-        //    //string expectedViewName = "Privacy";
+                //Act
+                ViewResult result = (ViewResult)controller.Products("CleaningSolutions", 1);
+                
+                string actualViewName = result.ViewName;
 
-        //    ////Act
-        //    ViewResult result = (ViewResult)controller.Privacy();
-        //    //string actualViewName = result.ViewName;
+                //Assert
+                Assert.Equal(expectedViewName, actualViewName);
+            }
+                
+        }
 
-        //    //Assert
-        //    Assert.Null(result.ViewName);
-        //}
     }
 }
