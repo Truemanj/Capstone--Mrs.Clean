@@ -76,7 +76,7 @@ namespace MrsCleanCapstone.Controllers
 
                     product.ProductImageName = filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
 
-                    string path = Path.Combine(wwwrootPath + "/Images/", filename);
+                    string path = Path.Combine(wwwrootPath + "/images/", filename);
 
                     using (var fileStream = new FileStream(path, FileMode.Create))
                     {
