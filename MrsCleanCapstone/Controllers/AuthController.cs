@@ -33,6 +33,8 @@ namespace MrsCleanCapstone.Controllers
 
         //[HttpPost("{controller}/{action}")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
             var user = await _userManager.FindByNameAsync(loginDto.UserName);
@@ -50,6 +52,8 @@ namespace MrsCleanCapstone.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Register(RegisterDto registerDto)
         {
 

@@ -66,10 +66,27 @@ namespace MrsCleanCapstone.Test
         }
 
         [Fact]
+        public void Services_Returns_ServicesView()
+        {
+
+            //Arrange
+            var repo = new Mock<IGenericRepository<Product>>();
+            HomeController controller = new HomeController(repo.Object);
+            string expectedViewName = "Services";
+
+            //Act
+            ViewResult result = (ViewResult)controller.Services();
+            string actualViewName = result.ViewName;
+
+            //Assert
+            Assert.Equal(expectedViewName, actualViewName);
+        }
+
+        [Fact]
         public void Product_Returns_ProductsView()
         {
+            //Arrange
             var options = new DbContextOptionsBuilder<ApplicationDbContext>().UseInMemoryDatabase(databaseName: "MrsCleanDatabase").Options;
-
             using(var context = new ApplicationDbContext(options))
             {
                 context.Database.EnsureDeleted();
@@ -84,26 +101,12 @@ namespace MrsCleanCapstone.Test
                     },
                     new Product
                     {
-                        ProductName = "Cleaning Solution B",
-                        Quantity = 40,
-                        Price = 20,
-                        Category = "CleaningSolutions",
-                        description = "Cleans the interior of your car"
-                    },
-                    new Product
-                    {
                         ProductName = "Cleaning Solution C",
                         Quantity = 17,
                         Price = 35.50M,
                         Category = "CleaningSolutions",
                         description = "Deeps cleans the inside your car"
                     });
-            }
-
-            
-            using (var context = new ApplicationDbContext(options))
-            {
-                //Arrange
                 var repo = new Mock<IGenericRepository<Product>>();
                 repo.Setup(x => x.Get()).Returns(context.Products);
                 HomeController controller = new HomeController(repo.Object);
