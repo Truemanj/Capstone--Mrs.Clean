@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using MrsCleanCapstone.Data;
 using MrsCleanCapstone.GenericRepository;
 using MrsCleanCapstone.Models;
+using MrsCleanCapstone.Models.ViewModels;
 
 namespace MrsCleanCapstone.Controllers
 {
@@ -20,6 +21,7 @@ namespace MrsCleanCapstone.Controllers
         private readonly ILogger<ProductsController> _logger;
         private readonly IWebHostEnvironment _hostEnvironment;
         private IGenericRepository<Product> _repository = null;
+        public int PageSize = 4;
 
         public ProductsController(ILogger<ProductsController> logger, IWebHostEnvironment hostEnvironment, IGenericRepository<Product> repository)
         {
@@ -29,10 +31,25 @@ namespace MrsCleanCapstone.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string category, int productPage = 1) => View(nameof(Index), new ProductListViewModel
         {
-            return View(await _repository.GetAll());
-        }
+            Products = _repository.Get()
+             .Where(b => category == null || b.Category == category)
+             .OrderBy(b => b.ProductID)
+             .Skip((productPage - 1) * PageSize)
+             .Take(PageSize),
+            PagingInfo = new PagingInfo
+            {
+                CurrentPage = productPage,
+                ItemsPerPage = PageSize,
+                TotalItems = category == null ?
+                 _repository.Get().Count() :
+                 _repository.Get().Where(b =>
+                     b.Category == category).Count()
+
+            },
+            CurrentCategory = category
+        });
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -54,7 +71,7 @@ namespace MrsCleanCapstone.Controllers
 
         // GET: Products/AddProduct
         [Authorize]
-        public IActionResult AddProduct()
+        public IActionResult Add()
         {
             return View();
         }
@@ -65,7 +82,7 @@ namespace MrsCleanCapstone.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> AddProduct([Bind("ProductID,ProductName,Quantity,Price,Category,description,ProductImageName, ProductImage")] Product product)
+        public async Task<IActionResult> Add([Bind("ProductID,ProductName,Quantity,Price,Category,description,ProductImageName, ProductImage")] Product product)
         {
                 if (ModelState.IsValid)
                 {

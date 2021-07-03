@@ -11,6 +11,7 @@
     <Content Remove="Data\Migrations\**" />
     <EmbeddedResource Remove="Data\Migrations\**" />
     <None Remove="Data\Migrations\**" />
+	 <Watch Include="**\*.css" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,80 +3,217 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MrsCleanCapstone</title>
-    <link rel="stylesheet" href="~/css/mc-style.css"/>
+    <link rel="stylesheet" href="~/css/mc-style.css" />
+    <link rel="stylesheet" href="~/css/button.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="~/css/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
-    <div class="mc-banner">
+    @* <div class="mc-banner">
         <div class="mc-banner-content">
-            <img src="~/images/mrsclean-logosmall.png" />
+        <img src="~/images/mrsclean-logosmall.png" />
         </div>
-    </div>
+        </div> *@
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-5">
+        <!--<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-5">
             <div class="container">
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end ">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"> <img class="logo" src="~/images/mrsclean-logosmall.png" /> Mrs. Clean Auto Spa</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Checklist">Checklist</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                        </li>
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="AddProduct">Add Product</a>
-                            </li>
-                        }
                     </ul>
                     <ul class="navbar-nav ml-auto">
+                        @* <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                    </li> *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                asp-action="Products">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                asp-action="Checklist">Checklist</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
+                                asp-action="Services">Services</a>
+                        </li>
                         @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <form asp-action="logout" asp-controller="Auth" method="post">
-                                    <button type="submit" style="width:auto" class="nav-link btn btn-link py-0">
-                                        Logout @User.Identity.Name
-                                    </button>
-                                </form>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">Register</a>
-                            </li>
-                        }
+        {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Products"
+                                asp-action="AddProduct">Add Product</a>
+                                        </li>
+        }
+        @if (SignInManager.IsSignedIn(User))
+        {
+                                        <li class="nav-item">
+                                            <form asp-action="logout" asp-controller="Auth" method="post">
+                                                <button type="submit" style="width:auto" class="nav-link btn btn-link py-0">
+                                                    Logout @User.Identity.Name
+                                                </button>
+                                            </form>
+                                        </li>
+        }
+        else
+        {
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth"
+                                asp-action="Register">Register</a>
+                                        </li>
+        }
                     </ul>
+                </div>
+            </div>
+        </nav>-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mrs. Clean Auto Spa <span
+                        class="badge"> <img class="logo" src="~/images/mrsclean-logosmall.png"></span></a>
+                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent">
+                    <div class="hamburger-toggle">
+                        <div class="hamburger">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home"
+                                asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Products</a>
+                            <ul class="dropdown-menu shadow">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Products"
+                                        asp-action="Index">View Products</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Products"
+                                        asp-action="AddProduct">Add Product</a></li>
+                                @* <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-submenu-toggle icon-left">Submenu Left</a>
+                                    <ul class="dropdown-menu dropdown-menu-right dropdown-submenu shadow">
+                                    <li><a class="dropdown-item" href=""> Third level 1</a></li>
+                                    <li><a class="dropdown-item" href=""> Third level 2</a></li>
+                                    <li><a class="dropdown-item" href=""> Third level 3</a></li>
+                                    <li><a class="dropdown-item" href=""> Third level 4</a></li>
+                                    <li><a class="dropdown-item" href=""> Third level 5</a></li>
+                                    </ul>
+                                    </li>
+                                    <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-submenu-toggle">Submenu Right</a>
+                                    <ul class="dropdown-menu dropdown-submenu shadow">
+                                    <li><a class="dropdown-item" href=""> Second level 1</a></li>
+                                    <li><a class="dropdown-item" href=""> Second level 2</a></li>
+                                    <li><a class="dropdown-item" href=""> Second level 3</a></li>
+                                    <li class="dropdown-submenu">
+                                    <a href="#" class="dropdown-item dropdown-submenu-toggle">Let's go
+                                    deeper!</a>
+                                    <ul class="dropdown-menu dropdown-submenu shadow">
+                                    <li><a class="dropdown-item" href=""> Third level 1</a></li>
+                                    <li><a class="dropdown-item" href=""> Third level 2</a></li>
+                                    <li><a class="dropdown-item" href=""> Third level 3</a></li>
+                                    <li><a class="dropdown-item" href=""> Third level 4</a></li>
+                                    <li><a class="dropdown-item" href=""> Third level 5</a></li>
+                                    </ul>
+                                    </li>
+                                    <li><a class="dropdown-item" href=""> Third level 5</a></li>
+                                    </ul>
+                                    </li>
+                                    <li>
+                                    <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li> *@
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Checklist">Checklist</a>
+                        </li>
+                        @* <li class="nav-item dropdown dropdown-mega">
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Megamenu</a>
+                            <div class="dropdown-menu shadow">
+                            <div class="mega-content px-4">
+                            <div class="container-fluid">
+                            <div class="row">
+                            <div class="col-12 col-sm-4 col-md-3 py-4">
+                            <h5>Pages</h5>
+                            <div class="list-group">
+                            <a class="list-group-item" href="#">Accomodations</a>
+                            <a class="list-group-item" href="#">Terms & Conditions</a>
+                            <a class="list-group-item" href="#">Privacy</a>
+                            </div>
+                            </div>
+                            <div class="col-12 col-sm-4 col-md-3 py-4">
+                            <h5>Card</h5>
+                            <div class="card">
+                            <img src="https://placehold.it/320x180" class="img-fluid"
+                            alt="image">
+                            <div class="card-body">
+                            <p class="card-text">Some quick example text to build on the
+                            card title and make up the bulk of the card's content.</p>
+                            </div>
+                            </div>
+                            </div>
+                            <div class="col-12 col-sm-4 col-md-3 py-4">
+                            <h5>Lot of Pages</h5>
+                            <p>Lorem ipsum dolo sit achmet muhamed borlan de irtka.
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-3 py-4">
+                            <h5>Damn, so many</h5>
+                            <div class="list-group">
+                            <a class="list-group-item" href="#">Accomodations</a>
+                            <a class="list-group-item" href="#">Terms & Conditions</a>
+                            <a class="list-group-item" href="#">Privacy</a>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </li> *@
+                    </ul>
+                    <form class="d-flex">
+                        <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="main-container">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -92,4 +229,5 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

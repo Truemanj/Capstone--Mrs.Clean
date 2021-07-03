@@ -28,26 +28,6 @@ namespace MrsCleanCapstone.Controllers
         {
             return View(nameof(Index));
         }
-
-        public IActionResult Products(string category, int productPage = 1) => View(nameof(Products),new ProductListViewModel
-        {
-            Products = _repository.Get()
-            .Where(b => category == null || b.Category == category)
-            .OrderBy(b => b.ProductID)
-            .Skip((productPage - 1) * PageSize)
-            .Take(PageSize),
-            PagingInfo = new PagingInfo
-            {
-                CurrentPage = productPage,
-                ItemsPerPage = PageSize,
-                TotalItems = category == null ?
-                _repository.Get().Count() :
-                _repository.Get().Where(b =>
-                    b.Category == category).Count()
-
-            },
-            CurrentCategory = category
-        });
         
 
         [Authorize]
