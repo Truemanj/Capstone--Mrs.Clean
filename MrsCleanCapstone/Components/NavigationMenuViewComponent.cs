@@ -16,6 +16,7 @@ namespace MrsCleanCapstone.Components
         {
             repository = productRepo;
         }
+
         public IViewComponentResult Invoke()
         {
             ViewBag.SelectedCategory = RouteData.Values["category"];
