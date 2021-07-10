@@ -84,7 +84,9 @@ namespace MrsCleanCapstone.Controllers
         [Authorize]
         public async Task<IActionResult> Add([Bind("ProductID,ProductName,Quantity,Price,Category,description,ProductImageName, ProductImage")] Product product)
         {
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+                if (product.ProductImage != null)
                 {
                     //Save image to wwwroot
                     string wwwrootPath = _hostEnvironment.WebRootPath;
@@ -99,12 +101,12 @@ namespace MrsCleanCapstone.Controllers
                     {
                         await product.ProductImage.CopyToAsync(fileStream);
                     }
-
-                    await _repository.Add(product);
-                    return RedirectToAction("Products","Home");
                 }
+                await _repository.Add(product);
+                return RedirectToAction("Index", "Products");
+            }
 
-                return View();
+            return View();
         }
 
         // GET: Products/Edit/5
@@ -128,9 +130,10 @@ namespace MrsCleanCapstone.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductPrice,ProductDescription,ProductImageName")] Product product)
+        public async Task<IActionResult> Edit([Bind("ProductID,ProductName,Quantity,Price,Category,description,ProductImageName, ProductImage")] Product product)
         {
-            if (id != product.ProductID)
+
+            if (!ProductExists(product.ProductID))
             {
                 return NotFound();
             }
@@ -139,7 +142,31 @@ namespace MrsCleanCapstone.Controllers
             {
                 try
                 {
-                   await _repository.Update(product);
+                    if (product.ProductImage != null)
+                    {
+                        string wwwrootPath = _hostEnvironment.WebRootPath;
+                        string filename = Path.GetFileNameWithoutExtension(product.ProductImage.FileName);
+                        string extension = Path.GetExtension(product.ProductImage.FileName);
+
+                        if (product.ProductImageName != null)
+                        {
+                            if (System.IO.File.Exists(Path.Combine(wwwrootPath + "/Images/", product.ProductImageName)))
+                            {
+                                System.IO.File.Delete(Path.Combine(wwwrootPath + "/Images/", product.ProductImageName));
+                            }
+                        }
+
+                        product.ProductImageName = filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
+
+                        string path = Path.Combine(wwwrootPath + "/Images/", filename);
+
+                        using (var fileStream = new FileStream(path, FileMode.Create))
+                        {
+                            await product.ProductImage.CopyToAsync(fileStream);
+                        }
+                    }
+
+                    await _repository.Update(product);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -154,7 +181,7 @@ namespace MrsCleanCapstone.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Products/Delete/5
