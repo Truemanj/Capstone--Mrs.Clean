@@ -50,30 +50,35 @@ namespace MrsCleanCapstone.Controllers
             },
             CurrentCategory = category
         });
+        //// GET: Products
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _repository.GetAll());
+        //}
 
         // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var product = await _repository
-                .FirstOrDefault(m => m.ProductID == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+        //    var product = await _repository
+        //        .FirstOrDefault(m => m.ProductID == id);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(product);
-        }
+        //    return View(product);
+        //}
 
         // GET: Products/AddProduct
         [Authorize]
         public IActionResult Add()
         {
-            return View();
+            return View(nameof(AddProduct));
         }
 
         // POST: Products/Create
@@ -95,7 +100,7 @@ namespace MrsCleanCapstone.Controllers
 
                     product.ProductImageName = filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
 
-                    string path = Path.Combine(wwwrootPath + "/Images/", filename);
+                    string path = Path.Combine(wwwrootPath + "/images/", filename);
 
                     using (var fileStream = new FileStream(path, FileMode.Create))
                     {
@@ -110,20 +115,20 @@ namespace MrsCleanCapstone.Controllers
         }
 
         // GET: Products/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var product = await _repository.GetById((int)id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
+        //    var product = await _repository.GetById((int)id);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return View(product);
+        //}
 
         // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -142,31 +147,7 @@ namespace MrsCleanCapstone.Controllers
             {
                 try
                 {
-                    if (product.ProductImage != null)
-                    {
-                        string wwwrootPath = _hostEnvironment.WebRootPath;
-                        string filename = Path.GetFileNameWithoutExtension(product.ProductImage.FileName);
-                        string extension = Path.GetExtension(product.ProductImage.FileName);
-
-                        if (product.ProductImageName != null)
-                        {
-                            if (System.IO.File.Exists(Path.Combine(wwwrootPath + "/Images/", product.ProductImageName)))
-                            {
-                                System.IO.File.Delete(Path.Combine(wwwrootPath + "/Images/", product.ProductImageName));
-                            }
-                        }
-
-                        product.ProductImageName = filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-
-                        string path = Path.Combine(wwwrootPath + "/Images/", filename);
-
-                        using (var fileStream = new FileStream(path, FileMode.Create))
-                        {
-                            await product.ProductImage.CopyToAsync(fileStream);
-                        }
-                    }
-
-                    await _repository.Update(product);
+                   await _repository.Update(product);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -181,35 +162,35 @@ namespace MrsCleanCapstone.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return RedirectToAction(nameof(Index));
-        }
-
-        // GET: Products/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _repository.FirstOrDefault(m => m.ProductID == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
             return View(product);
         }
 
-        // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var product = await _repository.GetById(id);
-            await _repository.Remove(product);
-            return RedirectToAction(nameof(Index));
-        }
+        // GET: Products/Delete/5
+        //public async Task<IActionResult> Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var product = await _repository.FirstOrDefault(m => m.ProductID == id);
+        //    if (product == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(product);
+        //}
+
+        //// POST: Products/Delete/5
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var product = await _repository.GetById(id);
+        //    await _repository.Remove(product);
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         public bool ProductExists(int id)
         {
