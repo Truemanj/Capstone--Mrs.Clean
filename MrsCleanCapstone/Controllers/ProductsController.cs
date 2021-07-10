@@ -50,11 +50,6 @@ namespace MrsCleanCapstone.Controllers
             },
             CurrentCategory = category
         });
-        //// GET: Products
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _repository.GetAll());
-        //}
 
         // GET: Products/Details/5
         //public async Task<IActionResult> Details(int? id)
