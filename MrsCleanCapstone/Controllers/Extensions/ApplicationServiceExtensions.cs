@@ -15,7 +15,7 @@ namespace MrsCleanCapstone.Controllers.Extensions
         {
             //Docker sql server configuration
             var server = Configuration["DbServer"]??"localhost";
-            var port = Configuration["DBPort"] ?? "1433";
+            var port = Configuration["DBPort"] ?? "3389";
             var user = Configuration["DBUser"] ?? "SA";
             var password = Configuration["DBPassword"] ?? "Mrsclean@capstone";
             var database = Configuration["Database"] ?? "MrsCleancapstone";
