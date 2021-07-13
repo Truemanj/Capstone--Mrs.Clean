@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MrsCleanCapstone.GenericRepository;
 using MrsCleanCapstone.Models;
@@ -14,9 +15,9 @@ namespace MrsCleanCapstone.Controllers
     {
 
         private readonly ILogger<AppointmentsController> _logger;
-        private IGenericRepository<Customer> _repository = null;
+        private IGenericRepository<Appointment> _repository = null;
 
-        public AppointmentsController(ILogger<AppointmentsController> logger,  IGenericRepository<Customer> repository)
+        public AppointmentsController(ILogger<AppointmentsController> logger,  IGenericRepository<Appointment> repository)
         {
             _logger = logger;
             _repository = repository;
@@ -24,8 +25,17 @@ namespace MrsCleanCapstone.Controllers
         // GET: AppointmentsController
         public ActionResult Index()
         {
-            List < Customer > appointments = _repository.Get().ToList();
-            return View(appointments);
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetAllAppointments()
+        {
+            var appointments = Json(_repository.Get().Include(m=>m.Customerfk).Include(x=>x.Vehicles).ToList());
+
+
+
+            return appointments;
         }
 
         // GET: AppointmentsController/Details/5
