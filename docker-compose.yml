@@ -1,0 +1,22 @@
+version: '3'
+services:
+    ms-sql-server:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        environment:
+            ACCEPT_EULA: "Y"
+            SA_PASSWORD: "Mrsclean@capstone"
+        ports:
+          - "1433:1433"
+    mrs-clean-capstone:
+        build: .
+        environment:
+            DbServer: "ms-sql-server"
+            DBUser: "SA"
+            DBPassword: "Mrsclean@capstone"
+        depends_on: 
+          - ms-sql-server
+        restart: on-failure
+        links:
+          - ms-sql-server
+        ports:
+          - "8080:80"

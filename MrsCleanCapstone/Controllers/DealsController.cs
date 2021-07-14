@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MrsCleanCapstone.GenericRepository;
 using MrsCleanCapstone.Models;
@@ -11,44 +10,37 @@ using System.Threading.Tasks;
 
 namespace MrsCleanCapstone.Controllers
 {
-    public class AppointmentsController : Controller
+    public class DealsController : Controller
     {
 
-        private readonly ILogger<AppointmentsController> _logger;
-        private IGenericRepository<Appointment> _repository = null;
+        private readonly ILogger<DealsController> _logger;
+        private IGenericRepository<Deal> _repository = null;
 
-        public AppointmentsController(ILogger<AppointmentsController> logger,  IGenericRepository<Appointment> repository)
+        public DealsController(ILogger<DealsController> logger, IGenericRepository<Deal> repository)
         {
             _logger = logger;
             _repository = repository;
         }
-        // GET: AppointmentsController
+        // GET: DealsController
         public ActionResult Index()
         {
-            return View();
+            var deals = _repository.Get().ToList();
+            return View(deals);
         }
 
-        [HttpGet]
-        public JsonResult GetAllAppointments()
-        {
-            var appointments = Json(_repository.Get().Include(m=>m.Customerfk).Include(x=>x.Vehicles).ToList());
-
-            return appointments;
-        }
-
-        // GET: AppointmentsController/Details/5
-        public ActionResult Book(int id)
+        // GET: DealsController/Details/5
+        public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: AppointmentsController/Create
+        // GET: DealsController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: AppointmentsController/Create
+        // POST: DealsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -63,13 +55,13 @@ namespace MrsCleanCapstone.Controllers
             }
         }
 
-        // GET: AppointmentsController/Edit/5
+        // GET: DealsController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: AppointmentsController/Edit/5
+        // POST: DealsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -84,13 +76,13 @@ namespace MrsCleanCapstone.Controllers
             }
         }
 
-        // GET: AppointmentsController/Delete/5
+        // GET: DealsController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: AppointmentsController/Delete/5
+        // POST: DealsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

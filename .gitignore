@@ -341,7 +341,6 @@ healthchecksdb
 
 .dockerignore
 .vs
-docker-compose.yml
 appsettings.json
 appsettings.Development.json
 ./MrsCleanCapstone/Properties/launchSettings.json
