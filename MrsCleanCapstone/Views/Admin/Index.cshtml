@@ -1,0 +1,10 @@
+@using MrsCleanCapstone.Actions
+<section class="admin-dashboard-section">
+    @foreach (var action in AdminActions.Actions)
+    {
+        <div class="admin-action">
+            <p>@action.Name.ToString()</p>
+            <p>@action.Description.ToString()</p>
+        </div>
+    }
+</section>

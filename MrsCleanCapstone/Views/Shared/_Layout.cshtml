@@ -20,6 +20,7 @@
 
 
     <link rel="stylesheet" href="~/css/mc-style.css" />
+    <link rel="stylesheet" href="~/css/admin-style.css" />
     <link rel="stylesheet" href="~/css/button.css" />
     <link rel="stylesheet" href="~/css/deals.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -36,15 +37,17 @@
 
 
 </head>
+
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    Mrs. Clean Auto Spa <span class="badge"> <img class="logo" src="~/images/mrsclean-logosmall.png"></span>
+                    Mrs. Clean Auto Spa <span class="badge"> <img class="logo"
+                            src="~/images/mrsclean-logosmall.png"></span>
                 </a>
                 <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-                        data-target="#navbarSupportedContent">
+                    data-target="#navbarSupportedContent">
                     <div class="hamburger-toggle">
                         <div class="hamburger">
                             <span></span>
@@ -57,21 +60,21 @@
                     <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home"
-                               asp-action="Index">Home</a>
+                                asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Products</a>
                             <ul class="dropdown-menu shadow">
                                 <li>
                                     <a class="dropdown-item" asp-area="" asp-controller="Products"
-                                       asp-action="Index">View Products</a>
+                                        asp-action="Index">View Products</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Products"
-                                       asp-action="Add">Add Product</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Products" asp-action="Add">Add
+                                        Product</a>
                                 </li>
                             </ul>
                         </li>
@@ -84,8 +87,11 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Checklist">Checklist</a>
                         </li>
+                    </ul>
                         @if (SignInManager.IsSignedIn(User))
                         {
+                            <ul class="nav navbar-nav navbar-right">
+
                             <li class="nav-item">
                                 <form asp-action="logout" asp-controller="Auth" method="post">
                                     <button type="submit" style="width:auto" class="nav-link btn btn-link py-0 btn-warning">
@@ -93,22 +99,22 @@
                                     </button>
                                 </form>
                             </li>
+                            </ul>
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth"
-                                   asp-action="Register">Register</a>
-                            </li>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Auth"
+                                    asp-action="Login">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Auth"
+                                    asp-action="Register">Register</a>
+                                </li>
+                            </ul>
+
                         }
-                    </ul>
-                    <form class="d-flex">
-                        <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
                 </div>
             </div>
         </nav>
