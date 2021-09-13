@@ -2,9 +2,20 @@
 <section class="admin-dashboard-section">
     @foreach (var action in AdminActions.Actions)
     {
-        <div class="admin-action">
+        <div class="admin-action" onclick="goToPage('@action.Name.ToString().Split(" ")[1]')">
             <p>@action.Name.ToString()</p>
             <p>@action.Description.ToString()</p>
         </div>
     }
+
+   
 </section>
+
+@section Scripts{
+    <script type="text/javascript">
+        goToPage = (name) => {
+            window.location.href = "/admin/" + name;
+        }
+    </script>
+}
+

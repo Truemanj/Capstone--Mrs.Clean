@@ -55,11 +55,11 @@ namespace MrsCleanCapstone.Controllers
             }
         }
 
-        // GET: DealsController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        //// GET: DealsController/Edit/5
+        //public ActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
 
         // POST: DealsController/Edit/5
         [HttpPost]

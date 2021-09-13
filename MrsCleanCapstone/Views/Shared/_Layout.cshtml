@@ -9,6 +9,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MrsCleanCapstone</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/mc-style.css" />
+    <link rel="stylesheet" href="~/css/admin-style.css" />
+    <link rel="stylesheet" href="~/css/admin-cards.css" />
+    <link rel="stylesheet" href="~/css/deals.css" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    @*<link href="~/css/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/21.1.4/css/dx.light.css">
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.4.0/polyfill.min.js"></script>
@@ -16,108 +27,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.0.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.9/jspdf.plugin.autotable.min.js"></script>
-
-
-
-    <link rel="stylesheet" href="~/css/mc-style.css" />
-    <link rel="stylesheet" href="~/css/admin-style.css" />
-    <link rel="stylesheet" href="~/css/button.css" />
-    <link rel="stylesheet" href="~/css/deals.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="~/css/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/21.1.4/css/dx.light.css">
-
     <!-- DevExtreme library -->
     <script type="text/javascript" src="https://cdn3.devexpress.com/jslib/21.1.4/js/dx.all.js"></script>
-
-
 </head>
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
-                    Mrs. Clean Auto Spa <span class="badge"> <img class="logo"
-                            src="~/images/mrsclean-logosmall.png"></span>
-                </a>
-                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent">
-                    <div class="hamburger-toggle">
-                        <div class="hamburger">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home"
-                                asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Products</a>
-                            <ul class="dropdown-menu shadow">
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Products"
-                                        asp-action="Index">View Products</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-controller="Products" asp-action="Add">Add
-                                        Product</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Checklist">Checklist</a>
-                        </li>
-                    </ul>
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <ul class="nav navbar-nav navbar-right">
-
-                            <li class="nav-item">
-                                <form asp-action="logout" asp-controller="Auth" method="post">
-                                    <button type="submit" style="width:auto" class="nav-link btn btn-link py-0 btn-warning">
-                                        Logout @User.Identity.Name
-                                    </button>
-                                </form>
-                            </li>
-                            </ul>
-                        }
-                        else
-                        {
-                            <ul class="nav navbar-nav navbar-right">
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Auth"
-                                    asp-action="Login">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Auth"
-                                    asp-action="Register">Register</a>
-                                </li>
-                            </ul>
-
-                        }
-                </div>
-            </div>
-        </nav>
+        <a href="#">
+            <img src="/images/mrsclean-logosmall.png" class="logo">
+        </a>
+        <div class="toggle"></div>
+        <ul class="navigation">
+            <li><a href="#">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
     </header>
     <div class="main-container">
         <main role="main" class="pb-3">
@@ -125,13 +52,60 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    @*<footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2021 - MrsCleanCapstone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    </footer>*@
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        //toggle
+        const menutoggle = document.querySelector('.toggle');
+        const navigation = document.querySelector('.navigation');
+        menutoggle.onclick = () => {
+            menutoggle.classList.toggle('active')
+            navigation.classList.toggle('active')
+        }
+
+        //slider
+        const slides = document.querySelectorAll('.slides');
+        const prev = document.querySelector('.prev');
+        const next = document.querySelector('.next');
+
+        i = 0;
+
+        function ActiveSlides(n) {
+            for (slide of slides) {
+                slide.classList.remove('active');
+            }
+            slides[n].classList.add('active')
+        }
+
+        prev.addEventListener('click', () => {
+            if (i == 0) {
+                i = slides.length - 1;
+                ActiveSlides(i);
+            } else {
+                i--;
+                ActiveSlides(i);
+            }
+        })
+
+        next.addEventListener('click', () => {
+            if (i == slides.length - 1) {
+                i = 0;
+                ActiveSlides(i);
+            } else {
+                i++;
+                ActiveSlides(i);
+            }
+        })
+
+    </script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 
