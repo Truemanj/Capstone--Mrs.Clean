@@ -9,12 +9,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MrsCleanCapstone</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/productStyle.css" />
+    <link rel="stylesheet" href="~/css/loginStyle.css" />
     <link rel="stylesheet" href="~/css/mc-style.css" />
     <link rel="stylesheet" href="~/css/admin-style.css" />
     <link rel="stylesheet" href="~/css/admin-cards.css" />
     <link rel="stylesheet" href="~/css/deals.css" />
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     @*<link href="~/css/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />*@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -39,70 +41,41 @@
         </a>
         <div class="toggle"></div>
         <ul class="navigation">
-            <li><a href="#">Home</a></li>
-            <li><a href="products.html">Products</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a asp-action="Index" asp-controller="Home">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Products">Products</a></li>
+            <li><a href="#aboutus">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <li>
+                    <form asp-action="logout" asp-controller="Auth" method="post">
+                        <button type="submit" style="width:auto" class="auth_btn ml-2">
+                            Logout @User.Identity.Name
+                        </button>
+                    </form>
+                </li>
+            }
+            else
+            {
+                <li><a asp-action="Login" asp-controller="Auth" class="auth_btn">Login</a></li>
+                <li><a asp-action="Register" asp-controller="Auth" class="auth_btn">Register</a></li>
+            }
         </ul>
     </header>
     <div class="main-container">
-        <main role="main" class="pb-3">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
     @*<footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - MrsCleanCapstone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>*@
+            <div class="container">
+                &copy; 2021 - MrsCleanCapstone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script>
-        //toggle
-        const menutoggle = document.querySelector('.toggle');
-        const navigation = document.querySelector('.navigation');
-        menutoggle.onclick = () => {
-            menutoggle.classList.toggle('active')
-            navigation.classList.toggle('active')
-        }
-
-        //slider
-        const slides = document.querySelectorAll('.slides');
-        const prev = document.querySelector('.prev');
-        const next = document.querySelector('.next');
-
-        i = 0;
-
-        function ActiveSlides(n) {
-            for (slide of slides) {
-                slide.classList.remove('active');
-            }
-            slides[n].classList.add('active')
-        }
-
-        prev.addEventListener('click', () => {
-            if (i == 0) {
-                i = slides.length - 1;
-                ActiveSlides(i);
-            } else {
-                i--;
-                ActiveSlides(i);
-            }
-        })
-
-        next.addEventListener('click', () => {
-            if (i == slides.length - 1) {
-                i = 0;
-                ActiveSlides(i);
-            } else {
-                i++;
-                ActiveSlides(i);
-            }
-        })
-
-    </script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 

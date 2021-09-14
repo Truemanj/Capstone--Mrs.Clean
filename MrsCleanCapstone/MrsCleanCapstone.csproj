@@ -21,6 +21,8 @@
   <ItemGroup>
     <Watch Remove="wwwroot\css\admin-cards.css" />
     <Watch Remove="wwwroot\css\deals.css" />
+    <Watch Remove="wwwroot\css\loginStyle.css" />
+    <Watch Remove="wwwroot\css\productStyle.css" />
   </ItemGroup>
 
   <ItemGroup>

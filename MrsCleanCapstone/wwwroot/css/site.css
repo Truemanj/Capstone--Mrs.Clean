@@ -113,6 +113,14 @@ header {
                 color: rgb(206, 205, 205);
             }
 
+            .auth_btn{
+                background: #193b7b;
+                padding: 0.2em 1.5em;
+                border-radius: 20px;
+                outline: none;
+                color: #fff;
+            }
+
 .content {
     position: relative;
     width: 100%;

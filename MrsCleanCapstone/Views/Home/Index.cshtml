@@ -57,7 +57,7 @@
         </div>
     </div>
 </section>
-<section class="services">
+<section class="services" id="services">
     <div class="services_content">
         <div class="services_title">
             <h3>What we do</h3>
@@ -103,7 +103,7 @@
         </div>
     </div>
 </section>
-<section class="aboutus">
+<section class="aboutus" id="aboutus">
     <div class="about_image">
         <img src="/images/aboutback.jpg" alt="">
     </div>
@@ -250,7 +250,7 @@
         </div>
     </div>
 </section>
-<section class="contactus">
+<section class="contactus" id="contact">
     <div class="contact_content">
         <div class="contact_title">
             <h3>Get in Touch</h3>
@@ -299,3 +299,44 @@
         </div>
     </div>
 </section>
+
+@section Scripts{ 
+    <script>
+      
+
+        //slider
+        const slides = document.querySelectorAll('.slides');
+        const prev = document.querySelector('.prev');
+        const next = document.querySelector('.next');
+
+        i = 0;
+
+        function ActiveSlides(n) {
+            for (slide of slides) {
+                slide.classList.remove('active');
+            }
+            slides[n].classList.add('active')
+        }
+
+        prev.addEventListener('click', () => {
+            if (i == 0) {
+                i = slides.length - 1;
+                ActiveSlides(i);
+            } else {
+                i--;
+                ActiveSlides(i);
+            }
+        })
+
+        next.addEventListener('click', () => {
+            if (i == slides.length - 1) {
+                i = 0;
+                ActiveSlides(i);
+            } else {
+                i++;
+                ActiveSlides(i);
+            }
+        })
+
+    </script>
+}

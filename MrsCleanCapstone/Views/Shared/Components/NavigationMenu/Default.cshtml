@@ -1,19 +1,25 @@
 ﻿@model IEnumerable<string>
 
-<a class="btn btn-block btn-outline-secondary"
-   asp-action="Index"
-   asp-controller="Products" 
-   asp-route-category="">
-    All
-</a>
+<div class="category all">
+    <!-- <ion-icon name="call-outline"></ion-icon> -->
+    <h3>
+        <a asp-action="Index"
+           asp-controller="Products"
+           asp-route-category="">All</a>
+    </h3>
+</div>
 @foreach (string category in Model)
 {
-    <a class="btn btn-block
-       @(category == @ViewBag.SelectedCategory ? "btn-primary" : "btn-secondary")"
-       asp-action="Index"
-       asp-controller="Products"
-       asp-route-category="@category"
-       asp-route-productPage="1">
-        @category
-    </a>
+
+    <div class="category">
+        <h3>
+            <a class="@(category == @ViewBag.SelectedCategory ? "btn-primary" : "btn-secondary")"
+               asp-action="Index"
+               asp-controller="Products"
+               asp-route-category="@category"
+               asp-route-productPage="1">
+                @category
+            </a>
+        </h3>
+    </div>
 }
