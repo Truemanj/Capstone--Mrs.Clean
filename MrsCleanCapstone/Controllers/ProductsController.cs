@@ -73,7 +73,7 @@ namespace MrsCleanCapstone.Controllers
         [Authorize]
         public IActionResult Add()
         {
-            return View(nameof(AddProduct));
+            return View(nameof(Add));
         }
 
         // POST: Products/Create

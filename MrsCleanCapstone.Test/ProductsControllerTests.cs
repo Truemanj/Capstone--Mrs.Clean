@@ -61,10 +61,10 @@ namespace MrsCleanCapstone.Test
             var mockLogger = new Mock<ILogger<ProductsController>>();
             var mockHost = new Mock<IWebHostEnvironment>();
             ProductsController controller = new ProductsController(mockLogger.Object, mockHost.Object, mockRepo.Object);
-            string expectedViewName = "AddProduct";
+            string expectedViewName = "Add";
 
             //Act
-            ViewResult result = (ViewResult)controller.AddProduct();
+            ViewResult result = (ViewResult)controller.Add();
             string actualViewName = result.ViewName;
 
             //Assert

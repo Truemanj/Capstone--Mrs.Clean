@@ -1,51 +1,50 @@
 ﻿@model ProductListViewModel
 
-<div class="text-center">
-    <h1 class="display-4">Available Products</h1><br />
-</div>
-
-<div class="mc-nav">
-    <div>
-        <div class="text-center">
-            <h3 class="mc-cat">Categories</h3>
+<section class="products">
+    <div class="products_content">
+        <div class="products_title">
+            <h3>Great products</h3>
+            <h2>Available Products</h2>
         </div>
-        <vc:navigation-menu />
+
+        <div class="product_info">
+            <div class="product_categories">
+                <h3 class="text-center">Browse Categories</h3>
+                <vc:navigation-menu />
+            </div>
+
+            <div class="products_container">
+                @foreach (var b in Model.Products)
+                {
+
+                    <div class="product">
+                        <div class="product_image">
+                            @if (b.ProductImageName == null)
+                            {
+                                <img src="~/images/placeholder.png" />
+                            }
+                            else
+                            {
+                                <img src="~/images/@b.ProductImageName" />
+
+                            }
+                            <h3>@b.Price.ToString("c")</h3>
+                        </div>
+                        <div class="product_description">
+                            <h2> @b.ProductName</h2>
+                            <p> @b.description</p>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+        <div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
+             page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
+             page-url-category="@Model.CurrentCategory" class="mc-page-button">
+        </div>
     </div>
-
-</div>
-
-@foreach (var b in Model.Products)
-{
-
-    <div class="mc-products">
-        @if (b.ProductImageName == null)
-        {
-            <img class="p-image" src="~/images/placeholder.png" />
-        }
-        else
-        {
-            <img class="p-image" src="~/images/@b.ProductImageName" />
-
-        }
-        <div class="mc-name">
-            <h5>
-                @b.ProductName
-                <span class="badge badge-pill badge-primary" style="float:right; margin-top: 5px">
-                    <small>@b.Price.ToString("c")</small>
-                </span>
-            </h5>
-        </div>
-        <div class="mc-desc">
-            @b.description
-            <a asp-action="Edit" asp-controller="Products" asp-route-id="@b.ProductID">Edit</a>
-        </div>
-    </div>
-}
-
-<div page-model="@Model.PagingInfo" page-action="Index" page-classes-enabled="true"
-     page-class="btn" page-class-normal="btn-outline-dark" page-class-selected="btn-primary"
-     page-url-category="@Model.CurrentCategory" class="mc-page-button">
-
-</div>
+</section>
 
 
