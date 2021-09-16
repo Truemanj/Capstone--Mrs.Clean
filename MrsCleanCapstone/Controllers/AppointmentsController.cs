@@ -21,20 +21,7 @@ namespace MrsCleanCapstone.Controllers
         {
             _logger = logger;
             _repository = repository;
-        }
-        // GET: AppointmentsController
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public JsonResult GetAllAppointments()
-        {
-            var appointments = Json(_repository.Get().Include(m=>m.Customerfk).Include(x=>x.Vehicles).ToList());
-
-            return appointments;
-        }
+        }        
 
         // GET: AppointmentsController/Details/5
         public ActionResult Book(int id)

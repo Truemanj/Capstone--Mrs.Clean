@@ -4,20 +4,28 @@
     ViewData["Title"] = "Manage Deals";
 }
 
-<h1>Manage Deals</h1>
-<section class="page-contain">
-    @foreach (var item in Model)
-    {
-        <div href="#" class="admin-data-card">
-            <h3>@item.Title</h3>
-            <h4>@item.Highlight</h4>
-            <p>@item.Description</p>
-            <span class="link-text">
-                <a onclick="openEditModal('@item.Id', '@item.Title', '@item.Description', '@item.Highlight')"><i class="material-icons">mode_edit</i></a>
-                <a asp-action="Delete" asp-route-id="@item.Id"><i class="large material-icons">delete</i></a>
-            </span>
+<section class="admin_container">
+    <div class="admin_content">
+        <div class="admin_content_title">
+            <h3>Admin Panel</h3>
+            <h2>Manage Deals</h2>
         </div>
-    }
+        <div class="admin_data_cards">
+            @foreach (var item in Model)
+            {
+                <div href="#" class="admin-data-card">
+                    <h3>@item.Title</h3>
+                    <h4>@item.Highlight</h4>
+                    <p>@item.Description</p>
+                    <span class="link-text">
+                        <a onclick="openEditModal('@item.Id', '@item.Title', '@item.Description', '@item.Highlight')" href="javascript:void(0)"><i class="material-icons">mode_edit</i></a>
+                        <a onclick="deleteDeal('@item.Id')" href="javascript:void(0)"><i class="large material-icons">delete</i></a>
+                    </span>
+                </div>
+
+            }
+        </div>
+    </div>
 </section>
 
 <!-- Modal -->
@@ -25,16 +33,19 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit deal</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body form-group">
-                    <input type="text" class="form-control" id="dealId" hidden />
-                    <input type="text" class="form-control" id="dealTitle" value="" />
-                    <input type="text" class="form-control" id="dealDescription" value="" />
-                    <input type="text" class="form-control" id="dealHighlight" value="" />
+            <div class="modal-body">
+                <input type="text" class="form-control mb-2" id="dealId" hidden />
+                <label>Title: </label>
+                <input type="text" class="form-control mb-2" id="dealTitle" value="" />
+                <label>Description: </label>
+                <input type="text" class="form-control mb-2" id="dealDescription" value="" />
+                <label>Highlight: </label>
+                <input type="text" class="form-control mb-2" id="dealHighlight" value="" />
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -46,6 +57,30 @@
 
 @section Scripts{ 
     <script type="text/javascript">
+
+        function deleteDeal(id) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/deals/delete/"+id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log("Success");
+                    window.location.reload();
+                },
+                failure: function (response) {
+                    console.log("Hello")
+                    alert(response);
+                },
+                error: function (response) {
+                    console.log("Hello error")
+                    console.log(response)
+                    alert(response);
+                }
+
+            })
+        }
+
         function openEditModal(id, title, description, highlight) {
             console.log(title);
             $("#dealId").val(id);
@@ -58,9 +93,9 @@
         function saveChanges() {
             var deal = {}
             deal.id = $("#dealId").val();
-            deal.title = $("#dealTitle").val(title);
-            deal.description = $("#dealDescription").val(description);
-            deal.highlight = $("#dealHighlight").val(highlight);
+            deal.title = $("#dealTitle").val();
+            deal.description = $("#dealDescription").val();
+            deal.highlight = $("#dealHighlight").val();
             $.ajax({
                 type: "POST",
                 url: "/admin/deals/edit",
@@ -68,14 +103,17 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    console.log("fsdfsd");
-                    alert("Hello: " + response.Name + ".\nCurrent Date and Time: " + response.DateTime);
+                    console.log("Success");
+                    window.location.reload();
                 },
                 failure: function (response) {
-                    alert(response.responseText);
+                    console.log("Hello")
+                    alert(response);
                 },
                 error: function (response) {
-                    alert(response.responseText);
+                    console.log("Hello error")
+                    console.log(response)
+                    alert(response);
                 }
 
             })
