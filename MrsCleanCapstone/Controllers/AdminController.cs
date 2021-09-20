@@ -53,7 +53,7 @@ namespace MrsCleanCapstone.Controllers
             if (deal.Id != 0)
             {
                 var dealToUpdate = await _dealsRepository.GetById(deal.Id);
-                if (dealToUpdate==null)
+                if (dealToUpdate == null)
                 {
                     return new JsonResult("Error!! Deal not found");
 
@@ -75,7 +75,7 @@ namespace MrsCleanCapstone.Controllers
 
         public async Task<IActionResult> DeleteDeal(int? id)
         {
-            if (id==0)
+            if (id == 0)
             {
                 return new JsonResult("Model is invalid");
             }
@@ -112,6 +112,15 @@ namespace MrsCleanCapstone.Controllers
         public ActionResult Appointments()
         {
             return View();
+        }
+
+        [Route("{controller}/appointments/add")]
+        [HttpPost]
+        public async Task<JsonResult> AddAppointmentAsync([FromBody] Appointment appt)
+        {
+            await _appointmentsRepository.Add(appt);
+
+            return new JsonResult("Hello");
         }
 
         [Route("{controller}/allappointments/")]

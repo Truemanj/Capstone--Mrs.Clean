@@ -22,10 +22,11 @@ namespace MrsCleanCapstone.Controllers
             _repository = repository;
         }
         // GET: DealsController
-        public async Task<IActionResult> Index()
+        [Route("/{controller}/")]
+        public async Task<IActionResult> Deals()
         {
             var deals = (await _repository.GetAll()).ToList();
-            return View(deals);
+            return View(nameof(Deals), deals);
         }
 
     }

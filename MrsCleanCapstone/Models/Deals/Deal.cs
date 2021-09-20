@@ -8,6 +8,7 @@ namespace MrsCleanCapstone.Models
 {
     public class Deal
     {
+        [Key]
         public int Id { get; set; }
         
         [Required]
