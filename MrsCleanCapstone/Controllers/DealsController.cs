@@ -24,6 +24,7 @@ namespace MrsCleanCapstone.Controllers
         // GET: DealsController
         public ActionResult Index()
         {
+            
             var deals = _repository.Get().ToList();
             return View(deals);
         }

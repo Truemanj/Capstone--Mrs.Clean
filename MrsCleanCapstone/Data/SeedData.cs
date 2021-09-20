@@ -69,8 +69,35 @@ namespace MrsCleanCapstone.Data
                        Category = "Fresheners",
                        description = "Leaves a refreshing scent"
                    });
-                
+            }
+            if (!context.Deals.Any())
+            {
+                context.Deals.AddRange(
+                    new Deal
+                    {
+                        
+                        Title = "Deal A",
+                        Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus fugit iusto ratione.",
+                        Highlight = "10% OFF",
+
+                    },
+                    new Deal
+                    {
+                        
+                        Title = "Deal B",
+                        Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                        Highlight = "20% OFF",
+                    },
+                    new Deal
+                    {
+
+                        Title = "Deal C",
+                        Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                        Highlight = "50% OFF",
+                    });
+
                 context.SaveChanges();
+
             }
         }
     }
