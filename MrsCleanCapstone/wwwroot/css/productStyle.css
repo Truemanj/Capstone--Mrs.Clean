@@ -1,13 +1,4 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap');
-body {
-    background: #309EFF;
-    background: -moz-linear-gradient(top, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
-    background: -webkit-linear-gradient(top, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
-    background: linear-gradient(to bottom, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
-    min-height: 100vh;
-    position: relative;
-}
-
 *, *::before, *::after {
     padding: 0;
     margin: 0;
