@@ -10,7 +10,10 @@
 .main {
     position: relative;
     min-height: 85vh;
-    background: radial-gradient(#3a7df0, #0a50d1);
+    background: #309EFF;
+    background: -moz-linear-gradient(top, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
+    background: -webkit-linear-gradient(top, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
+    background: linear-gradient(to bottom, #309EFF 0%, #FFFFFF 38%, #309EFF 100%);
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -91,7 +94,7 @@ header {
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
-    background: radial-gradient(#3a7df0, #0a50d1);
+    background: #309EFF;
 }
 
 .navigation {
@@ -135,7 +138,7 @@ header {
     }
 
         .content .text h2 {
-            color: #fff;
+            color: navy;
             font-size: 5em;
             font-weight: 300;
         }
@@ -145,7 +148,7 @@ header {
             }
 
         .content .text p {
-            color: #fff;
+            color: navy;
             font-weight: 400;
             font-size: 1.1em;
             line-height: 1.5em;
@@ -156,8 +159,8 @@ header {
     position: relative;
     display: inline-block;
     padding: 20px 50px;
-    background: #fff;
-    color: #333;
+    background: #3a7df0;
+    color: #FFF;
     font-size: 1.1em;
     font-weight: 500;
     border-radius: 40px;

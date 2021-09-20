@@ -40,6 +40,7 @@ namespace MrsCleanCapstone
             services.AddIdentityServices(Configuration);
             services.AddMaintenance(() => false,
              Encoding.UTF8.GetBytes("<div>Doing Maintenance!</div>"));
+            
 
         }
 
@@ -50,6 +51,7 @@ namespace MrsCleanCapstone
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                
             }
             else
             {
@@ -94,7 +96,7 @@ namespace MrsCleanCapstone
 
             });
 
-            //SeedData.EnsurePopulated(app);
+            SeedData.EnsurePopulated(app);
         }
     }
 }
