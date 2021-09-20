@@ -9,6 +9,7 @@ using MrsCleanCapstone.DTOs;
 using MrsCleanCapstone.GenericRepository;
 using System.Threading.Tasks;
 using MrsCleanCapstone.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MrsCleanCapstone.Controllers
 {
@@ -46,15 +47,21 @@ namespace MrsCleanCapstone.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Redirect(nameof(Deals));
+                return new JsonResult("Model is invalid");
             }
 
             if (deal.Id != 0)
             {
                 var dealToUpdate = await _dealsRepository.GetById(deal.Id);
+                if (dealToUpdate == null)
+                {
+                    return new JsonResult("Error!! Deal not found");
+
+                }
                 dealToUpdate.Title = deal.Title;
                 dealToUpdate.Description = deal.Description;
-                dealToUpdate.Highlight = deal.Title;
+                dealToUpdate.Highlight = deal.Highlight;
+                await _dealsRepository.Update(dealToUpdate);
                 return new JsonResult(dealToUpdate);
             }
             else
@@ -62,6 +69,28 @@ namespace MrsCleanCapstone.Controllers
                 return new JsonResult("Error!! Deal could not be updated");
             }
         }
+
+        [Route("{controller}/deals/delete/{id}")]
+        [HttpPost]
+
+        public async Task<IActionResult> DeleteDeal(int? id)
+        {
+            if (id == 0)
+            {
+                return new JsonResult("Model is invalid");
+            }
+
+            var dealToDelete = await _dealsRepository.GetById((int)id);
+            if (dealToDelete == null)
+            {
+                return new JsonResult("Error!! Deal not found");
+            }
+
+            await _dealsRepository.Remove(dealToDelete);
+            return new JsonResult(dealToDelete);
+
+        }
+
 
         public IActionResult Products()
         {
@@ -79,10 +108,29 @@ namespace MrsCleanCapstone.Controllers
             return View();
         }
 
-        public IActionResult Bookings()
+
+        public ActionResult Appointments()
         {
-            var appointments = _appointmentsRepository.Get().ToList();
-            return View(appointments);
+            return View();
+        }
+
+        [Route("{controller}/appointments/add")]
+        [HttpPost]
+        public async Task<JsonResult> AddAppointmentAsync([FromBody] Appointment appt)
+        {
+            await _appointmentsRepository.Add(appt);
+
+            return new JsonResult("Hello");
+        }
+
+        [Route("{controller}/allappointments/")]
+
+        [HttpGet]
+        public JsonResult GetAllAppointments()
+        {
+            var appointments = Json(_appointmentsRepository.Get().Include(m => m.Customerfk).Include(x => x.Vehicles).ToList());
+
+            return appointments;
         }
     }
 }

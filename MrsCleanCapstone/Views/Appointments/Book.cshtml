@@ -1,0 +1,163 @@
+﻿@model Appointment 
+
+<div class="container mt-5 mb-5" id="smartwizard">
+
+    <ul class="nav">
+        <li>
+            <a class="nav-link" href="#step-1">
+                Customer Information
+            </a>
+        </li>
+        <li>
+            <a class="nav-link" href="#step-2">
+                Appointment Informaion
+            </a>
+        </li>
+        <li>
+            <a class="nav-link" href="#step-3">
+                Additional Options
+            </a>
+        </li>
+        <li>
+            <a class="nav-link" href="#step-4">
+                Select Dates
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="step-1" class="tab-pane" role="tabpanel">
+            <h2>Customer Name</h2>
+            <div class="form-step-0" role="form" data-toggle="validator">
+                <div class="form-group">
+                    <label for="name">Name: </label>
+                    <input type="text" class="form-control" name="name" id="name" required placeholder="Enter name">
+                    <div class="help-block with-errors"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email: </label>
+                    <input type="text" class="form-control" name="email" id="email" required placeholder="Enter email">
+                    <div class="help-block with-errors"></div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number: </label>
+                    <input type="text" class="form-control" name="phone" id="phone" required placeholder="Enter phone number">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div id="step-2" class="tab-pane" role="tabpanel">
+            <h2>Customer Email</h2>
+            <div class="form-step-1" role="form" data-toggle="validator">
+                <div class="form-group">
+                        <label for="vehicles">Add Vehicles: </label>
+                        <div class="row">
+                            <div class="col-2">
+                                <select class="form-control" name="vehicle" id="vehicle" required placeholder="Select vehicle">
+                                    <option value="SUV">SUV</option>
+                                    <option value="SEDAN">SEDAN</option>
+                                    <option value="VAN">VAN</option>
+                                    <option value="TRUCK">TRUCK</option>
+                                </select>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-3">
+                                <input type="number" class="form-control" name="numSeats" placeholder="Enter number of seats" required id="numSeats" />
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" class="form-control" name="condition" placeholder="Briefly describe condition" required id="condition" />
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="col-1">
+                                <button class="btn-success form-control" onclick="addVehicle()">ADD</button>
+                            </div>
+                        </div>
+                    
+                </div>
+                <div class="form-group">
+                    <ul class="list-group" id="vehicleList"></ul>
+                </div>
+            </div>
+        </div>
+        <div id="step-3" class="tab-pane" role="tabpanel">
+            <h2>Customer Phone Number</h2>
+            <div class="form-step-2" role="form" data-toggle="validator">
+                <div class="form-group">
+                    <label for="name">Phone: </label>
+                    <input type="text" class="form-control" name="phone" id="phone" required placeholder="Enter phone number">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div id="step-4" class="tab-pane" role="tabpanel">
+            <h2>Customer Description</h2>
+            <div class="form-step-3" role="form" data-toggle="validator">
+                <div class="form-group">
+                    <label for="name">Desc: </label>
+                    <input type="text" class="form-control" name="desc" id="desc" required placeholder="Enter desc">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js"
+        type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            let numVehicles = 0;
+
+            // SmartWizard initialize
+            $('#smartwizard').smartWizard({
+                theme: 'arrows',
+                tramsitionEffect: 'fade',
+            });
+
+            $("#smartwizard").on("leaveStep", function (e, anchorObject, currentStepNumber, nextStepNumber, stepDirection) {
+
+                if (stepDirection == "forward") {
+                    if (currentStepNumber == 0) {
+                        saveCustomerInformation();
+                    } else if (currentStepNumber == 1) {
+                        saveVehicleInformation()
+                    }
+                }
+
+            });
+
+            let saveCustomerInformation = () => {
+
+                console.log("saved");
+
+                var customerName = $("#name").val()
+                var customerEmail = $("#email").val()
+                var customerPhone = $("#phone").val()
+
+                sessionStorage.setItem("customer", JSON.stringify({ customerName, customerEmail, customerPhone }));
+            }
+
+            let addVehicle = () => {
+                var vehicleType = $("#type").val()
+                var numSeats = $("#numSeats").val()
+                var vehicleCondition = $("#condition").val()
+
+
+                numVehicles++;
+            }
+
+
+        });
+    </script>
+}

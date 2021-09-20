@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Deal>
+    <h2>Deals</h2>
+
+    <div class="dealsContainer">
+
+        @if (Model.Count == 0)
+        {
+            <div>No deals found!!!</div>
+        }
+        else
+        {
+            @foreach (var el in Model)
+            {
+                <div class="card">
+                    <div class="box">
+                        <div class="card-content">
+                            <h2>@el.Id</h2>
+                            <h3>@el.Title</h3>
+                            <p>@el.Description</p>
+                            <a href="#">@el.Highlight</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
