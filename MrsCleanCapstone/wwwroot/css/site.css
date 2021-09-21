@@ -103,7 +103,7 @@ header {
         list-style: none;
     }
 
-        .navigation li a {
+        .navigation li a, .navigation li button {
             position: relative;
             color: #fff;
             text-decoration: none;
@@ -116,7 +116,7 @@ header {
 
             .auth_btn{
                 background: #193b7b;
-                padding: 0.2em 1.5em;
+                padding: 0em 0.5em;
                 border-radius: 20px;
                 outline: none;
                 color: #fff;
