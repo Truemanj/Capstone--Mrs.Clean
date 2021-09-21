@@ -245,13 +245,14 @@
                 console.log(apptData);
                 $.ajax({
                     type: "POST",
-                    url: "/admin/appointments/add",
+                    url: "/appointments/book",
                     data: apptData,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (response) {
                         console.log("Success");
                         alert("Booking Successful")
+                        sessionStorage.clear();
                         window.location.href="/"
                     },
                     failure: function (response) {
