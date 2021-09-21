@@ -10,8 +10,9 @@ namespace MrsCleanCapstone.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Make { get; set; }
-        public string Model { get; set; }
+        public string ServiceType { get; set; }
+        public string Condition{ get; set; }
         public string Type { get; set; }
+        public int NumSeats { get; set; }
     }
 }

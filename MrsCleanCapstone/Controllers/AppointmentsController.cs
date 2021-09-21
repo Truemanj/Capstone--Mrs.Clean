@@ -29,5 +29,17 @@ namespace MrsCleanCapstone.Controllers
             return View(appt);
         }
 
+        [Route("{controller}/book")]
+        [HttpPost]
+        public async Task<JsonResult> AddAppointmentAsync([FromBody] Appointment appt)
+        {
+            if (!ModelState.IsValid)
+            {
+                return new JsonResult("Error");
+            }
+            await _repository.Add(appt);
+            return new JsonResult(appt);
+        }
+
     }
 }

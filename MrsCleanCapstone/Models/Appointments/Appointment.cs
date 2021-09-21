@@ -11,7 +11,10 @@ namespace MrsCleanCapstone.Models
         [Key]
         public int Id { get; set; }
         public string Date { get; set; }
-        public string Description { get; set; }
+        public bool AnyPetHair { get; set; }
+        public bool WaterHoseAvailability { get; set; }
+        public bool WaterSupplyConnection { get; set; }
+        public bool PowerOutletAvailable { get; set; }
 
         public List<Vehicle> Vehicles { get; set; }
         public Customer Customerfk { get; set; }

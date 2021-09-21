@@ -3,10 +3,16 @@
 *@
 @{
 }
-
-<div class="appointmentsContainer">
-    <div id="dataGrid"></div>
+<div class="admin-appointments-grid">
+    <div class="admin-appointments-grid-title">
+            <h3>Admin Panel</h3>
+            <h2>View Bookings</h2>
+    </div>
+    <div class="appointmentsContainer">
+        <div id="dataGrid"></div>
+    </div>
 </div>
+
 @section Scripts{
 
 <script>
@@ -42,27 +48,36 @@
                             allowSorting: true
                         },
                         {
+                            caption: "Email",
+                            calculateCellValue: function (rowData) {
+                                return rowData.customerfk.email;
+                            },
+                            allowFiltering: "true",
+                            allowSorting: true
+                        },
+                        {
+                            caption: "Address",
+                            calculateCellValue: function (rowData) {
+                                return rowData.customerfk.address;
+                            },
+                            allowFiltering: "true",
+                            allowSorting: true
+                        },
+                        {
                             caption: "Appointment Date",
                             calculateCellValue: function (rowData) {
                                 return rowData.date;
                             },
                             allowFiltering: "true",
                             allowSorting: true
-                        }, {
-                            caption: "Description",
-                            calculateCellValue: function (rowData) {
-                                return rowData.description;
-                            },
-                            allowFiltering: "true",
-                            allowSorting: true
-                        }, {
-                            caption: "Vehicle Type",
+                        },  {
+                            caption: "Vehicle Type - #Seats",
                             calculateCellValue: function (rowData) {
                                 var allVehicles = "";
                                 rowData.vehicles.forEach((el) => {
-                                    allVehicles += el.model + " " + el.type + ", ";
+                                    allVehicles += el.type+" - "+el.numSeats + ", ";
                                 });
-                                return allVehicles == "" ? "No Vehicle" : allVehicles;
+                                return allVehicles == "" ? "No Vehicle" : allVehicles.substring(0, allVehicles.length-2);
                             },
                             allowFiltering: "true",
                             allowSorting: true,
