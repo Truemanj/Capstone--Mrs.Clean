@@ -69,6 +69,7 @@ namespace MrsCleanCapstone.Data
                        Category = "Fresheners",
                        description = "Leaves a refreshing scent"
                    });
+                context.SaveChanges();
             }
             if (!context.Deals.Any())
             {

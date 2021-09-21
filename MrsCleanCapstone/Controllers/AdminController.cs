@@ -10,9 +10,13 @@ using MrsCleanCapstone.GenericRepository;
 using System.Threading.Tasks;
 using MrsCleanCapstone.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MrsCleanCapstone.Controllers
 {
+
+    [Authorize]
+
     public class AdminController : Controller
     {
         private IGenericRepository<Deal> _dealsRepository;
@@ -109,19 +113,12 @@ namespace MrsCleanCapstone.Controllers
         }
 
 
-        public ActionResult Appointments()
+        public ActionResult Bookings()
         {
             return View();
         }
 
-        [Route("{controller}/appointments/add")]
-        [HttpPost]
-        public async Task<JsonResult> AddAppointmentAsync([FromBody] Appointment appt)
-        {
-            await _appointmentsRepository.Add(appt);
-
-            return new JsonResult("Hello");
-        }
+       
 
         [Route("{controller}/allappointments/")]
 
