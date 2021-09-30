@@ -592,7 +592,6 @@ header {
     border: solid #df0505;
     border-width: 4px 0 4px 0px;
     margin-bottom: 20px;
-    width: 50%;
 }
 
     .contact_title h3 {
@@ -614,20 +613,18 @@ header {
 
 .contact_info {
     display: flex;
-    align-items: center;
 }
 
 .contact_basic {
-    width: 35%;
+    width: 40%;
 }
 
 .contact_form_container {
-    width: 65%;
-    padding-left: 70px;
+    width: 60%;
     color: #fff;
 }
 
-    .contact_form_container h2 {
+    .contact_form_container > h2 {
         font-weight: 700;
         font-style: normal;
         color: #ffffff;
@@ -697,6 +694,12 @@ header {
     .contact_form_container .btn:hover {
         background-color: #fff;
         color: #df0505;
+    }
+
+    .divider{
+        width: 3px;
+        background: #413f3f;
+        margin: 0 40px;
     }
 
 @media(max-width: 991px) {
