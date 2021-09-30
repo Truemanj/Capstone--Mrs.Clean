@@ -39,7 +39,8 @@ namespace MrsCleanCapstone
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddIdentityServices(Configuration);
             services.AddMaintenance(() => false,
-             Encoding.UTF8.GetBytes("<div>Doing Maintenance Yo!</div>"));
+             Encoding.UTF8.GetBytes("<div>Doing Maintenance!</div>"));
+            
 
         }
 
@@ -50,6 +51,7 @@ namespace MrsCleanCapstone
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                
             }
             else
             {

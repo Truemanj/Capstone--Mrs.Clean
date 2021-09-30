@@ -1,0 +1,109 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="admin-appointments-grid">
+    <div class="admin-appointments-grid-title">
+            <h3>Admin Panel</h3>
+            <h2>View Bookings</h2>
+    </div>
+    <div class="appointmentsContainer">
+        <div id="dataGrid"></div>
+    </div>
+</div>
+
+@section Scripts{
+
+<script>
+    $(document).ready(function () {
+
+        $.ajax({
+            url: '/admin/allappointments',
+            type: 'GET',
+            dataType: 'json', // added data type
+            success: function (res) {
+                console.log(res);
+                $("#dataGrid").dxDataGrid({
+                    dataSource: res,
+                    keyExpr: "id",
+                    columns: [
+                        {
+                            caption: "Customer Name",
+                            cellTemplate: function (container, options) {
+                                $('<a>' + options.data.customerfk.name + '</a>')
+                                    .attr('href', '/Customers/Info/' + options.data.customerfk.id)
+                                    .attr('target', '_blank')
+                                    .appendTo(container);
+                            },
+                            allowFiltering: "true",
+                            allowSorting: true
+                        },
+                        {
+                            caption: "Phone Number",
+                            calculateCellValue: function (rowData) {
+                                return rowData.customerfk.phoneNumber;
+                            },
+                            allowFiltering: "true",
+                            allowSorting: true
+                        },
+                        {
+                            caption: "Email",
+                            calculateCellValue: function (rowData) {
+                                return rowData.customerfk.email;
+                            },
+                            allowFiltering: "true",
+                            allowSorting: true
+                        },
+                        {
+                            caption: "Address",
+                            calculateCellValue: function (rowData) {
+                                return rowData.customerfk.address;
+                            },
+                            allowFiltering: "true",
+                            allowSorting: true
+                        },
+                        {
+                            caption: "Appointment Date",
+                            calculateCellValue: function (rowData) {
+                                return rowData.date;
+                            },
+                            allowFiltering: "true",
+                            allowSorting: true
+                        },  {
+                            caption: "Vehicle Type - #Seats",
+                            calculateCellValue: function (rowData) {
+                                var allVehicles = "";
+                                rowData.vehicles.forEach((el) => {
+                                    allVehicles += el.type+" - "+el.numSeats + ", ";
+                                });
+                                return allVehicles == "" ? "No Vehicle" : allVehicles.substring(0, allVehicles.length-2);
+                            },
+                            allowFiltering: "true",
+                            allowSorting: true,
+                            allowExporting: true
+                        }
+                    ],
+                    summary: { groupItems: [{ summaryType: "count", displayFormat: "{0} records" }] },
+                    paging: { pageSize: 10 },
+                    allowColumnReordering: true,
+                    allowColumnResizing: true,
+                    filterRow: { visible: true, applyFilter: "auto" },
+                    headerFilter: { visible: true },
+                    columnChooser: { enabled: true },
+                    pager: { showPageSizeSelector: true, allowedPageSizes: [10, 25, 50], showInfo: true, showNavigationButtons: true },
+                    groupPanel: { visible: true },
+                    grouping: { autoExpandAll: false },
+                    export: { enabled: true, fileName: "AllAppointments", },
+                    noDataText: "No data", onContentReady: function () { $("#dataGrid > .dx-datagrid").addClass("dx-container"); },
+                    searchPanel: { visible: true },
+
+                    // Configuration goes here
+                });
+            }
+        });
+
+
+    });
+</script>
+}

@@ -1,0 +1,272 @@
+﻿@model Appointment
+
+<div class="container mt-5 mb-5" id="smartwizard">
+
+    <ul class="nav">
+        <li>
+            <a class="nav-link" href="#step-1">
+                Customer Information
+            </a>
+        </li>
+        <li>
+            <a class="nav-link" href="#step-2">
+                Appointment Information
+            </a>
+        </li>
+        <li>
+            <a class="nav-link" href="#step-3">
+                Additional Options
+            </a>
+        </li>
+        <li>
+            <a class="nav-link" href="#step-4">
+                Select Dates
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="step-1" class="tab-pane" role="tabpanel">
+            <h2>Customer Name</h2>
+            <div class="form-step-0" role="form" data-toggle="validator">
+                <div class="form-group">
+                    <label for="name">Name: </label>
+                    <input type="text" class="form-control" name="name" id="name" required placeholder="Enter name">
+                    <div class="help-block with-errors"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email: </label>
+                    <input type="text" class="form-control" name="email" id="email" required placeholder="Enter email">
+                    <div class="help-block with-errors"></div>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number: </label>
+                    <input type="text" class="form-control" name="phone" id="phone" required placeholder="Enter phone number">
+                    <div class="help-block with-errors"></div>
+                </div>
+                <div class="form-group">
+                    <label for="address">Address: </label>
+                    <input type="text" class="form-control" name="address" id="address" required placeholder="Enter your address">
+                    <div class="help-block with-errors"></div>
+                </div>
+            </div>
+        </div>
+        <div id="step-2" class="tab-pane" role="tabpanel">
+            <h2>Appointment Information </h2>
+            <div class="form-step-1" role="form" data-toggle="validator">
+                <div class="form-group">
+                    <label for="vehicles">Add Vehicles: </label>
+                    <div class="row">
+                        <div class="col-2">
+                            <select class="form-control" name="vehicleType" id="vehicleType" required placeholder="Select vehicle">
+                                <option value="SUV">SUV</option>
+                                <option value="SEDAN">SEDAN</option>
+                                <option value="VAN">VAN</option>
+                                <option value="TRUCK">TRUCK</option>
+                            </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-2">
+                            <input type="number" class="form-control" name="numSeats" placeholder="#Seats" required id="numSeats" />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-2">
+                            <select class="form-control" name="serviceType" id="serviceType" required placeholder="Select service type">
+                                <option value="INTERIOR">INTERIOR</option>
+                                <option value="INTERIOR_EXTERIOR">INTERIOR + EXTERIOR</option>
+                            </select>
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-5">
+                            <input type="text" class="form-control" name="condition" placeholder="Briefly describe condition" required id="condition" />
+                            <div class="help-block with-errors"></div>
+                        </div>
+                        <div class="col-1">
+                            <button class="btn-success form-control" id="addVehicleBtn">ADD</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="list-group" id="vehicleList" style="height: 40vh; overflow-y: scroll">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="step-3" class="tab-pane" role="tabpanel">
+            <h2>Additional Information</h2>
+            <div class="form-step-2" role="form" data-toggle="validator">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="petsCheckbox">
+                    <label class="form-check-label" for="petsCheckbox">
+                        Are there any pet hair?
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="waterHoseCheckbox">
+                    <label class="form-check-label" for="waterHoseCheckbox">
+                        Is there any water hose available?
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="waterSupplyCheckbox">
+                    <label class="form-check-label" for="waterSupplyCheckbox">
+                        Is there any water supply connection?
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="outletCheckbox">
+                    <label class="form-check-label" for="outletCheckbox">
+                        Is there any power outlet available?
+                    </label>
+                </div>
+                <div class="form-group">
+                    <h6 class="alert-info">Car must be empty before the arrival</h6>
+                    <h6 class="alert-info">To view full checklist upon arrival, visit <a target="_blank" asp-action="CheckList" asp-controller="Home">Checklist</a></h6>
+                </div>
+            </div>
+        </div>
+        <div id="step-4" class="tab-pane" role="tabpanel">
+            <h2>Select Available Date</h2>
+            <div class="form-step-3" role="form" data-toggle="validator">
+                <div class="form-group form-inline">
+                    Date: <input type="text" class="form-control mr-3" id="datepicker">
+                    <button id="bookAppt" class="form-control btn-success">Book Now</button>
+                </div>
+            </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js"
+            type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#datepicker").datepicker();
+
+            let allVehicles = [];
+            // SmartWizard initialize
+            $('#smartwizard').smartWizard({
+                theme: 'arrows',
+                tramsitionEffect: 'fade'
+            });
+
+            $("#smartwizard").on("leaveStep", function (e, anchorObject, currentStepNumber, nextStepNumber, stepDirection) {
+
+                if (stepDirection == "forward") {
+                    if (currentStepNumber == 0) {
+                        saveCustomerInformation();
+                        return true;
+                    } else if (currentStepNumber == 1) {
+                        saveVehicleInformation()
+                        return true;
+                    } else if (currentStepNumber == 2) {
+                        saveAdditionalInformation()
+                    }
+                }
+
+            });
+
+            let saveAdditionalInformation = () => {
+                var AnyPetHair = $("#petsCheckbox").is(':checked')
+                var WaterHoseAvailability = $("#waterHoseCheckbox").is(':checked')
+                var WaterSupplyConnection = $("#waterSupplyCheckbox").is(':checked')
+                var PowerOutletAvailable = $("#outletCheckbox").is(':checked')
+
+                sessionStorage.setItem("Additional", JSON.stringify({ AnyPetHair, WaterHoseAvailability, WaterSupplyConnection, PowerOutletAvailable }));
+            }
+
+            let saveCustomerInformation = () => {
+
+                console.log("saved");
+
+                var Name = $("#name").val()
+                var Email = $("#email").val()
+                var PhoneNumber = $("#phone").val()
+                var Address = $("#address").val()
+
+                sessionStorage.setItem("Customer", JSON.stringify({ "Customerfk": { Name, Email, PhoneNumber, Address }}));
+            }
+            let saveVehicleInformation = () => {
+                $('#vehicleList > a').each(function () {
+                    var vehicleData = $(this).text().split(" - ");
+                    let vehicleObj = {
+                        Type: vehicleData[0],
+                        NumSeats: vehicleData[1],
+                        ServiceType: vehicleData[2],
+                        Condition: vehicleData[3]
+                    }
+                    allVehicles.push(vehicleObj);
+                });
+
+                sessionStorage.setItem("Vehicles", JSON.stringify({ "Vehicles": allVehicles }));
+            }
+
+            $("#addVehicleBtn").on('click', () => {
+                var vehicleType = $("#vehicleType").val()
+                var numSeats = $("#numSeats").val()
+                var serviceType = $("#serviceType").val()
+                var vehicleCondition = $("#condition").val()
+
+                var vehicleListItem = $("<a></a>").text(vehicleType + " - " + numSeats + " - " + serviceType + " - " + vehicleCondition);
+                vehicleListItem.addClass("list-group-item list-group-item-action");
+                $("#vehicleList").append(vehicleListItem);
+            });
+
+            $("#vehicleList").on('click', 'a', function (e) {
+                $(this).remove();
+            })
+
+            $("#bookAppt").on('click', function (e) {
+                e.preventDefault();
+                console.log("HEllo")
+                var DateSelected = $("#datepicker").val();
+                sessionStorage.setItem("Date", JSON.stringify({ "Date": DateSelected }));
+
+                const customer = sessionStorage.getItem("Customer");
+                const vehicle = sessionStorage.getItem("Vehicles");
+                const additional = sessionStorage.getItem("Additional");
+                const date = sessionStorage.getItem("Date");
+
+                const customerData = customer.substring(1, customer.length - 1)
+                const vehicleData = vehicle.substring(1, vehicle.length - 1)
+                const additionalData = additional.substring(1, additional.length - 1)
+                const dateData = date.substring(1, date.length - 1)
+
+                var apptData = '{' + customerData + ',' + vehicleData + ',' + additionalData + ',' + dateData + '}'
+                console.log(apptData);
+                $.ajax({
+                    type: "POST",
+                    url: "/appointments/book",
+                    data: apptData,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log("Success");
+                        alert("Booking Successful")
+                        sessionStorage.clear();
+                        window.location.href="/"
+                    },
+                    failure: function (response) {
+                        console.log("Hello")
+                        alert("Booking Unsuccessful");
+                    },
+                    error: function (response) {
+                        console.log("Hello error")
+                        console.log(response)
+                        alert(response);
+                    }
+
+                })
+            })
+        });
+    </script>
+}</div>

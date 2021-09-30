@@ -18,8 +18,11 @@ namespace MrsCleanCapstone.Data
             : base(options)
         {
         }
-
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Vehicle> Vehicles { get; set; }
+        public DbSet<Deal> Deals{ get; set; }
     }
 }

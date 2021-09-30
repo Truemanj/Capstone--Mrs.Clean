@@ -5,228 +5,88 @@
 <html lang="en">
 
 <head>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - MrsCleanCapstone</title>
-    <link rel="stylesheet" href="~/css/mc-style.css" />
-    <link rel="stylesheet" href="~/css/button.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="~/css/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/21.1.4/css/dx.light.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/productStyle.css" />
+    <link rel="stylesheet" href="~/css/loginStyle.css" />
+    <link rel="stylesheet" href="~/css/mc-style.css" />
+    <link rel="stylesheet" href="~/css/admin-style.css" />
+    <link rel="stylesheet" href="~/css/admin-cards.css" />
+    <link rel="stylesheet" href="~/css/deals.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    @*<link href="~/css/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />*@
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">*@
+    @*<link rel="stylesheet" href="https://cdn3.devexpress.com/jslib/21.1.4/css/dx.light.css">*@
+    <link href="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/datepicker/jquery-ui.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.4.0/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.4.0/polyfill.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.1.1/exceljs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.0.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.9/jspdf.plugin.autotable.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/datepicker/jquery-ui.js"></script>
+    <!-- DevExtreme library -->
+    <script type="text/javascript" src="https://cdn3.devexpress.com/jslib/21.1.4/js/dx.all.js"></script>
 </head>
 
 <body>
-    @* <div class="mc-banner">
-        <div class="mc-banner-content">
-        <img src="~/images/mrsclean-logosmall.png" />
-        </div>
-        </div> *@
     <header>
-        <!--<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-light border-bottom box-shadow mb-5">
-            <div class="container">
+        <a asp-action="Index" asp-controller="Home" asp-fragment="">
+            <img src="/images/mrsclean-logosmall.png" class="logo">
+        </a>
+        <div class="toggle"></div>
+        <ul class="navigation">
+            <li><a asp-action="Index" asp-controller="Products">Products</a></li>
+            <li><a asp-action="Index" asp-controller="Deals">Deals</a></li>
+            <li><a asp-action="Checklist" asp-controller="Home">Checklist</a></li>
+            <li><a asp-action="Index" asp-controller="Home" asp-fragment="services">Services</a></li>
+            <li><a asp-action="Index" asp-controller="Home" asp-fragment="aboutus">About</a></li>
+            <li><a asp-action="Index" asp-controller="Home" asp-fragment="contact">Contact</a></li>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <li><a asp-action="Index" asp-controller="Admin">Admin</a></li>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end ">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"> <img class="logo" src="~/images/mrsclean-logosmall.png" /> Mrs. Clean Auto Spa</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ml-auto">
-                        @* <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                                    </li> *@
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Products">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Checklist">Checklist</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home"
-                                asp-action="Services">Services</a>
-                        </li>
-                        @if (SignInManager.IsSignedIn(User))
-        {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Products"
-                                asp-action="AddProduct">Add Product</a>
-                                        </li>
-        }
-        @if (SignInManager.IsSignedIn(User))
-        {
-                                        <li class="nav-item">
-                                            <form asp-action="logout" asp-controller="Auth" method="post">
-                                                <button type="submit" style="width:auto" class="nav-link btn btn-link py-0">
-                                                    Logout @User.Identity.Name
-                                                </button>
-                                            </form>
-                                        </li>
-        }
-        else
-        {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth"
-                                asp-action="Register">Register</a>
-                                        </li>
-        }
-                    </ul>
-                </div>
-            </div>
-        </nav>-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mrs. Clean Auto Spa <span
-                        class="badge"> <img class="logo" src="~/images/mrsclean-logosmall.png"></span></a>
-                <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent">
-                    <div class="hamburger-toggle">
-                        <div class="hamburger">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" asp-area="" asp-controller="Home"
-                                asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Products</a>
-                            <ul class="dropdown-menu shadow">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Products"
-                                        asp-action="Index">View Products</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Products"
-                                        asp-action="AddProduct">Add Product</a></li>
-                                @* <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-item dropdown-submenu-toggle icon-left">Submenu Left</a>
-                                    <ul class="dropdown-menu dropdown-menu-right dropdown-submenu shadow">
-                                    <li><a class="dropdown-item" href=""> Third level 1</a></li>
-                                    <li><a class="dropdown-item" href=""> Third level 2</a></li>
-                                    <li><a class="dropdown-item" href=""> Third level 3</a></li>
-                                    <li><a class="dropdown-item" href=""> Third level 4</a></li>
-                                    <li><a class="dropdown-item" href=""> Third level 5</a></li>
-                                    </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-item dropdown-submenu-toggle">Submenu Right</a>
-                                    <ul class="dropdown-menu dropdown-submenu shadow">
-                                    <li><a class="dropdown-item" href=""> Second level 1</a></li>
-                                    <li><a class="dropdown-item" href=""> Second level 2</a></li>
-                                    <li><a class="dropdown-item" href=""> Second level 3</a></li>
-                                    <li class="dropdown-submenu">
-                                    <a href="#" class="dropdown-item dropdown-submenu-toggle">Let's go
-                                    deeper!</a>
-                                    <ul class="dropdown-menu dropdown-submenu shadow">
-                                    <li><a class="dropdown-item" href=""> Third level 1</a></li>
-                                    <li><a class="dropdown-item" href=""> Third level 2</a></li>
-                                    <li><a class="dropdown-item" href=""> Third level 3</a></li>
-                                    <li><a class="dropdown-item" href=""> Third level 4</a></li>
-                                    <li><a class="dropdown-item" href=""> Third level 5</a></li>
-                                    </ul>
-                                    </li>
-                                    <li><a class="dropdown-item" href=""> Third level 5</a></li>
-                                    </ul>
-                                    </li>
-                                    <li>
-                                    <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li> *@
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Checklist">Checklist</a>
-                        </li>
-                        @* <li class="nav-item dropdown dropdown-mega">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Megamenu</a>
-                            <div class="dropdown-menu shadow">
-                            <div class="mega-content px-4">
-                            <div class="container-fluid">
-                            <div class="row">
-                            <div class="col-12 col-sm-4 col-md-3 py-4">
-                            <h5>Pages</h5>
-                            <div class="list-group">
-                            <a class="list-group-item" href="#">Accomodations</a>
-                            <a class="list-group-item" href="#">Terms & Conditions</a>
-                            <a class="list-group-item" href="#">Privacy</a>
-                            </div>
-                            </div>
-                            <div class="col-12 col-sm-4 col-md-3 py-4">
-                            <h5>Card</h5>
-                            <div class="card">
-                            <img src="https://placehold.it/320x180" class="img-fluid"
-                            alt="image">
-                            <div class="card-body">
-                            <p class="card-text">Some quick example text to build on the
-                            card title and make up the bulk of the card's content.</p>
-                            </div>
-                            </div>
-                            </div>
-                            <div class="col-12 col-sm-4 col-md-3 py-4">
-                            <h5>Lot of Pages</h5>
-                            <p>Lorem ipsum dolo sit achmet muhamed borlan de irtka.
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-3 py-4">
-                            <h5>Damn, so many</h5>
-                            <div class="list-group">
-                            <a class="list-group-item" href="#">Accomodations</a>
-                            <a class="list-group-item" href="#">Terms & Conditions</a>
-                            <a class="list-group-item" href="#">Privacy</a>
-                            </div>
-                            </div>
-                            </div>
-                            </div>
-                            </div>
-                            </div>
-                            </li> *@
-                    </ul>
-                    <form class="d-flex">
-                        <input class="form-control mr-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
+                <li>
+                    <form asp-action="logout" asp-controller="Auth" method="post">
+                        <button type="submit" style="width:auto" class="auth_btn ml-2">
+                            Logout @User.Identity.Name
+                        </button>
                     </form>
-                </div>
-            </div>
-        </nav>
+                </li>
+            }
+            else
+            {
+                <li><a asp-action="Login" asp-controller="Auth" class="auth_btn p-sm-2">Login</a></li>
+                <li><a asp-action="Register" asp-controller="Auth" class="auth_btn p-sm-2">Register</a></li>
+            }
+        </ul>
     </header>
     <div class="main-container">
-        <main role="main" class="pb-3">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - MrsCleanCapstone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @*<footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - MrsCleanCapstone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>*@
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 

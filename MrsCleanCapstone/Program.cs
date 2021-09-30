@@ -22,9 +22,9 @@ namespace MrsCleanCapstone
                     var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
                     // for demo purposes, delete the database & migrate on startup so 
                     // we can start with a clean slate
-                    context.Database.EnsureDeleted();
+                    //context.Database.EnsureDeleted();
                     
-                    context.Database.Migrate();
+                    //context.Database.Migrate();
                 }
                 catch (Exception ex)
                 {

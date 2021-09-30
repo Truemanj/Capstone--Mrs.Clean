@@ -73,7 +73,7 @@ namespace MrsCleanCapstone.Controllers
         [Authorize]
         public IActionResult Add()
         {
-            return View(nameof(AddProduct));
+            return View(nameof(Add));
         }
 
         // POST: Products/Create
@@ -84,7 +84,9 @@ namespace MrsCleanCapstone.Controllers
         [Authorize]
         public async Task<IActionResult> Add([Bind("ProductID,ProductName,Quantity,Price,Category,description,ProductImageName, ProductImage")] Product product)
         {
-                if (ModelState.IsValid)
+            if (ModelState.IsValid)
+            {
+                if (product.ProductImage != null)
                 {
                     //Save image to wwwroot
                     string wwwrootPath = _hostEnvironment.WebRootPath;
@@ -99,12 +101,12 @@ namespace MrsCleanCapstone.Controllers
                     {
                         await product.ProductImage.CopyToAsync(fileStream);
                     }
-
-                    await _repository.Add(product);
-                    return RedirectToAction("Products","Home");
                 }
+                await _repository.Add(product);
+                return RedirectToAction("Index", "Products");
+            }
 
-                return View();
+            return View();
         }
 
         // GET: Products/Edit/5
@@ -126,36 +128,37 @@ namespace MrsCleanCapstone.Controllers
         // POST: Products/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("ProductId,ProductName,ProductPrice,ProductDescription,ProductImageName")] Product product)
-        //{
-        //    if (id != product.ProductID)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("ProductID,ProductName,Quantity,Price,Category,description,ProductImageName, ProductImage")] Product product)
+        {
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //           await _repository.Update(product);
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!ProductExists(product.ProductID))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(product);
-        //}
+            if (!ProductExists(product.ProductID))
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                   await _repository.Update(product);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(product.ProductID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
+        }
 
         // GET: Products/Delete/5
         //public async Task<IActionResult> Delete(int? id)

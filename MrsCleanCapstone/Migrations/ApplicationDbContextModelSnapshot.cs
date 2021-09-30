@@ -221,6 +221,86 @@ namespace MrsCleanCapstone.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("MrsCleanCapstone.Models.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("AnyPetHair")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("CustomerfkId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Date")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PowerOutletAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("WaterHoseAvailability")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("WaterSupplyConnection")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerfkId");
+
+                    b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("MrsCleanCapstone.Models.Customer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("MrsCleanCapstone.Models.Deal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Highlight")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Deals");
+                });
+
             modelBuilder.Entity("MrsCleanCapstone.Models.Product", b =>
                 {
                     b.Property<int>("ProductID")
@@ -249,6 +329,35 @@ namespace MrsCleanCapstone.Migrations
                     b.HasKey("ProductID");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("MrsCleanCapstone.Models.Vehicle", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Condition")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumSeats")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ServiceType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.ToTable("Vehicles");
                 });
 
             modelBuilder.Entity("MrsCleanCapstone.Models.Authentication.Employee", b =>
@@ -307,6 +416,27 @@ namespace MrsCleanCapstone.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MrsCleanCapstone.Models.Appointment", b =>
+                {
+                    b.HasOne("MrsCleanCapstone.Models.Customer", "Customerfk")
+                        .WithMany()
+                        .HasForeignKey("CustomerfkId");
+
+                    b.Navigation("Customerfk");
+                });
+
+            modelBuilder.Entity("MrsCleanCapstone.Models.Vehicle", b =>
+                {
+                    b.HasOne("MrsCleanCapstone.Models.Appointment", null)
+                        .WithMany("Vehicles")
+                        .HasForeignKey("AppointmentId");
+                });
+
+            modelBuilder.Entity("MrsCleanCapstone.Models.Appointment", b =>
+                {
+                    b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618
         }
