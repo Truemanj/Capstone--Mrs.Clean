@@ -14,25 +14,28 @@
             </div>
 
             <div class="products_container">
-                @foreach (var b in Model.Products)
+                @foreach (var prod in Model.Products)
                 {
 
                     <div class="product">
                         <div class="product_image">
-                            @if (b.ProductImageName == null)
+                            @if (prod.ProductImage != null)
                             {
-                                <img src="~/images/placeholder.png" />
+                                var base64 = Convert.ToBase64String(prod.ProductImage);
+                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                                <img src="@imgSrc" />
                             }
                             else
                             {
-                                <img src="~/images/@b.ProductImageName" />
-
+                                <img src="~/images/placeholder.png" />
                             }
-                            <h3>@b.Price.ToString("c")</h3>
+
+                            <h3>@prod.Price.ToString("c")</h3>
                         </div>
                         <div class="product_description">
-                            <h2> @b.ProductName</h2>
-                            <p> @b.description</p>
+                            <h2> @prod.ProductName</h2>
+                            <p> @prod.Description</p>
                         </div>
                     </div>
                 }

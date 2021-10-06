@@ -12,20 +12,24 @@ namespace MrsCleanCapstone.Models
     {
         [Key] 
         public int ProductID { get; set; }
-        public string ProductName { get; set; }
-        public int Quantity { get; set; }
+        [Required]
+        [Display(Name = "Product Name")]
         
+        public string ProductName { get; set; }
         [Column (TypeName = "decimal(8,2)")]
+        [Required]
+        [Display(Name = "Product Description")]
         public decimal Price { get; set; }
-
+        [Required]
+        [Display(Name = "Product Category")]
+        [StringLength(20)]
         public string Category { get; set; }
-
-        public string description { get; set; }
-
+        [Required]
+        [Display(Name = "Product Description")]
+        public string Description { get; set; }
         public string ProductImageName { get; set; }
-
-        [NotMapped]
-        public IFormFile ProductImage { get; set; }
+        [Display(Name = "Attach Product Image")]
+        public byte[] ProductImage { get; set; }
 
 
     }

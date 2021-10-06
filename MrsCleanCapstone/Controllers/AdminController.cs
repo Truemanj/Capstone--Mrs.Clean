@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 using MrsCleanCapstone.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using MrsCleanCapstone.Models.ViewModels;
 
 namespace MrsCleanCapstone.Controllers
 {
@@ -43,6 +46,89 @@ namespace MrsCleanCapstone.Controllers
             return View(deals);
         }
 
+        public IActionResult Products()
+        {
+            //var products = _productsRepository.Get().ToList();
+            var manageProductsVM = new ManageProductsViewModel()
+            {
+                ProductsList = _productsRepository.Get().ToList(),
+                ProductData = new Product()
+            };
+            return View(manageProductsVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        //[Route("{controller}/products/edit")]
+
+        public async Task<IActionResult> EditProduct([Bind("ProductID,ProductName,Quantity,Price,Category,Description,ProductImage")] Product product, IFormFile ProductImage)
+        {
+            if (ModelState.IsValid)
+            {
+                if (product.ProductID == 0)
+                {
+                    if (ProductImage != null)
+
+                    {
+                        if (ProductImage.Length > 0)
+
+                        //Convert Image to byte and save to database
+
+                        {
+
+                            byte[] p1 = null;
+                            using (var fs1 = ProductImage.OpenReadStream())
+                            using (var ms1 = new MemoryStream())
+                            {
+                                fs1.CopyTo(ms1);
+                                p1 = ms1.ToArray();
+                            }
+                            product.ProductImage = p1;
+
+                        }
+
+                        await _productsRepository.Add(product);
+                        return RedirectToAction("Products", "Admin");
+                    }
+
+                }else if (product.ProductID != 0)
+                {
+                    if (ProductImage != null)
+
+                    {
+                        if (ProductImage.Length > 0)
+
+                        //Convert Image to byte and save to database
+
+                        {
+
+                            byte[] p1 = null;
+                            using (var fs1 = ProductImage.OpenReadStream())
+                            using (var ms1 = new MemoryStream())
+                            {
+                                fs1.CopyTo(ms1);
+                                p1 = ms1.ToArray();
+                            }
+                            product.ProductImage = p1;
+
+                        }
+                    }
+                    await _productsRepository.Update(product);
+                    return RedirectToAction("Products", "Admin");
+                }
+                else
+                {
+                    return RedirectToAction("Products", "Admin");
+
+                }
+                return RedirectToAction("Products", "Admin");
+
+            }
+
+            return RedirectToAction("Products", "Admin");
+        }
+
         [Route("{controller}/deals/edit")]
         [HttpPost]
         //[ValidateAntiForgeryToken]
@@ -67,6 +153,10 @@ namespace MrsCleanCapstone.Controllers
                 dealToUpdate.Highlight = deal.Highlight;
                 await _dealsRepository.Update(dealToUpdate);
                 return new JsonResult(dealToUpdate);
+            } else if (deal.Id == 0)
+            {
+                await _dealsRepository.Add(deal);
+                return new JsonResult(deal);
             }
             else
             {
@@ -95,12 +185,27 @@ namespace MrsCleanCapstone.Controllers
 
         }
 
+        [Route("{controller}/products/delete/{id}")]
+        [HttpPost]
 
-        public IActionResult Products()
+        public async Task<IActionResult> DeleteProduct(int? id)
         {
-            var products = _productsRepository.Get().ToList();
-            return View(products);
+            if (id == 0)
+            {
+                return new JsonResult("Model is invalid");
+            }
+
+            var productToDelete = await _productsRepository.GetById((int)id);
+            if (productToDelete == null)
+            {
+                return new JsonResult("Error!! Deal not found");
+            }
+
+            await _productsRepository.Remove(productToDelete);
+            return new JsonResult(productToDelete);
         }
+
+
 
         public IActionResult Services()
         {

@@ -13,7 +13,7 @@ namespace MrsCleanCapstone.GenericRepository
         #region Fields
 
         protected ApplicationDbContext Context;
-
+        public T Id { get; set; }
         #endregion
 
         public GenericRepository(ApplicationDbContext context)
@@ -33,6 +33,8 @@ namespace MrsCleanCapstone.GenericRepository
             // await Context.AddAsync(entity);
             await Context.Set<T>().AddAsync(entity);
             await Context.SaveChangesAsync();
+
+            //return (int)entity.GetType().GetProperty("Id", typeof(int)).GetValue(entity, null);
         }
 
         public Task Update(T entity)
