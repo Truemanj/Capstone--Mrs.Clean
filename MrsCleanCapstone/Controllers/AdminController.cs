@@ -44,8 +44,12 @@ namespace MrsCleanCapstone.Controllers
 
         public IActionResult Deals()
         {
-            var deals = _dealsRepository.Get().ToList();
-            return View(deals);
+            var manageDealsVM = new ManageDealsViewModel()
+            {
+                DealsList = _dealsRepository.Get().ToList(),
+                DealData = new Deal()
+            };
+            return View(manageDealsVM);
         }
 
         public IActionResult Products()
@@ -94,7 +98,8 @@ namespace MrsCleanCapstone.Controllers
                         return RedirectToAction("Products", "Admin");
                     }
 
-                }else if (product.ProductID != 0)
+                }
+                else if (product.ProductID != 0)
                 {
                     if (ProductImage != null)
 
@@ -131,15 +136,16 @@ namespace MrsCleanCapstone.Controllers
             return RedirectToAction("Products", "Admin");
         }
 
-        [Route("{controller}/deals/edit")]
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
         //[ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> EditDeal([FromBody] Deal deal)
+        public async Task<IActionResult> EditDeal(Deal deal)
         {
             if (!ModelState.IsValid)
             {
-                return new JsonResult("Model is invalid");
+                return RedirectToAction("Deals", "Admin");
             }
 
             if (deal.Id != 0)
@@ -147,22 +153,23 @@ namespace MrsCleanCapstone.Controllers
                 var dealToUpdate = await _dealsRepository.GetById(deal.Id);
                 if (dealToUpdate == null)
                 {
-                    return new JsonResult("Error!! Deal not found");
+                    return RedirectToAction("Deals", "Admin");
 
                 }
                 dealToUpdate.Title = deal.Title;
                 dealToUpdate.Description = deal.Description;
                 dealToUpdate.Highlight = deal.Highlight;
                 await _dealsRepository.Update(dealToUpdate);
-                return new JsonResult(dealToUpdate);
-            } else if (deal.Id == 0)
+                return RedirectToAction("Deals", "Admin");
+            }
+            else if (deal.Id == 0)
             {
                 await _dealsRepository.Add(deal);
-                return new JsonResult(deal);
+                return RedirectToAction("Deals", "Admin");
             }
             else
             {
-                return new JsonResult("Error!! Deal could not be updated");
+                return RedirectToAction("Deals", "Admin");
             }
         }
 
@@ -225,7 +232,7 @@ namespace MrsCleanCapstone.Controllers
             return View();
         }
 
-       
+
 
         [Route("{controller}/allappointments/")]
 
@@ -239,14 +246,14 @@ namespace MrsCleanCapstone.Controllers
 
         [Route("{controller}/appointment/edit")]
         [HttpPost]
-        
+
 
         public async Task<IActionResult> EditAppointment([FromBody] Appointment appointment)
         {
-            
-            
-            
-            
+
+
+
+
             if (!ModelState.IsValid)
             {
                 return new JsonResult("Model is invalid");
@@ -255,7 +262,7 @@ namespace MrsCleanCapstone.Controllers
             if (appointment.Id != 0)
             {
                 var apptToUpdate = await _appointmentsRepository.GetById(appointment.Id);
-               // var custToUpdate = await _customerRepository.GetById(customer.Id);
+                // var custToUpdate = await _customerRepository.GetById(customer.Id);
                 if (apptToUpdate == null)
                 {
                     return new JsonResult("Error!! Appointment not found");
@@ -291,9 +298,6 @@ namespace MrsCleanCapstone.Controllers
         public async Task<IActionResult> EditCustomer([FromBody] Customer customer)
         {
 
-
-
-
             if (!ModelState.IsValid)
             {
                 return new JsonResult("Model is invalid");
@@ -301,18 +305,18 @@ namespace MrsCleanCapstone.Controllers
 
             if (customer.Id != 0)
             {
-                
+
                 var custToUpdate = await _customerRepository.GetById(customer.Id);
                 if (custToUpdate == null)
                 {
                     return new JsonResult("Error!! Customer not found");
 
                 }
-                
+
                 custToUpdate.PhoneNumber = customer.PhoneNumber;
                 custToUpdate.Address = customer.Address;
                 custToUpdate.Email = customer.Email;
-                
+
                 await _customerRepository.Update(custToUpdate);
                 return new JsonResult(custToUpdate);
 
@@ -347,6 +351,6 @@ namespace MrsCleanCapstone.Controllers
 
         }
 
-       
+
     }
 }
