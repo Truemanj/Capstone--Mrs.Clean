@@ -24,50 +24,44 @@ namespace MrsCleanCapstone.Data
                     new Product
                     {
                         ProductName = "Cleaning Solution A",
-                        Quantity = 30,
                         Price = 25,
                         Category = "CleaningSolutions",
-                        description = "Cleans the outside of your car"
+                        Description = "Cleans the outside of your car"
                     },
                     new Product
                     {
                         ProductName = "Cleaning Solution B",
-                        Quantity = 40,
                         Price = 20,
                         Category = "CleaningSolutions",
-                        description = "Cleans the interior of your car"
+                        Description = "Cleans the interior of your car"
                     },
                     new Product
                     {
                         ProductName = "Cleaning Solution C",
-                        Quantity = 17,
                         Price = 35.50M,
                         Category = "CleaningSolutions",
-                        description = "Deeps cleans the inside your car"
+                        Description = "Deeps cleans the inside your car"
                     },
                     new Product
                     {
                         ProductName = "Fleece Shammy",
-                        Quantity = 100,
                         Price = 10,
                         Category = "CleaningTools",
-                        description = "Helps give your car a nice shine"
+                        Description = "Helps give your car a nice shine"
                     },
                     new Product
                     {
                         ProductName = "Brush and Bucket",
-                        Quantity = 55,
                         Price = 15.45M,
                         Category = "CleaningTools",
-                        description = "Helps get suds all around your car"
+                        Description = "Helps get suds all around your car"
                     },
                    new Product
                    {
                        ProductName = "Air Freshener",
-                       Quantity = 200,
                        Price = 5,
                        Category = "Fresheners",
-                       description = "Leaves a refreshing scent"
+                       Description = "Leaves a refreshing scent"
                    });
                 context.SaveChanges();
             }
