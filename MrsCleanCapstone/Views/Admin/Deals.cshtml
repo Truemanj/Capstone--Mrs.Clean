@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MrsCleanCapstone.Models.Deal>
+﻿@model MrsCleanCapstone.Models.ViewModels.ManageDealsViewModel
 
 @{
     ViewData["Title"] = "Manage Deals";
@@ -14,7 +14,7 @@
             <div href="#" class="admin-data-card admin-add-card" id="admin-add-deal-card">
                 <ion-icon name="add-outline" class="add-icon"></ion-icon>
             </div>
-            @foreach (var item in Model)
+            @foreach (var item in Model.DealsList)
             {
                 <div href="#" class="admin-data-card">
                     <h3>@item.Title</h3>
@@ -42,13 +42,25 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="text" class="form-control mb-2" id="dealId" hidden />
-                <label>Title: </label>
-                <input type="text" class="form-control mb-2" id="dealTitle" value="" />
-                <label>Description: </label>
-                <input type="text" class="form-control mb-2" id="dealDescription" value="" />
-                <label>Highlight: </label>
-                <input type="text" class="form-control mb-2" id="dealHighlight" value="" />
+                <form id="dealForm" asp-action="EditDeal" asp-controller="Admin">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="@Model.DealData.Id" name="Id" type="text" hidden>
+                    <div class="form-group">
+                        <label asp-for="@Model.DealData.Title" class="control-label"></label>
+                        <input asp-for="@Model.DealData.Title" name="Title" class="form-control" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Title" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.DealData.Description" class="control-label"></label>
+                        <input asp-for="@Model.DealData.Description" name="Description" class="form-control" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.DealData.Highlight" class="control-label"></label>
+                        <input asp-for="@Model.DealData.Highlight" name="Highlight" class="form-control" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Highlight" data-valmsg-replace="true"></span>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -58,7 +70,9 @@
     </div>
 </div>
 
-@section Scripts{ 
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
     <script type="text/javascript">
 
         $("#admin-add-deal-card").on('click', function () {
@@ -68,7 +82,7 @@
         function deleteDeal(id) {
             $.ajax({
                 type: "POST",
-                url: "/admin/deals/delete/"+id,
+                url: "/admin/deals/delete/" + id,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
@@ -90,48 +104,23 @@
 
         function openEditModal(id, title, description, highlight) {
             console.log(title);
-            $("#dealId").val(id);
-            $("#dealTitle").val(title);
-            $("#dealDescription").val(description);
-            $("#dealHighlight").val(highlight);
+            $("#DealData_Id").val(id);
+            $("#DealData_Title").val(title);
+            $("#DealData_Description").val(description);
+            $("#DealData_Highlight").val(highlight);
             $('#dealsModal').modal('show')
         }
 
         function openAddModel() {
-            $("#dealId").val(0);
-            $("#dealTitle").val("");
-            $("#dealDescription").val("");
-            $("#dealHighlight").val("");
+            $("#DealData_Id").val(0);
+            $("#DealData_Title").val("");
+            $("#DealData_Description").val("");
+            $("#DealData_Highlight").val("");
             $('#dealsModal').modal('show')
         }
 
         function saveChanges() {
-            var deal = {}
-            deal.id = $("#dealId").val();
-            deal.title = $("#dealTitle").val();
-            deal.description = $("#dealDescription").val();
-            deal.highlight = $("#dealHighlight").val();
-            $.ajax({
-                type: "POST",
-                url: "/admin/deals/edit",
-                data: JSON.stringify(deal),
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    console.log("Success");
-                    window.location.reload();
-                },
-                failure: function (response) {
-                    console.log("Hello")
-                    alert(response);
-                },
-                error: function (response) {
-                    console.log("Hello error")
-                    console.log(response)
-                    alert(response);
-                }
-
-            })
+            $("#dealForm").submit();
         }
     </script>
 }
