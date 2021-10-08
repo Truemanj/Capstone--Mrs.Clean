@@ -24,12 +24,14 @@ namespace MrsCleanCapstone.Controllers
         //private IGenericRepository<Feedback> _feedbacksRepository;
         private IGenericRepository<Product> _productsRepository;
         //private IGenericRepository<Service> _servicesRepository;
+        private IGenericRepository<Customer> _customerRepository;
 
-        public AdminController(IGenericRepository<Product> productsRepository, IGenericRepository<Appointment> appointmentsRepository, IGenericRepository<Deal> dealsRepository)
+        public AdminController(IGenericRepository<Product> productsRepository, IGenericRepository<Appointment> appointmentsRepository, IGenericRepository<Deal> dealsRepository, IGenericRepository<Customer> customerRepository)
         {
             _productsRepository = productsRepository;
             _dealsRepository = dealsRepository;
             _appointmentsRepository = appointmentsRepository;
+            _customerRepository = customerRepository;
         }
 
         public IActionResult Index()
@@ -129,5 +131,117 @@ namespace MrsCleanCapstone.Controllers
 
             return appointments;
         }
+
+        [Route("{controller}/appointment/edit")]
+        [HttpPost]
+        
+
+        public async Task<IActionResult> EditAppointment([FromBody] Appointment appointment)
+        {
+            
+            
+            
+            
+            if (!ModelState.IsValid)
+            {
+                return new JsonResult("Model is invalid");
+            }
+
+            if (appointment.Id != 0)
+            {
+                var apptToUpdate = await _appointmentsRepository.GetById(appointment.Id);
+               // var custToUpdate = await _customerRepository.GetById(customer.Id);
+                if (apptToUpdate == null)
+                {
+                    return new JsonResult("Error!! Appointment not found");
+
+                }
+                apptToUpdate.Date = appointment.Date;
+                apptToUpdate.AnyPetHair = appointment.AnyPetHair;
+                apptToUpdate.WaterHoseAvailability = appointment.WaterHoseAvailability;
+                apptToUpdate.WaterHoseAvailability = appointment.WaterHoseAvailability;
+                apptToUpdate.WaterSupplyConnection = appointment.WaterSupplyConnection;
+                apptToUpdate.PowerOutletAvailable = appointment.PowerOutletAvailable;
+                //custToUpdate.PhoneNumber = customer.PhoneNumber;
+                //custToUpdate.Address = customer.Address;
+                //custToUpdate.Email = customer.Email;
+                await _appointmentsRepository.Update(apptToUpdate);
+                //await _customerRepository.Update(custToUpdate);
+                return new JsonResult(apptToUpdate);
+
+
+            }
+            else
+            {
+                return new JsonResult("Error!! Appointment could not be updated");
+            }
+
+
+        }
+
+        [Route("{controller}/customer/edit")]
+        [HttpPost]
+
+
+        public async Task<IActionResult> EditCustomer([FromBody] Customer customer)
+        {
+
+
+
+
+            if (!ModelState.IsValid)
+            {
+                return new JsonResult("Model is invalid");
+            }
+
+            if (customer.Id != 0)
+            {
+                
+                var custToUpdate = await _customerRepository.GetById(customer.Id);
+                if (custToUpdate == null)
+                {
+                    return new JsonResult("Error!! Customer not found");
+
+                }
+                
+                custToUpdate.PhoneNumber = customer.PhoneNumber;
+                custToUpdate.Address = customer.Address;
+                custToUpdate.Email = customer.Email;
+                
+                await _customerRepository.Update(custToUpdate);
+                return new JsonResult(custToUpdate);
+
+
+            }
+            else
+            {
+                return new JsonResult("Error!! Appointment could not be updated");
+            }
+
+
+        }
+
+        [Route("{controller}/appointment/delete/{id}")]
+        [HttpPost]
+
+        public async Task<IActionResult> DeleteAppointment(int? id)
+        {
+            if (id == 0)
+            {
+                return new JsonResult("Model is invalid");
+            }
+
+            var apptToDelete = await _appointmentsRepository.GetById((int)id);
+            if (apptToDelete == null)
+            {
+                return new JsonResult("Error!! Appointment not found");
+            }
+
+            await _appointmentsRepository.Remove(apptToDelete);
+            return new JsonResult(apptToDelete);
+
+        }
+
+       
     }
 }

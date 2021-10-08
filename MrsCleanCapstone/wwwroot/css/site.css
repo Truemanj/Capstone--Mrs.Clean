@@ -881,3 +881,25 @@ header {
         line-height: 1.2;
         letter-spacing: 0px;
     }
+.deletebtn {
+    background-color: #f44336;
+    color: white;
+    padding: 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+.mc-btn {
+    background-color: #008CBA;
+    color: white;
+    margin-right: 3px;
+    padding: 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+}
