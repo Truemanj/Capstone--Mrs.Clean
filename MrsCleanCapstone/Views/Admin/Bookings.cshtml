@@ -36,6 +36,9 @@
                 <label>Power Outlet: </label>
                 <input type="text" class="form-control mb-2" id="apptOutlet" value="" />
                 <h3>Customer Information</h3>
+                <input type="text" class="form-control mb-2" id="custId" hidden />
+                <label>Customer Name: </label>
+                <input type="text" class="form-control mb-2" id="apptName" value="" />
                 <label>Customer Phone Number: </label>
                 <input type="text" class="form-control mb-2" id="apptPhone" value="" />
                 <label>Customer Email: </label>
@@ -128,7 +131,7 @@
                         {
                             caption: "Edit/Delete",
                             cellTemplate: function (container, options) {
-
+                               // it works here
 
                                 $('<button>' + 'Edit' + '</button>')
                                     .attr('onclick', 'openEditModal("'
@@ -138,10 +141,13 @@
                                         + options.data.waterHoseAvailability + '`'
                                         + options.data.waterSupplyConnection + '`'
                                         + options.data.powerOutletAvailable + '`'
+                                        + options.data.customerfk.name + '`'
                                         + options.data.customerfk.phoneNumber + '`'
                                         + options.data.customerfk.email + '`'
                                         + options.data.customerfk.address + '`'
-                                        + options.data.customerfk.id
+                                        + options.data.customerfk.id 
+                                        
+                                        
 
                                         + '")')
                                     .attr('target', '_blank')
@@ -188,7 +194,7 @@
     function openEditModal(apptId) {
         console.log(apptId);
         var apptToEdit = apptId.split("`");
-        console.log(apptToEdit[9]);
+        console.log(apptToEdit);
 
         $("#apptId").val(apptToEdit[0]);
         $("#apptDate").val(apptToEdit[1]);
@@ -196,34 +202,32 @@
         $("#apptWaterHose").val(apptToEdit[3]);
         $("#apptWaterSupply").val(apptToEdit[4]);
         $("#apptOutlet").val(apptToEdit[5]);
-        $("#apptPhone").val(apptToEdit[6]);
-        $("#apptEmail").val(apptToEdit[7]);
-        $("#apptAddress").val(apptToEdit[8]);
-        $("#custId").val(apptToEdit[9]);
+        $("#apptName").val(apptToEdit[6]);
+        $("#apptPhone").val(apptToEdit[7]);
+        $("#apptEmail").val(apptToEdit[8]);
+        $("#apptAddress").val(apptToEdit[9]);
+        $("#custId").val(apptToEdit[10]);
        
        
         $('#bookingModal').modal('show')
     }
 
     function saveAppointmentChanges() {
+
         var appointment = {}
-        //var customer = {};
+        
         appointment.Id = $("#apptId").val();
         appointment.Date = $("#apptDate").val();
         appointment.PetHair = $("#apptPetHair").val();
         appointment.WaterHose = $("#apptWaterHose").val();
         appointment.WaterSupply = $("#apptWaterSupply").val();
         appointment.Outlet = $("#apptOutlet").val();
-        //customer.Id = $('#custId').val();
-        //customer.PhoneNumber = $('#apptPhone').val();
-        //customer.Email = $('#apptEmail').val();
-        //customer.Address = $('#apptAddress').val();
+        
 
         $.ajax({
             type: "POST",
             url: "/admin/appointment/edit",
             data: JSON.stringify(appointment),
-            //data: JSON.stringify(customer),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (response) {
@@ -247,11 +251,14 @@
     function saveCustomerChanges() {
         
         var customer = {};
-   
+
         customer.Id = $('#custId').val();
+        customer.Name = $('#apptName').val();
         customer.PhoneNumber = $('#apptPhone').val();
         customer.Email = $('#apptEmail').val();
         customer.Address = $('#apptAddress').val();
+
+        
 
         $.ajax({
             type: "POST",
@@ -278,6 +285,10 @@
     }
 
     function deleteAppointment(id) {
+
+       
+
+
         $.ajax({
             type: "POST",
             url: "/admin/appointment/delete/" + id,

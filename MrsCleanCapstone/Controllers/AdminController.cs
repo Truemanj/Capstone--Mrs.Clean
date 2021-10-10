@@ -28,13 +28,15 @@ namespace MrsCleanCapstone.Controllers
         private IGenericRepository<Product> _productsRepository;
         //private IGenericRepository<Service> _servicesRepository;
         private IGenericRepository<Customer> _customerRepository;
+        private IGenericRepository<Vehicle> _vehicleRepository;
 
-        public AdminController(IGenericRepository<Product> productsRepository, IGenericRepository<Appointment> appointmentsRepository, IGenericRepository<Deal> dealsRepository, IGenericRepository<Customer> customerRepository)
+        public AdminController(IGenericRepository<Product> productsRepository, IGenericRepository<Appointment> appointmentsRepository, IGenericRepository<Deal> dealsRepository, IGenericRepository<Customer> customerRepository, IGenericRepository<Vehicle> vehicleRepository)
         {
             _productsRepository = productsRepository;
             _dealsRepository = dealsRepository;
             _appointmentsRepository = appointmentsRepository;
             _customerRepository = customerRepository;
+            _vehicleRepository = vehicleRepository;
         }
 
         public IActionResult Index()
@@ -251,9 +253,6 @@ namespace MrsCleanCapstone.Controllers
         public async Task<IActionResult> EditAppointment([FromBody] Appointment appointment)
         {
 
-
-
-
             if (!ModelState.IsValid)
             {
                 return new JsonResult("Model is invalid");
@@ -262,7 +261,7 @@ namespace MrsCleanCapstone.Controllers
             if (appointment.Id != 0)
             {
                 var apptToUpdate = await _appointmentsRepository.GetById(appointment.Id);
-                // var custToUpdate = await _customerRepository.GetById(customer.Id);
+                
                 if (apptToUpdate == null)
                 {
                     return new JsonResult("Error!! Appointment not found");
@@ -274,11 +273,9 @@ namespace MrsCleanCapstone.Controllers
                 apptToUpdate.WaterHoseAvailability = appointment.WaterHoseAvailability;
                 apptToUpdate.WaterSupplyConnection = appointment.WaterSupplyConnection;
                 apptToUpdate.PowerOutletAvailable = appointment.PowerOutletAvailable;
-                //custToUpdate.PhoneNumber = customer.PhoneNumber;
-                //custToUpdate.Address = customer.Address;
-                //custToUpdate.Email = customer.Email;
+                
                 await _appointmentsRepository.Update(apptToUpdate);
-                //await _customerRepository.Update(custToUpdate);
+                
                 return new JsonResult(apptToUpdate);
 
 
@@ -294,9 +291,9 @@ namespace MrsCleanCapstone.Controllers
         [Route("{controller}/customer/edit")]
         [HttpPost]
 
-
         public async Task<IActionResult> EditCustomer([FromBody] Customer customer)
         {
+            Console.Write(customer);
 
             if (!ModelState.IsValid)
             {
@@ -313,6 +310,7 @@ namespace MrsCleanCapstone.Controllers
 
                 }
 
+                custToUpdate.Name = customer.Name;
                 custToUpdate.PhoneNumber = customer.PhoneNumber;
                 custToUpdate.Address = customer.Address;
                 custToUpdate.Email = customer.Email;
@@ -324,7 +322,7 @@ namespace MrsCleanCapstone.Controllers
             }
             else
             {
-                return new JsonResult("Error!! Appointment could not be updated");
+                return new JsonResult("Error!! Customer could not be updated");
             }
 
 
@@ -335,12 +333,16 @@ namespace MrsCleanCapstone.Controllers
 
         public async Task<IActionResult> DeleteAppointment(int? id)
         {
+
             if (id == 0)
             {
                 return new JsonResult("Model is invalid");
             }
 
             var apptToDelete = await _appointmentsRepository.GetById((int)id);
+
+            apptToDelete.Vehicles.Clear();
+
             if (apptToDelete == null)
             {
                 return new JsonResult("Error!! Appointment not found");

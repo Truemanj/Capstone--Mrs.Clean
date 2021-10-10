@@ -20,9 +20,13 @@ namespace MrsCleanCapstone.Controllers
             _repository = repository;
         }
 
-
-        public IActionResult Info(int id)
+        [Route("{controller}/Info/{id}")]
+        public async Task<IActionResult> Info(int? id)
         {
+            var customer = await _repository.GetById((int)id);
+
+            ViewBag.Message = customer;
+
             return View();
         }
     }
