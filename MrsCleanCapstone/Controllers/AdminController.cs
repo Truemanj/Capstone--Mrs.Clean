@@ -341,7 +341,6 @@ namespace MrsCleanCapstone.Controllers
 
             var apptToDelete = await _appointmentsRepository.GetById((int)id);
 
-            apptToDelete.Vehicles.Clear();
 
             if (apptToDelete == null)
             {
