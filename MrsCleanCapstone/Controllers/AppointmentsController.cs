@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MrsCleanCapstone.GenericRepository;
 using MrsCleanCapstone.Models;
+using MrsCleanCapstone.Models.ViewModels;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -19,16 +20,23 @@ namespace MrsCleanCapstone.Controllers
         private readonly ILogger<AppointmentsController> _logger;
         private IGenericRepository<Appointment> _repository = null;
 
-        public AppointmentsController(ILogger<AppointmentsController> logger,  IGenericRepository<Appointment> repository)
+        public AppointmentsController(ILogger<AppointmentsController> logger, IGenericRepository<Appointment> repository)
         {
             _logger = logger;
             _repository = repository;
-        }        
+        }
 
         public ActionResult Book()
         {
-            Appointment appt = new Appointment();
-            return View(appt);
+            var bookApptVM = new BookAppointmentViewModel()
+            {
+                Appointment = new Appointment(),
+                Customer = new Customer(),
+                Vehicle = new Vehicle(),
+                ServiceTypes = new List<string> { "INTERIOR", "INTERIOR_EXTERIOR" },
+                VehicleTypes = new List<string> { "SUV", "SEDAN", "VAN", "TRUCK"}
+            };
+            return View(bookApptVM);
         }
 
         [Route("{controller}/book")]
