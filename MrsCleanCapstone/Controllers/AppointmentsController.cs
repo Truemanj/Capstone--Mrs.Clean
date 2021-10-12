@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MrsCleanCapstone.GenericRepository;
 using MrsCleanCapstone.Models;
@@ -20,11 +21,13 @@ namespace MrsCleanCapstone.Controllers
 
         private readonly ILogger<AppointmentsController> _logger;
         private IGenericRepository<Appointment> _repository = null;
+        private IConfiguration configuration;
 
-        public AppointmentsController(ILogger<AppointmentsController> logger, IGenericRepository<Appointment> repository)
+        public AppointmentsController(ILogger<AppointmentsController> logger, IGenericRepository<Appointment> repository, IConfiguration config)
         {
             _logger = logger;
             _repository = repository;
+            configuration = config;
         }
 
         public ActionResult Book()
@@ -50,10 +53,10 @@ namespace MrsCleanCapstone.Controllers
             }
             await _repository.Add(appt);
 
-            var sendGridClient = new SendGridClient("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");
+            var sendGridClient = new SendGridClient(configuration.GetSection("SENDGRID_API_KEY").Value);
 
             var sendGridMessage = new SendGridMessage();
-            sendGridMessage.SetFrom("rishabhbajaj@icloud.com", "Mrs CLean Auto Spa");
+            sendGridMessage.SetFrom(configuration.GetSection("SENDGRID_MAIL").Value, "Mrs CLean Auto Spa");
             sendGridMessage.AddTo(appt.Customerfk.Email, appt.Customerfk.Name);
             sendGridMessage.SetTemplateId("d-538ca911241f448584850d40b0ad3816");
             sendGridMessage.SetTemplateData(new ConfirmationEmail
