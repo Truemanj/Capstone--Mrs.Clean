@@ -26,7 +26,21 @@ namespace MrsCleanCapstone.Controllers
 
         public IActionResult Index()
         {
-            return View(nameof(Index));
+            var homePageViewModel = new HomePageViewModel()
+            {
+                Feedback = new Feedback()
+            };
+            var message = "";
+            if(!string.IsNullOrEmpty(TempData["SUCCESS"] as string))
+            {
+                message = TempData["SUCCESS"] as string;
+            }
+            if (!string.IsNullOrEmpty(TempData["ERROR"] as string))
+            {
+                message = TempData["ERROR"] as string;
+            }
+            ViewData["MESSAGE"] = message;
+            return View(nameof(Index), homePageViewModel);
         }
         
 

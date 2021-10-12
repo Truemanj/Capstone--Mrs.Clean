@@ -904,29 +904,92 @@ header {
     border-radius: 12px;
 }
 
-table {
-    table-layout: fixed;
-    width: 100%;
+.feedback-table table {
     border-collapse: collapse;
-    border: 3px black;
+    margin: 50px auto;
+    width: 100%;
+}
+.fixTableHead {
+    overflow-y: auto;
+    height: 70vh;
+    margin-top: 20px;
 }
 
-thead th:nth-child(1) {
-    width: 30%;
+    .fixTableHead thead th {
+        position: sticky;
+        top: 0;
+    }
+
+.feedback-table table tbody {
+    overflow: auto;
+    height: 200px;
 }
 
-thead th:nth-child(2) {
-    width: 20%;
+/* Zebra striping */
+.feedback-table tr:nth-of-type(odd) {
+    background: #eee;
 }
 
-thead th:nth-child(3) {
-    width: 15%;
+.feedback-table th {
+    background: #3498db;
+    color: white;
+    font-weight: bold;
 }
 
-thead th:nth-child(4) {
-    width: 35%;
+.feedback-table td, .feedback-table th {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+    font-size: 18px;
 }
 
-th, td {
-    padding: 20px;
+/* 
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+
+    .feedback-table table {
+        width: 100%;
+    }
+
+    /* Force table to not be like tables anymore */
+    .feedback-table table, .feedback-table thead, .feedback-table tbody, .feedback-table th, .feedback-table td, .feedback-table tr {
+        display: block;
+    }
+
+        /* Hide table headers (but not display: none;, for accessibility) */
+        .feedback-table thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+    .feedback-table tr {
+        border: 1px solid #ccc;
+    }
+
+    .feedback-table td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+
+        .feedback-table td:before {
+            /* Now like a table header */
+            position: absolute;
+            /* Top/left values mimic padding */
+            top: 6px;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            /* Label the data */
+            content: attr(data-column);
+            color: #000;
+            font-weight: bold;
+        }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -67,6 +68,22 @@ namespace MrsCleanCapstone.Controllers
             }
 
             return new JsonResult(appt);
+        }
+
+
+        [Route("{controller}/Info/{id}")]
+        [Authorize]
+        public IActionResult Info(int? id)
+        {
+            var appointment =  _repository.Get().Include(x=>x.Customerfk).Include(x=>x.Vehicles).SingleOrDefault(m=>m.Id==id);
+            if (appointment != null)
+            {
+                return View(appointment);
+            }
+            else
+            {
+                return RedirectToAction("Bookings","Admin");
+            }
         }
 
     }

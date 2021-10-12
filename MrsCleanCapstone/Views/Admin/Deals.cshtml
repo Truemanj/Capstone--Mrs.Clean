@@ -43,7 +43,7 @@
             </div>
             <div class="modal-body">
                 <form id="dealForm" asp-action="EditDeal" asp-controller="Admin">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div asp-validation-summary="All" class="text-danger"></div>
                     <input asp-for="@Model.DealData.Id" name="Id" type="text" hidden>
                     <div class="form-group">
                         <label asp-for="@Model.DealData.Title" class="control-label"></label>
