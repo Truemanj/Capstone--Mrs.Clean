@@ -61,7 +61,7 @@ namespace MrsCleanCapstone.Test
             var logger = new Mock<ILogger<AppointmentsController>>();
             AppointmentsController controller = new AppointmentsController(logger.Object, repo.Object);
             int expectedCount = 1;
-            String expectedDate = "19-09=2021";
+            String expectedDate = "19-09-2021";
             //Act
             ViewResult result = (ViewResult)controller.Book();
             int actualCount =book.Count;
@@ -74,6 +74,54 @@ namespace MrsCleanCapstone.Test
 
         }
 
+        //[Fact]
+        //public  void GetAppointmentById()
+        //{
+        //    var appointment = new Appointment()
+        //    {
+        //        Id=101, 
+        //        AnyPetHair=true,
+        //        WaterSupplyConnection=true,
+        //        WaterHoseAvailability=  true,
+        //        PowerOutletAvailable = false,
+        //        Customerfk=new Customer()
+        //        {
+        //            Id=111,
+        //            Name="Test User",
+        //            Email = "test@email.com",
+        //            PhoneNumber="29304723234",
+        //            Address="123 Mississaga Rd"
+        //        },
+        //        Vehicles=new List<Vehicle>()
+        //        {
+        //            new Vehicle()
+        //            {
+        //                Id=222,
+        //                Type="SUV",
+        //                ServiceType="INTERIOR",
+        //                Condition="Bad",
+        //                NumSeats=5
+        //            }
+        //        }
+        //    };
+            
+        //    var repo = new Mock<IGenericRepository<Appointment>>();
+        //    //repo.Setup(x => x.Get()).Returns(appointment.T);
+        //    //repo.Verify();
+        //    var logger = new Mock<ILogger<DealsController>>();
+        //    DealsController controller = new DealsController(logger.Object, repo.Object);
+        //    int expectedCount = 1;
+        //    String expectedDealTitle = "New Deal";
+        //    //Act
+        //    ViewResult result = (ViewResult)(await controller.Deals());
+        //    int actualCount = ((List<Deal>)result.Model).Count;
+        //    String actualDealTitle = ((List<Deal>)result.Model)[0].Title;
+
+
+        //    //Assert
+        //    Assert.Equal(expectedCount, actualCount);
+        //    Assert.Equal(expectedDealTitle, actualDealTitle);
+        //}
 
 
 
