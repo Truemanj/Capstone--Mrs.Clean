@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "View Feedbacks";
+}
+
+@model List<MrsCleanCapstone.Models.Feedback>
+
+<section class="admin_container">
+    <div class="admin_content">
+        <div class="admin_content_title">
+            <h3>Admin Panel</h3>
+            <h2>View Feedbacks</h2>
+        </div>
+        <div class="fixTableHead feedback-table">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var fb in Model)
+                    {
+                        <tr>
+                            <td>@fb.Name</td>
+                            <td>@fb.Email</td>
+                            <td>@fb.DateSubmitted.Date.ToShortDateString()</td>
+                            <td>@fb.Message</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            </div>
+        </div>
+</section>
+
+
+

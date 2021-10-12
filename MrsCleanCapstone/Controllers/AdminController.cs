@@ -24,19 +24,20 @@ namespace MrsCleanCapstone.Controllers
     {
         private IGenericRepository<Deal> _dealsRepository;
         private IGenericRepository<Appointment> _appointmentsRepository;
-        //private IGenericRepository<Feedback> _feedbacksRepository;
+        private IGenericRepository<Feedback> _feedbackRepository;
         private IGenericRepository<Product> _productsRepository;
         //private IGenericRepository<Service> _servicesRepository;
         private IGenericRepository<Customer> _customerRepository;
         private IGenericRepository<Vehicle> _vehicleRepository;
 
-        public AdminController(IGenericRepository<Product> productsRepository, IGenericRepository<Appointment> appointmentsRepository, IGenericRepository<Deal> dealsRepository, IGenericRepository<Customer> customerRepository, IGenericRepository<Vehicle> vehicleRepository)
+        public AdminController(IGenericRepository<Product> productsRepository, IGenericRepository<Appointment> appointmentsRepository, IGenericRepository<Deal> dealsRepository, IGenericRepository<Customer> customerRepository, IGenericRepository<Vehicle> vehicleRepository, IGenericRepository<Feedback> feedbackRepository)
         {
             _productsRepository = productsRepository;
             _dealsRepository = dealsRepository;
             _appointmentsRepository = appointmentsRepository;
             _customerRepository = customerRepository;
             _vehicleRepository = vehicleRepository;
+            _feedbackRepository = feedbackRepository;
         }
 
         public IActionResult Index()
@@ -216,16 +217,10 @@ namespace MrsCleanCapstone.Controllers
             return new JsonResult(productToDelete);
         }
 
-
-
-        public IActionResult Services()
-        {
-            return View();
-        }
-
         public IActionResult Feedbacks()
         {
-            return View();
+            var feedbacksList = _feedbackRepository.Get().ToList();
+            return View(feedbacksList);
         }
 
 
@@ -233,8 +228,6 @@ namespace MrsCleanCapstone.Controllers
         {
             return View();
         }
-
-
 
         [Route("{controller}/allappointments/")]
 

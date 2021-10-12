@@ -75,6 +75,11 @@ namespace MrsCleanCapstone.GenericRepository
             return Context.Set<T>();
         }
 
+        public T GetDbSetById(int id)
+        {
+            return Context.Set<T>().Find(id);
+        }
+
         #endregion
 
     }

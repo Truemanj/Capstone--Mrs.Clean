@@ -75,7 +75,7 @@
                             caption: "Customer Name",
                             cellTemplate: function (container, options) {
                                 $('<a>' + options.data.customerfk.name + '</a>')
-                                    .attr('href', '/Customers/Info/' + options.data.customerfk.id)
+                                    .attr('href', '/Appointments/Info/' + options.data.id)
                                     .attr('target', '_blank')
                                     .appendTo(container);
                             },

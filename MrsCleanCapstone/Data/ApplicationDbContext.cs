@@ -24,5 +24,6 @@ namespace MrsCleanCapstone.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Deal> Deals{ get; set; }
+        public DbSet<Feedback> Feedbacks{ get; set; }
     }
 }
