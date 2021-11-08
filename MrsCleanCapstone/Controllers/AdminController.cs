@@ -345,6 +345,71 @@ namespace MrsCleanCapstone.Controllers
 
         }
 
+        [Route("{controller}/feedback/edit")]
+        [HttpPost]
+
+
+        public async Task<IActionResult> EditFeedback([FromBody] Feedback feedback)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return new JsonResult("Model is invalid");
+            }
+
+            if (feedback.Id != 0)
+            {
+                var fbToUpdate = await _feedbackRepository.GetById(feedback.Id);
+
+                if (fbToUpdate == null)
+                {
+                    return new JsonResult("Error!! Feedback not found");
+
+                }
+                fbToUpdate.Name = feedback.Name;
+                fbToUpdate.Email = feedback.Email;
+                fbToUpdate.Message = feedback.Message;
+                
+
+
+                await _feedbackRepository.Update(fbToUpdate);
+
+                return new JsonResult(fbToUpdate);
+
+
+            }
+            else
+            {
+                return new JsonResult("Error!! Appointment could not be updated");
+            }
+
+
+        }
+
+        [Route("{controller}/feedback/delete/{id}")]
+        [HttpPost]
+
+        public async Task<IActionResult> DeleteFeedback(int? id)
+        {
+
+            if (id == 0)
+            {
+                return new JsonResult("Model is invalid");
+            }
+
+            var fbToDelete = await _feedbackRepository.GetById((int)id);
+
+
+            if (fbToDelete == null)
+            {
+                return new JsonResult("Error!! Feedback not found");
+            }
+
+            await _feedbackRepository.Remove(fbToDelete);
+            return new JsonResult(fbToDelete);
+
+        }
+
 
     }
 }
