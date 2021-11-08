@@ -144,11 +144,12 @@ namespace MrsCleanCapstone.Controllers
         [Authorize]
         //[ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> EditDeal(Deal deal)
+        public async Task<IActionResult> EditDeal([Bind]Deal deal)
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Deals", "Admin");
+                TempData["ERROR"] = "ERROR";
+                return RedirectToAction("Deals", "Admin", new { message="ERROR"});
             }
 
             if (deal.Id != 0)
@@ -217,9 +218,9 @@ namespace MrsCleanCapstone.Controllers
             return new JsonResult(productToDelete);
         }
 
-        public IActionResult Feedbacks()
+        public async Task<IActionResult> Feedbacks()
         {
-            var feedbacksList = _feedbackRepository.Get().ToList();
+            var feedbacksList = (await _feedbackRepository.GetAll()).ToList();
             return View(feedbacksList);
         }
 
@@ -251,9 +252,9 @@ namespace MrsCleanCapstone.Controllers
                 return new JsonResult("Model is invalid");
             }
 
-            if (appointment.Id != 0)
+            if (appointment.Id != Guid.Empty)
             {
-                var apptToUpdate = await _appointmentsRepository.GetById(appointment.Id);
+                var apptToUpdate = await _appointmentsRepository.GetByGuid(appointment.Id);
                 
                 if (apptToUpdate == null)
                 {

@@ -13,6 +13,8 @@ using MrsCleanCapstone.Data;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+
 namespace MrsCleanCapstone.Test
 {
     public class AppointmentControllerTests
@@ -23,8 +25,9 @@ namespace MrsCleanCapstone.Test
 
             //Arrange
             var repo = new Mock<IGenericRepository<Appointment>>();
+            var config = new Mock<IConfiguration>();
             var logger = new Mock<ILogger<AppointmentsController>>();
-            AppointmentsController controller = new AppointmentsController(logger.Object, repo.Object);
+            AppointmentsController controller = new AppointmentsController(logger.Object, repo.Object, config.Object);
             string expectedViewName = null;
 
             //Act
@@ -44,7 +47,7 @@ namespace MrsCleanCapstone.Test
             string DateTime = "19-09-2021";
             book.Add(new Appointment()
             {
-                Id = 1,
+                Id = Guid.NewGuid(),
                 AnyPetHair = false,
                 Date = DateTime,
                 PowerOutletAvailable = true,
@@ -58,8 +61,9 @@ namespace MrsCleanCapstone.Test
             var repo = new Mock<IGenericRepository<Appointment>>();
             repo.Setup(x => x.GetAll()).Returns(Task.FromResult<IEnumerable<Appointment>>(book));
             //repo.Verify();
+            var config = new Mock<IConfiguration>();
             var logger = new Mock<ILogger<AppointmentsController>>();
-            AppointmentsController controller = new AppointmentsController(logger.Object, repo.Object);
+            AppointmentsController controller = new AppointmentsController(logger.Object, repo.Object, config.Object);
             int expectedCount = 1;
             String expectedDate = "19-09-2021";
             //Act

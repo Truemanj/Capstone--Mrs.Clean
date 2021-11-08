@@ -9,6 +9,6 @@ namespace MrsCleanCapstone.Models
     public class ConfirmationEmail
     {
         [JsonProperty("order")]
-        public int Order { get; set; }
+        public Guid Order { get; set; }
     }
 }
