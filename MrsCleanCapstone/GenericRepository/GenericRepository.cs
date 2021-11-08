@@ -24,6 +24,7 @@ namespace MrsCleanCapstone.GenericRepository
         #region Public Methods
 
         public Task<T> GetById(int id) => Context.Set<T>().FindAsync(id).AsTask();
+        public Task<T> GetByGuid(Guid guid) => Context.Set<T>().FindAsync(guid).AsTask();
 
         public Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate)
             => Context.Set<T>().FirstOrDefaultAsync(predicate);

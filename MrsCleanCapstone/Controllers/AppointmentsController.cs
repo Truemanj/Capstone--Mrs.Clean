@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MrsCleanCapstone.DTOs;
 using MrsCleanCapstone.GenericRepository;
 using MrsCleanCapstone.Models;
 using MrsCleanCapstone.Models.ViewModels;
@@ -38,7 +39,7 @@ namespace MrsCleanCapstone.Controllers
                 Customer = new Customer(),
                 Vehicle = new Vehicle(),
                 ServiceTypes = new List<string> { "INTERIOR", "INTERIOR_EXTERIOR" },
-                VehicleTypes = new List<string> { "SUV", "SEDAN", "VAN", "TRUCK"}
+                VehicleTypes = new List<string> { "SUV", "SEDAN", "VAN", "TRUCK" }
             };
             return View(bookApptVM);
         }
@@ -76,18 +77,100 @@ namespace MrsCleanCapstone.Controllers
 
         [Route("{controller}/Info/{id}")]
         [Authorize]
-        public IActionResult Info(int? id)
+        public IActionResult Info(Guid? id)
         {
-            var appointment =  _repository.Get().Include(x=>x.Customerfk).Include(x=>x.Vehicles).SingleOrDefault(m=>m.Id==id);
+            var appointment = _repository.Get().Include(x => x.Customerfk).Include(x => x.Vehicles).SingleOrDefault(m => m.Id == id);
             if (appointment != null)
             {
                 return View(appointment);
             }
             else
             {
-                return RedirectToAction("Bookings","Admin");
+                return RedirectToAction("Bookings", "Admin");
             }
         }
 
+        public IActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Search(AppointmentLookupDto appt)
+        {
+            var appointment = _repository.Get().Include(x => x.Customerfk).Include(x => x.Vehicles).SingleOrDefault(m => m.Id == appt.AppointmentId);
+            if (appointment != null)
+            {
+                if (appointment.Customerfk.Email.Equals(appt.CustomerEmail))
+                {
+                    return View("InfoCustomer", appointment);
+                }
+                return View("InfoCustomer", null);
+            }
+            else
+            {
+                return View("InfoCustomer", null);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditAppointment(Appointment appointment)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Search");
+            }
+
+            if (appointment.Id != Guid.Empty)
+            {
+                var apptToUpdate = _repository.Get().Include(x => x.Customerfk).Include(x => x.Vehicles).SingleOrDefault(m => m.Id == appointment.Id);
+
+                if (apptToUpdate == null)
+                {
+                    return new JsonResult("Error!! Appointment not found");
+
+                }
+                apptToUpdate.AnyPetHair = appointment.AnyPetHair;
+                apptToUpdate.WaterHoseAvailability = appointment.WaterHoseAvailability;
+                apptToUpdate.WaterHoseAvailability = appointment.WaterHoseAvailability;
+                apptToUpdate.WaterSupplyConnection = appointment.WaterSupplyConnection;
+                apptToUpdate.PowerOutletAvailable = appointment.PowerOutletAvailable;
+                apptToUpdate.Customerfk.Name = appointment.Customerfk.Name;
+                apptToUpdate.Customerfk.Email = appointment.Customerfk.Email;
+                apptToUpdate.Customerfk.Address = appointment.Customerfk.Address;
+                apptToUpdate.Customerfk.PhoneNumber = appointment.Customerfk.PhoneNumber;
+
+                await _repository.Update(apptToUpdate);
+
+                return View("InfoCustomer", apptToUpdate);
+
+            }
+            else
+            {
+                return RedirectToAction("Search");
+            }
+
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == Guid.Empty)
+            {
+                return new JsonResult("Model is invalid");
+            }
+
+            var apptToDelete = await _repository.GetByGuid((Guid)id);
+
+
+            if (apptToDelete == null)
+            {
+                return new JsonResult("Error!! Appointment not found");
+            }
+
+            await _repository.Remove(apptToDelete);
+            return new JsonResult(apptToDelete);
+        }
     }
 }

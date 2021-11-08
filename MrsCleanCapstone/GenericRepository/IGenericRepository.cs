@@ -10,6 +10,9 @@ namespace MrsCleanCapstone.GenericRepository
     public interface IGenericRepository<T> where T : class
     {
         Task<T> GetById(int id);
+
+        Task<T> GetByGuid(Guid guid);
+
         Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate);
         T GetDbSetById(int id);
 

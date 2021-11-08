@@ -53,6 +53,7 @@
             <li><a asp-action="Index" asp-controller="Home" asp-fragment="services">Services</a></li>
             <li><a asp-action="Index" asp-controller="Home" asp-fragment="aboutus">About</a></li>
             <li><a asp-action="Index" asp-controller="Home" asp-fragment="contact">Contact</a></li>
+            <li><a asp-action="Search" asp-controller="Appointments">My Appointments</a></li>
             @if (SignInManager.IsSignedIn(User))
             {
                 <li><a asp-action="Index" asp-controller="Admin">Admin</a></li>
