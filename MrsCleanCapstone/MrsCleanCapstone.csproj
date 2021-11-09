@@ -8,10 +8,18 @@
 
   <ItemGroup>
     <Compile Remove="Data\Migrations\**" />
+    <Compile Remove="Views\Customers\**" />
     <Content Remove="Data\Migrations\**" />
+    <Content Remove="Views\Customers\**" />
     <EmbeddedResource Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Views\Customers\**" />
     <None Remove="Data\Migrations\**" />
+    <None Remove="Views\Customers\**" />
 	 <Watch Include="**\*.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Customers\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,7 +49,6 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Views\Customers\" />
 		<Folder Include="wwwroot\images\" />
 	</ItemGroup>
 

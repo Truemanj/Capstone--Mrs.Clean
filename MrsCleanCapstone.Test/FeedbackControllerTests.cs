@@ -52,5 +52,37 @@ namespace MrsCleanCapstone.Test
             Assert.Equal(expectedCount, actualCount);
             Assert.Equal(expectedName, actualCustomerName);
         }
-    }
+
+     
+        /*
+        [Fact]
+        public async void UpdateFeedbacks_Test()
+        {
+            //Arrange
+            Feedback
+           
+            var repoF = new Mock<IGenericRepository<Feedback>>();
+            var repoV = new Mock<IGenericRepository<Vehicle>>();
+            var repoC = new Mock<IGenericRepository<Customer>>();
+            var repoA = new Mock<IGenericRepository<Appointment>>();
+            var repoP = new Mock<IGenericRepository<Product>>();
+            var repoD = new Mock<IGenericRepository<Deal>>();
+            repoF.Setup(x => x.GetAll()).Returns(Task.FromResult<IEnumerable<Feedback>>(feedbacks));
+            //repo.Verify();
+            var logger = new Mock<ILogger<FeedbacksController>>();
+            AdminController controller = new AdminController(repoP.Object, repoA.Object, repoD.Object, repoC.Object, repoV.Object, repoF.Object);
+            int expectedCount = 1;
+            String expectedName = "Kevin James";
+            //Act
+            ViewResult result = (ViewResult)(await controller.Feedbacks());
+            int actualCount = ((List<Feedback>)result.Model).Count;
+            String actualCustomerName = ((List<Feedback>)result.Model)[0].Name;
+
+            //Assert
+            Assert.Equal(expectedCount, actualCount);
+            Assert.Equal(expectedName, actualCustomerName);
+        }
+    }*/
+
+
 }

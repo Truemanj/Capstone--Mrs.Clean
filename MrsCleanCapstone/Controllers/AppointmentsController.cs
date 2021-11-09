@@ -59,7 +59,7 @@ namespace MrsCleanCapstone.Controllers
             var sendGridMessage = new SendGridMessage();
             sendGridMessage.SetFrom(configuration.GetSection("SENDGRID_MAIL").Value, "Mrs CLean Auto Spa");
             sendGridMessage.AddTo(appt.Customerfk.Email, appt.Customerfk.Name);
-            sendGridMessage.SetTemplateId("d-538ca911241f448584850d40b0ad3816");
+            sendGridMessage.SetTemplateId(configuration.GetSection("SENDGRID_TEMPLATE_ID").Value);
             sendGridMessage.SetTemplateData(new ConfirmationEmail
             {
                 Order = appt.Id
