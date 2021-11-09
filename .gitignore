@@ -343,5 +343,6 @@ healthchecksdb
 .vs
 ./MrsCleanCapstone/appsettings.json
 appsettings.Development.json
+/MrsCleanCapstone/Properties/launchSettings.json
 ./MrsCleanCapstone/Properties/launchSettings.json
 .vscode/
