@@ -78,6 +78,55 @@ namespace MrsCleanCapstone.Test
 
         }
 
+    [Fact]
+    public async void GetAllAppointments_Test()
+        {
+            //Arrange
+
+            var book = new List<Appointment>();
+            string DateTime = "19-09-2021";
+            book.Add(new Appointment()
+            {
+                Id = Guid.NewGuid(),
+                AnyPetHair = false,
+                Date = DateTime,
+                PowerOutletAvailable = true,
+                Vehicles = null,
+                WaterHoseAvailability = true,
+                WaterSupplyConnection = true,
+                Customerfk = new Customer()
+                       {
+                          Name=null,
+                          Address="",
+                          Email="abc@test.ca",
+                          PhoneNumber="none"
+                        },
+
+            });
+            var repoA = new Mock<IGenericRepository<Appointment>>();
+            var repoP = new Mock<IGenericRepository<Product>>();
+            var repoD = new Mock<IGenericRepository<Deal>>();
+            var repoC = new Mock<IGenericRepository<Customer>>();
+            var repoV = new Mock<IGenericRepository<Vehicle>>();
+            var repoF = new Mock<IGenericRepository<Feedback>>();
+            repoA.Setup(x => x.GetAll()).Returns(Task.FromResult<IEnumerable<Appointment>>(book));
+            var logger = new Mock<ILogger<AppointmentsController>>();
+            AdminController controller = new AdminController(repoP.Object,repoA.Object, repoD.Object,repoC.Object,repoV.Object,repoF.Object);
+            string expectedName = "19-09-2021";
+           
+
+             //Act
+            ViewResult result = (ViewResult)(controller.Bookings());
+            string actualName = DateTime;
+
+            //Assert
+            Assert.Equal(expectedName, actualName);
+
+           
+                 }
+
+    
+
         //[Fact]
         //public  void GetAppointmentById()
         //{
