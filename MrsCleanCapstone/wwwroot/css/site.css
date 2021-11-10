@@ -592,7 +592,6 @@ header {
     border: solid #df0505;
     border-width: 4px 0 4px 0px;
     margin-bottom: 20px;
-    width: 50%;
 }
 
     .contact_title h3 {
@@ -614,20 +613,18 @@ header {
 
 .contact_info {
     display: flex;
-    align-items: center;
 }
 
 .contact_basic {
-    width: 35%;
+    width: 40%;
 }
 
 .contact_form_container {
-    width: 65%;
-    padding-left: 70px;
+    width: 60%;
     color: #fff;
 }
 
-    .contact_form_container h2 {
+    .contact_form_container > h2 {
         font-weight: 700;
         font-style: normal;
         color: #ffffff;
@@ -697,6 +694,12 @@ header {
     .contact_form_container .btn:hover {
         background-color: #fff;
         color: #df0505;
+    }
+
+    .divider{
+        width: 3px;
+        background: #413f3f;
+        margin: 0 40px;
     }
 
 @media(max-width: 991px) {
@@ -878,3 +881,115 @@ header {
         line-height: 1.2;
         letter-spacing: 0px;
     }
+.deletebtn {
+    background-color: #f44336;
+    color: white;
+    padding: 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+.mc-btn {
+    background-color: #008CBA;
+    color: white;
+    margin-right: 3px;
+    padding: 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+.feedback-table table {
+    border-collapse: collapse;
+    margin: 50px auto;
+    width: 100%;
+}
+.fixTableHead {
+    overflow-y: auto;
+    height: 70vh;
+    margin-top: 20px;
+}
+
+    .fixTableHead thead th {
+        position: sticky;
+        top: 0;
+    }
+
+.feedback-table table tbody {
+    overflow: auto;
+    height: 200px;
+}
+
+/* Zebra striping */
+.feedback-table tr:nth-of-type(odd) {
+    background: #eee;
+}
+
+.feedback-table th {
+    background: #3498db;
+    color: white;
+    font-weight: bold;
+}
+
+.feedback-table td, .feedback-table th {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+    font-size: 18px;
+}
+
+/* 
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media only screen and (max-width: 760px), (min-device-width: 768px) and (max-device-width: 1024px) {
+
+    .feedback-table table {
+        width: 100%;
+    }
+
+    /* Force table to not be like tables anymore */
+    .feedback-table table, .feedback-table thead, .feedback-table tbody, .feedback-table th, .feedback-table td, .feedback-table tr {
+        display: block;
+    }
+
+        /* Hide table headers (but not display: none;, for accessibility) */
+        .feedback-table thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+    .feedback-table tr {
+        border: 1px solid #ccc;
+    }
+
+    .feedback-table td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+
+        .feedback-table td:before {
+            /* Now like a table header */
+            position: absolute;
+            /* Top/left values mimic padding */
+            top: 6px;
+            left: 6px;
+            width: 45%;
+            padding-right: 10px;
+            white-space: nowrap;
+            /* Label the data */
+            content: attr(data-column);
+            color: #000;
+            font-weight: bold;
+        }
+}

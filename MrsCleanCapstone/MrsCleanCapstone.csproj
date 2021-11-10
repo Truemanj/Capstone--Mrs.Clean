@@ -8,10 +8,18 @@
 
   <ItemGroup>
     <Compile Remove="Data\Migrations\**" />
+    <Compile Remove="Views\Customers\**" />
     <Content Remove="Data\Migrations\**" />
+    <Content Remove="Views\Customers\**" />
     <EmbeddedResource Remove="Data\Migrations\**" />
+    <EmbeddedResource Remove="Views\Customers\**" />
     <None Remove="Data\Migrations\**" />
+    <None Remove="Views\Customers\**" />
 	 <Watch Include="**\*.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Customers\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +44,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Sendgrid" Version="9.24.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
 

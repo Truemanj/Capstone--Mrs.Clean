@@ -2,6 +2,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+@model MrsCleanCapstone.Models.ViewModels.HomePageViewModel
+
 <section class="main">
     <div class="content">
         <div class="text">
@@ -11,7 +13,7 @@
                 amet consequatur laudantium commodi inventore pariatur repellat accusantium ex, omnis, temporibus
                 nesciunt nulla corporis aliquam, illo mollitia ipsum eum quod obcaecati.
             </p>
-            <a asp-action="Book" asp-controller="Appointments"  class ="btn">Book Appointment</a>
+            <a asp-action="Book" asp-controller="Appointments" class="btn">Book Appointment</a>
         </div>
         <div class="slider">
             <div class="slides active">
@@ -252,12 +254,13 @@
 </section>
 <section class="contactus" id="contact">
     <div class="contact_content">
-        <div class="contact_title">
-            <h3>Get in Touch</h3>
-            <h2>Contact Us</h2>
-        </div>
+
         <div class="contact_info">
             <div class="contact_basic">
+                <div class="contact_title">
+                    <h3>Get in Touch</h3>
+                    <h2>Contact Us</h2>
+                </div>
                 <div class="phone basicbox">
                     <ion-icon name="call-outline"></ion-icon>
                     <h3>+1 (111-222-3333)</h3>
@@ -287,23 +290,43 @@
                     </ul>
                 </div>
             </div>
+            <div class="divider"></div>
             <div class="contact_form_container">
-                <h2>Ask us anything</h2>
-                <form class="contact_form">
-                    <input type="text" placeholder="Name" />
-                    <input type="text" placeholder="Email" />
-                    <input type="text" placeholder="Message" />
+                <div class="contact_title">
+                    <h3>Got anything to say to us</h3>
+                    <h2>Any FeedBack</h2>
+                </div>
+                <form id="feedbackForm" class="contact_form" asp-action="Create" asp-controller="Feedbacks">
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                    <input asp-for="@Model.Feedback.Name" name="Name" placeholder="Enter name" />
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                    <input asp-for="@Model.Feedback.Email" name="Email" placeholder="Enter email" />
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Message" data-valmsg-replace="true"></span>
+                    <input asp-for="@Model.Feedback.Message" name="Message" placeholder="Enter message" />
+                    <button type="submit" class="btn">Send</button>
                 </form>
-                <button class="btn">Send</button>
             </div>
         </div>
     </div>
 </section>
 
-@section Scripts{ 
-    <script>
-      
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 
+    <script>
+        $(document).ready(function () {
+       @*@if (!string.IsNullOrEmpty(ViewData["MESSAGE"] as string))
+        {
+            @:alert("Hello");
+        }*@
+
+            var jsViewData = '@ViewData["MESSAGE"]';
+            if (jsViewData && jsViewData == "SUCCESS") {
+                toastr.success("Thanks for the feedback");
+            } else if (jsViewData && jsViewData == "ERROR") {
+                toastr.error("Error Encountered! Please try again later");
+            }
         //slider
         const slides = document.querySelectorAll('.slides');
         const prev = document.querySelector('.prev');
@@ -336,7 +359,10 @@
                 i++;
                 ActiveSlides(i);
             }
-        })
+        });
+
+        });
+
 
     </script>
 }

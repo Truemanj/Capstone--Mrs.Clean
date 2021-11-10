@@ -157,6 +157,35 @@
         color: black;
     }
 
+.admin-add-card {
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border: 4px dotted #ccc;
+}
+
+    .admin-add-card:hover .add-icon {
+        color: #fff;
+    }
+
+.add-icon {
+    font-size: 200px;
+    /* border: 2px dotted #ccc; */
+    color: #0e65d0;
+}
+
+.admin-product-image {
+    text-align: center;
+    width: 80%;
+    height: 80%;
+    margin: auto;
+}
+
+.admin-product-image img{
+    width: 80%;
+    height: 80%;
+}
+
 @-webkit-keyframes point {
     0% {
         transform: translateX(0);

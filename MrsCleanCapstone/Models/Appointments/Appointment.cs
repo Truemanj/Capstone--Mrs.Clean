@@ -9,7 +9,7 @@ namespace MrsCleanCapstone.Models
     public class Appointment
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Date { get; set; }
         public bool AnyPetHair { get; set; }
         public bool WaterHoseAvailability { get; set; }

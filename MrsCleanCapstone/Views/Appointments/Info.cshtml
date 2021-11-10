@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Appointment
+<section class="admin_container">
+    <div class="admin_content">
+        <div class="admin_content_title">
+            <h3>Admin Panel</h3>
+            <h2>Appointment Info</h2>
+        </div>
+        <div class="admin_appointment_information">
+
+            @if (Model != null)
+            {
+                <div class="admin_customer_info">
+                    <h2>Customer Information</h2>
+                    <p><b>Name:</b> @Model.Customerfk.Name</p>
+                    <p><b>Email:</b> @Model.Customerfk.Email</p>
+                    <p><b>Phone Number:</b> @Model.Customerfk.PhoneNumber</p>
+                    <p><b>Address:</b> @Model.Customerfk.Address</p>
+                    <hr />
+
+                </div>
+
+                <div class="admin_vehicle_info">
+                    <h2>Vehicle Information</h2>
+                    @foreach (var vehicle in Model.Vehicles)
+                    {
+                        <p><b>Vehicle Type:</b> @vehicle.Type</p>
+                        <p><b>Number of Seats:</b> @vehicle.NumSeats</p>
+                        <p><b>Service Type:</b> @vehicle.ServiceType</p>
+                        <p><b>Condition:</b> @vehicle.Condition</p>
+                        <hr />
+                    }
+
+                </div>
+
+                <div class="admin_additional_information">
+                    <h2>Additional Information</h2>
+                    <p><b>Any Pet Hair?: </b> @(Model.AnyPetHair ? "Yes" : "No")</p>
+                    <p><b>Water Hose Availability?: </b> @(Model.WaterHoseAvailability ? "Yes" : "No")</p>
+                    <p><b>Power Outlet Available?: </b> @(Model.PowerOutletAvailable ? "Yes" : "No")</p>
+                    <p><b>Water Supply Connection?: </b> @(Model.WaterSupplyConnection ? "Yes" : "No")</p>
+                </div>
+            }
+            else
+            {
+                <div class="no_appointment_information">
+                    <h3>No Appointment available for this appointment id or email</h3>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>

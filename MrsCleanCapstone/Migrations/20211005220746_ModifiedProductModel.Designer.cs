@@ -10,8 +10,8 @@ using MrsCleanCapstone.Data;
 namespace MrsCleanCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210710024137_AddedAppointmentModel")]
-    partial class AddedAppointmentModel
+    [Migration("20211005220746_ModifiedProductModel")]
+    partial class ModifiedProductModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -230,14 +230,23 @@ namespace MrsCleanCapstone.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("AnyPetHair")
+                        .HasColumnType("bit");
+
                     b.Property<int?>("CustomerfkId")
                         .HasColumnType("int");
 
                     b.Property<string>("Date")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("PowerOutletAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("WaterHoseAvailability")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("WaterSupplyConnection")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -253,6 +262,9 @@ namespace MrsCleanCapstone.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -267,6 +279,30 @@ namespace MrsCleanCapstone.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("MrsCleanCapstone.Models.Deal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Highlight")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Deals");
+                });
+
             modelBuilder.Entity("MrsCleanCapstone.Models.Product", b =>
                 {
                     b.Property<int>("ProductID")
@@ -277,19 +313,19 @@ namespace MrsCleanCapstone.Migrations
                     b.Property<string>("Category")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(8,2)");
+
+                    b.Property<byte[]>("ProductImage")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ProductImageName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("description")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProductID");
@@ -307,10 +343,13 @@ namespace MrsCleanCapstone.Migrations
                     b.Property<int?>("AppointmentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Make")
+                    b.Property<string>("Condition")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Model")
+                    b.Property<int>("NumSeats")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ServiceType")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")

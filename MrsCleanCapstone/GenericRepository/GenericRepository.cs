@@ -13,7 +13,7 @@ namespace MrsCleanCapstone.GenericRepository
         #region Fields
 
         protected ApplicationDbContext Context;
-
+        public T Id { get; set; }
         #endregion
 
         public GenericRepository(ApplicationDbContext context)
@@ -24,6 +24,7 @@ namespace MrsCleanCapstone.GenericRepository
         #region Public Methods
 
         public Task<T> GetById(int id) => Context.Set<T>().FindAsync(id).AsTask();
+        public Task<T> GetByGuid(Guid guid) => Context.Set<T>().FindAsync(guid).AsTask();
 
         public Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate)
             => Context.Set<T>().FirstOrDefaultAsync(predicate);
@@ -33,6 +34,8 @@ namespace MrsCleanCapstone.GenericRepository
             // await Context.AddAsync(entity);
             await Context.Set<T>().AddAsync(entity);
             await Context.SaveChangesAsync();
+
+            //return (int)entity.GetType().GetProperty("Id", typeof(int)).GetValue(entity, null);
         }
 
         public Task Update(T entity)
@@ -71,6 +74,11 @@ namespace MrsCleanCapstone.GenericRepository
         public DbSet<T> Get()
         {
             return Context.Set<T>();
+        }
+
+        public T GetDbSetById(int id)
+        {
+            return Context.Set<T>().Find(id);
         }
 
         #endregion

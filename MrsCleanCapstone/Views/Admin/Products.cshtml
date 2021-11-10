@@ -1,0 +1,156 @@
+﻿@model MrsCleanCapstone.Models.ViewModels.ManageProductsViewModel
+
+@{
+    ViewData["Title"] = "Manage Products";
+}
+
+<section class="admin_container">
+    <div class="admin_content">
+        <div class="admin_content_title">
+            <h3>Admin Panel</h3>
+            <h2>Manage Products</h2>
+        </div>
+        <div class="admin_data_cards">
+            <div href="#" class="admin-data-card admin-add-card" id="admin-product-add-card">
+                <ion-icon name="add-outline" class="add-icon"></ion-icon>
+            </div>
+            @foreach (var item in Model.ProductsList)
+            {
+                <div href="#" class="admin-data-card">
+                    <div class="admin-product-image">
+                        @if (item.ProductImage != null)
+                        {
+                            var base64 = Convert.ToBase64String(item.ProductImage);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+
+                            <img src="@imgSrc" />
+                        }
+                        else
+                        {
+                            <img src="~/images/placeholder.png" />
+                        }
+
+
+                    </div>
+                    <h3>@item.ProductName</h3>
+                    <h4>@item.Category</h4>
+                    <h4>@item.Price.ToString("c")</h4>
+                    <p>@item.Description</p>
+                    <span class="link-text">
+                        <a onclick="openEditModal('@item.ProductID', '@item.ProductName', '@item.Description', '@item.Category', '@item.Price', '@item.ProductImageName')" href="javascript:void(0)"><i class="material-icons">mode_edit</i></a>
+                        <a onclick="deleteProduct('@item.ProductID')" href="javascript:void(0)"><i class="large material-icons">delete</i></a>
+                    </span>
+                </div>
+
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="productsModal" tabindex="-1" role="dialog" aria-labelledby="productsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Manage product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm" asp-action="EditProduct" asp-controller="Admin" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="@Model.ProductData.ProductID" name="ProductID" type="text" hidden>
+                    <div class="form-group">
+                        <label asp-for="@Model.ProductData.ProductName" class="control-label"></label>
+                        <input asp-for="@Model.ProductData.ProductName" name="ProductName" class="form-control" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="ProductName" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.ProductData.Price" class="control-label"></label>
+                        <input asp-for="@Model.ProductData.Price" name="Price" class="form-control" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.ProductData.Category" class="control-label"></label>
+                        <input asp-for="@Model.ProductData.Category" name="Category" class="form-control" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Category" data-valmsg-replace="true"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.ProductData.Description" class="control-label"></label>
+                        <input asp-for="@Model.ProductData.Description" name="Description" class="form-control" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.ProductData.ProductImage" class="control-label"></label>
+                        <input type="file" asp-for="@Model.ProductData.ProductImage" name="ProductImage" accept="image/*" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="ProductImage" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="saveChanges()">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    <script type="text/javascript">
+
+        $("#admin-product-add-card").on('click', function () {
+            openAddModel();
+        });
+
+        function deleteProduct(id) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/products/delete/" + id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log("Success");
+                    window.location.reload();
+                },
+                failure: function (response) {
+                    console.log("Hello")
+                    alert(response);
+                },
+                error: function (response) {
+                    console.log("Hello error")
+                    console.log(response)
+                    alert(response);
+                }
+
+            })
+        }
+
+        function openEditModal(id, name, description, category, price, imageName) {
+            $("#ProductData_ProductID").val(parseInt(id));
+            $("#ProductData_ProductName").val(name);
+            $("#ProductData_Description").val(description);
+            $("#ProductData_Price").val(price);
+            $("#ProductData_Category").val(category);
+            $('#productsModal').modal('show')
+        }
+
+        function openAddModel() {
+            $("#ProductId").val(0);
+            $("#ProductName").val("");
+            $("#ProductDescription").val("");
+            $("#ProductPrice").val(0);
+            $("#ProductCategory").val("");
+            $("#ProductImage").val(null);
+            $('#productsModal').modal('show')
+        }
+
+        function saveChanges() {
+            console.log("Hello");
+            $("#productForm").submit();
+        }
+    </script>
+}

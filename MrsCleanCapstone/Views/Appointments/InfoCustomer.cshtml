@@ -1,0 +1,179 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model Appointment
+<section class="admin_container">
+    <div class="admin_content">
+        <div class="admin_content_title">
+            <h3>Admin Panel</h3>
+            <h2>Appointment Info</h2>
+        </div>
+        <div class="admin_appointment_information">
+
+            @if (Model != null)
+            {
+                <div class="admin_customer_info">
+                    <h2>Customer Information</h2>
+                    <p><b>Name:</b> @Model.Customerfk.Name</p>
+                    <p><b>Email:</b> @Model.Customerfk.Email</p>
+                    <p><b>Phone Number:</b> @Model.Customerfk.PhoneNumber</p>
+                    <p><b>Address:</b> @Model.Customerfk.Address</p>
+                    <hr />
+
+                </div>
+
+                <div class="admin_vehicle_info">
+                    <h2>Vehicle Information</h2>
+                    @foreach (var vehicle in Model.Vehicles)
+                    {
+                        <p><b>Vehicle Type:</b> @vehicle.Type</p>
+                        <p><b>Number of Seats:</b> @vehicle.NumSeats</p>
+                        <p><b>Service Type:</b> @vehicle.ServiceType</p>
+                        <p><b>Condition:</b> @vehicle.Condition</p>
+                        <hr />
+                    }
+
+                </div>
+
+                <div class="admin_additional_information">
+                    <h2>Additional Information</h2>
+                    <p><b>Any Pet Hair?: </b> @(Model.AnyPetHair ? "Yes" : "No")</p>
+                    <p><b>Water Hose Availability?: </b> @(Model.WaterHoseAvailability ? "Yes" : "No")</p>
+                    <p><b>Power Outlet Available?: </b> @(Model.PowerOutletAvailable ? "Yes" : "No")</p>
+                    <p><b>Water Supply Connection?: </b> @(Model.WaterSupplyConnection ? "Yes" : "No")</p>
+                </div>
+
+                if ((DateTime.Parse(Model.Date) - DateTime.Now).TotalDays <= 2 && (DateTime.Parse(Model.Date) - DateTime.Now).TotalDays >= 0)
+                {
+                    <div>You cannot update/cancel your appointment. For further information contact us.</div>
+                }
+                else if ((DateTime.Parse(Model.Date) - DateTime.Now).TotalDays < 0)
+                {
+                    <div>Your appointment has already been completed.</div>
+                }
+                else
+                {
+                    <div class="appointment_information_buttons">
+                        <a class="btn" onclick="openEditModal('@Model.Id', '@Model.Customerfk.Name', '@Model.Customerfk.Email', '@Model.Customerfk.Address', '@Model.Customerfk.PhoneNumber', '@Model.AnyPetHair', '@Model.WaterHoseAvailability', '@Model.WaterSupplyConnection', '@Model.PowerOutletAvailable')" href="javascript:void(0)">Update</a>
+                        <a class="btn" onclick="deleteAppointment('@Model.Id')" href="javascript:void(0)">Delete</a>
+                    </div>
+                }
+                <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ModalLabel">Manage appointment</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="appointmentUpdateForm" asp-action="EditAppointment" asp-controller="Appointments" method="POST">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <input asp-for="@Model.Id" name="Id" type="text" hidden>
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Customerfk.Name" class="control-label"></label>
+                                        <input asp-for="@Model.Customerfk.Name" class="form-control" />
+                                        <span class="text-danger field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Customerfk.Email" class="control-label"></label>
+                                        <input asp-for="@Model.Customerfk.Email" class="form-control" />
+                                        <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Customerfk.Address" class="control-label"></label>
+                                        <input asp-for="@Model.Customerfk.Address" class="form-control" />
+                                        <span class="text-danger field-validation-valid" data-valmsg-for="Address" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="@Model.Customerfk.PhoneNumber" class="control-label"></label>
+                                        <input asp-for="@Model.Customerfk.PhoneNumber" class="form-control" />
+                                        <span class="text-danger field-validation-valid" data-valmsg-for="PhoneNumber" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="@Model.PowerOutletAvailable" name="PowerOutletAvailable" class="form-check-input" />
+                                        <label asp-for="@Model.PowerOutletAvailable" class="form-check-label"></label>
+                                        <span class="text-danger field-validation-valid" data-valmsg-for="PowerOutletAvailable" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="@Model.WaterSupplyConnection" name="WaterSupplyConnection" class="form-check-input" />
+                                        <label asp-for="@Model.WaterSupplyConnection" class="form-check-label"></label>
+                                        <span class="text-danger field-validation-valid" data-valmsg-for="WaterSupplyConnection" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="@Model.WaterHoseAvailability" name="WaterHoseAvailability" class="form-check-input" />
+                                        <label asp-for="@Model.WaterHoseAvailability" class="form-check-label"></label>
+                                        <span class="text-danger field-validation-valid" data-valmsg-for="WaterHoseAvailability" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="form-check">
+                                        <input asp-for="@Model.AnyPetHair" name="AnyPetHair" class="form-check-input" />
+                                        <label asp-for="@Model.AnyPetHair" class="form-check-label"></label>
+                                        <span class="text-danger field-validation-valid" data-valmsg-for="AnyPetHair" data-valmsg-replace="true"></span>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="saveChanges()">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            else
+            {
+                <div class="no_appointment_information">
+                    <h3>No Appointment available for this appointment id or email</h3>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+
+    <script type="text/javascript">
+
+
+        function deleteAppointment(id) {
+
+            if (confirm("Are you sure you want to delete this appointment?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/appointments/delete/" + id,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        console.log("Success");
+                        window.location.href = "/Appointments/Search/";
+                    },
+                    failure: function (response) {
+                        console.log("Hello")
+                        alert(response);
+                    },
+                    error: function (response) {
+                        console.log("Hello error")
+                        console.log(response)
+                        alert(response);
+                    }
+
+                })
+            }
+          
+        }
+
+        function openEditModal(id, name, email, address, phoneNumber, anyPet, hoseAvailability, waterSupply, powerSupply) {
+            console.log(name);
+            
+            $('#appointmentModal').modal('show')
+        }
+
+      
+        function saveChanges() {
+            $("#appointmentUpdateForm").submit();
+        }
+    </script>
+}

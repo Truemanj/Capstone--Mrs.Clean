@@ -32,10 +32,9 @@ namespace MrsCleanCapstone.Test
                 {
                     ProductID = 101,
                     ProductName = "Cleaning Solution C",
-                    Quantity = 17,
                     Price = 35.50M,
                     Category = "CleaningSolutions",
-                    description = "Deeps cleans the inside your car"
+                    Description = "Deeps cleans the inside your car"
                 });
                 //Arrange
                 var mockRepo = new Mock<IGenericRepository<Product>>();

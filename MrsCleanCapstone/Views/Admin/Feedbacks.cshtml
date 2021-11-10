@@ -1,0 +1,158 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "View Feedbacks";
+}
+
+@model List<MrsCleanCapstone.Models.Feedback>
+
+<section class="admin_container">
+    <div class="admin_content">
+        <div class="admin_content_title">
+            <h3>Admin Panel</h3>
+            <h2>View Feedbacks</h2>
+        </div>
+        <div class="fixTableHead feedback-table">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                        <th>Message</th>
+                        <th>Edit/Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var fb in Model)
+                    {
+                        
+                        <tr>
+                            <td>@fb.Name</td>
+                            <td>@fb.Email</td>
+                            <td>@fb.DateSubmitted.Date.ToShortDateString()</td>
+                            <td>@fb.Message</td>
+                            <td>
+                            <button class ="mc-btn" onclick="openEditModal('@fb.Id' + '`' + '@fb.Name' + '`' + '@fb.Email' + '`' + '@fb.Message')">Edit</button>
+                            <button  class ="deletebtn" onclick="deleteFeedback(@fb.Id)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+            </div>
+        </div>
+</section>
+
+<div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="dealsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Feedback</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3>Feedback Information</h3>
+                <input type="text" class="form-control mb-2" id="fbId" hidden />
+                <label>Name: </label>
+                <input type="text" class="form-control mb-2" id="name" value="" />
+                <label>Email: </label>
+                <input type="text" class="form-control mb-2" id="email" value="" />
+                <label>Feedback: </label>
+                <input type="text" class="form-control mb-2" id="feedback" value="" />
+                
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="deletebtn" data-dismiss="modal">Close</button>
+                <button type="button" class="mc-btn" onclick="saveFeedbackChanges()">Update Feedback</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function openEditModal(feedback) {
+
+        console.log(feedback);
+        var fbToEdit = feedback.split("`");
+        
+        $("#fbId").val(fbToEdit[0]);
+        $("#name").val(fbToEdit[1]);
+        $("#email").val(fbToEdit[2]);
+        $("#feedback").val(fbToEdit[3]);
+    
+        $('#feedbackModal').modal('show')
+    }
+
+    function saveFeedbackChanges() {
+
+        var feedback = {}
+
+        feedback.Id = $("#fbId").val();
+        feedback.Name = $("#name").val();
+        feedback.Email = $("#email").val();
+        feedback.Message = $("#feedback").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/admin/feedback/edit",
+            data: JSON.stringify(feedback),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                console.log("Success");
+                window.location.reload();
+            },
+            failure: function (response) {
+                console.log("Hello")
+                alert(response);
+            },
+            error: function (response) {
+                console.log("Hello error")
+                console.log(response)
+                alert(response);
+            }
+
+        })
+
+    }
+
+    function deleteFeedback(id) {
+
+        var choice = confirm("Are you sure you wish to delete this feedback?");
+
+        if (choice == true) {
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/feedback/delete/" + id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log("Success");
+                    window.location.reload();
+                },
+                failure: function (response) {
+                    console.log("Hello")
+                    alert(response);
+                },
+                error: function (response) {
+                    console.log("Hello error")
+                    console.log(response)
+                    alert(response);
+                }
+
+            })
+        }
+    }
+</script>
+
+
+
