@@ -1,0 +1,30 @@
+﻿@model MrsCleanCapstone.DTOs.AppointmentLookupDto
+@{
+    ViewBag.Title = "Appointment Lookup";
+}
+
+<section class="appointment_lookup">
+    <div class="appointment_lookup_content">
+        <div class="appointment_lookup_title">
+            <h3>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</h3>
+            <h2>Search an Appointment</h2>
+        </div>
+        <div class="appointment_lookup_container">
+            @Html.AntiForgeryToken()
+            <form asp-action="Search" asp-controller="Appointments" method="POST" class="appointment_lookup__form">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.LabelFor(m => m.CustomerEmail)
+                @Html.TextBoxFor(m => m.CustomerEmail, new { placeholder = "email", required = true })
+                @Html.ValidationMessageFor(m => m.CustomerEmail, "", new { @class = "text-danger" })
+                @Html.LabelFor(m => m.AppointmentId)
+                @Html.TextBoxFor(m => m.AppointmentId, new { placeholder = "appointment number" })
+                @Html.ValidationMessageFor(m => m.AppointmentId, "", new { @class = "text-danger" })
+                <input type="submit" value="SEARCH" class="btn" />
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

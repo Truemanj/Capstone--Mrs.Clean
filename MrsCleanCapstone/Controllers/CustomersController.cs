@@ -12,18 +12,15 @@ namespace MrsCleanCapstone.Controllers
     public class CustomersController : Controller
     {
         private readonly ILogger<CustomersController> _logger;
-        private IGenericRepository<Customer> _repository = null;
+        private IGenericRepository<Customer> _customerRepository = null;
+        private IGenericRepository<Appointment> _appointmentsRepository = null;
 
-        public CustomersController(ILogger<CustomersController> logger, IGenericRepository<Customer> repository)
+        public CustomersController(ILogger<CustomersController> logger, IGenericRepository<Customer> customerRepository, IGenericRepository<Appointment> appointmentsRepository)
         {
             _logger = logger;
-            _repository = repository;
+            _customerRepository = customerRepository;
+            _appointmentsRepository = appointmentsRepository;
         }
 
-
-        public IActionResult Info(int id)
-        {
-            return View();
-        }
     }
 }

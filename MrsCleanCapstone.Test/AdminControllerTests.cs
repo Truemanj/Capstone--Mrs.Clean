@@ -16,9 +16,8 @@ using System.Threading.Tasks;
 
 namespace MrsCleanCapstone.Test
 {
-    public class AppointmentsControllerTests
+    public class AdminControllerTests
     {
 
-      
     }
 }

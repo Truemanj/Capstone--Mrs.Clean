@@ -24,17 +24,20 @@ namespace MrsCleanCapstone.Controllers
     {
         private IGenericRepository<Deal> _dealsRepository;
         private IGenericRepository<Appointment> _appointmentsRepository;
-        //private IGenericRepository<Feedback> _feedbacksRepository;
+        private IGenericRepository<Feedback> _feedbackRepository;
         private IGenericRepository<Product> _productsRepository;
         //private IGenericRepository<Service> _servicesRepository;
         private IGenericRepository<Customer> _customerRepository;
+        private IGenericRepository<Vehicle> _vehicleRepository;
 
-        public AdminController(IGenericRepository<Product> productsRepository, IGenericRepository<Appointment> appointmentsRepository, IGenericRepository<Deal> dealsRepository, IGenericRepository<Customer> customerRepository)
+        public AdminController(IGenericRepository<Product> productsRepository, IGenericRepository<Appointment> appointmentsRepository, IGenericRepository<Deal> dealsRepository, IGenericRepository<Customer> customerRepository, IGenericRepository<Vehicle> vehicleRepository, IGenericRepository<Feedback> feedbackRepository)
         {
             _productsRepository = productsRepository;
             _dealsRepository = dealsRepository;
             _appointmentsRepository = appointmentsRepository;
             _customerRepository = customerRepository;
+            _vehicleRepository = vehicleRepository;
+            _feedbackRepository = feedbackRepository;
         }
 
         public IActionResult Index()
@@ -141,11 +144,12 @@ namespace MrsCleanCapstone.Controllers
         [Authorize]
         //[ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> EditDeal(Deal deal)
+        public async Task<IActionResult> EditDeal([Bind]Deal deal)
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Deals", "Admin");
+                TempData["ERROR"] = "ERROR";
+                return RedirectToAction("Deals", "Admin", new { message="ERROR"});
             }
 
             if (deal.Id != 0)
@@ -214,16 +218,10 @@ namespace MrsCleanCapstone.Controllers
             return new JsonResult(productToDelete);
         }
 
-
-
-        public IActionResult Services()
+        public async Task<IActionResult> Feedbacks()
         {
-            return View();
-        }
-
-        public IActionResult Feedbacks()
-        {
-            return View();
+            var feedbacksList = (await _feedbackRepository.GetAll()).ToList();
+            return View(feedbacksList);
         }
 
 
@@ -231,8 +229,6 @@ namespace MrsCleanCapstone.Controllers
         {
             return View();
         }
-
-
 
         [Route("{controller}/allappointments/")]
 
@@ -251,18 +247,15 @@ namespace MrsCleanCapstone.Controllers
         public async Task<IActionResult> EditAppointment([FromBody] Appointment appointment)
         {
 
-
-
-
             if (!ModelState.IsValid)
             {
                 return new JsonResult("Model is invalid");
             }
 
-            if (appointment.Id != 0)
+            if (appointment.Id != Guid.Empty)
             {
-                var apptToUpdate = await _appointmentsRepository.GetById(appointment.Id);
-                // var custToUpdate = await _customerRepository.GetById(customer.Id);
+                var apptToUpdate = await _appointmentsRepository.GetByGuid(appointment.Id);
+                
                 if (apptToUpdate == null)
                 {
                     return new JsonResult("Error!! Appointment not found");
@@ -274,11 +267,9 @@ namespace MrsCleanCapstone.Controllers
                 apptToUpdate.WaterHoseAvailability = appointment.WaterHoseAvailability;
                 apptToUpdate.WaterSupplyConnection = appointment.WaterSupplyConnection;
                 apptToUpdate.PowerOutletAvailable = appointment.PowerOutletAvailable;
-                //custToUpdate.PhoneNumber = customer.PhoneNumber;
-                //custToUpdate.Address = customer.Address;
-                //custToUpdate.Email = customer.Email;
+                
                 await _appointmentsRepository.Update(apptToUpdate);
-                //await _customerRepository.Update(custToUpdate);
+                
                 return new JsonResult(apptToUpdate);
 
 
@@ -294,9 +285,9 @@ namespace MrsCleanCapstone.Controllers
         [Route("{controller}/customer/edit")]
         [HttpPost]
 
-
         public async Task<IActionResult> EditCustomer([FromBody] Customer customer)
         {
+            Console.Write(customer);
 
             if (!ModelState.IsValid)
             {
@@ -313,6 +304,7 @@ namespace MrsCleanCapstone.Controllers
 
                 }
 
+                custToUpdate.Name = customer.Name;
                 custToUpdate.PhoneNumber = customer.PhoneNumber;
                 custToUpdate.Address = customer.Address;
                 custToUpdate.Email = customer.Email;
@@ -324,7 +316,7 @@ namespace MrsCleanCapstone.Controllers
             }
             else
             {
-                return new JsonResult("Error!! Appointment could not be updated");
+                return new JsonResult("Error!! Customer could not be updated");
             }
 
 
@@ -335,12 +327,15 @@ namespace MrsCleanCapstone.Controllers
 
         public async Task<IActionResult> DeleteAppointment(int? id)
         {
+
             if (id == 0)
             {
                 return new JsonResult("Model is invalid");
             }
 
             var apptToDelete = await _appointmentsRepository.GetById((int)id);
+
+
             if (apptToDelete == null)
             {
                 return new JsonResult("Error!! Appointment not found");
@@ -348,6 +343,71 @@ namespace MrsCleanCapstone.Controllers
 
             await _appointmentsRepository.Remove(apptToDelete);
             return new JsonResult(apptToDelete);
+
+        }
+
+        [Route("{controller}/feedback/edit")]
+        [HttpPost]
+
+
+        public async Task<IActionResult> EditFeedback([FromBody] Feedback feedback)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return new JsonResult("Model is invalid");
+            }
+
+            if (feedback.Id != 0)
+            {
+                var fbToUpdate = await _feedbackRepository.GetById(feedback.Id);
+
+                if (fbToUpdate == null)
+                {
+                    return new JsonResult("Error!! Feedback not found");
+
+                }
+                fbToUpdate.Name = feedback.Name;
+                fbToUpdate.Email = feedback.Email;
+                fbToUpdate.Message = feedback.Message;
+                
+
+
+                await _feedbackRepository.Update(fbToUpdate);
+
+                return new JsonResult(fbToUpdate);
+
+
+            }
+            else
+            {
+                return new JsonResult("Error!! Appointment could not be updated");
+            }
+
+
+        }
+
+        [Route("{controller}/feedback/delete/{id}")]
+        [HttpPost]
+
+        public async Task<IActionResult> DeleteFeedback(int? id)
+        {
+
+            if (id == 0)
+            {
+                return new JsonResult("Model is invalid");
+            }
+
+            var fbToDelete = await _feedbackRepository.GetById((int)id);
+
+
+            if (fbToDelete == null)
+            {
+                return new JsonResult("Error!! Feedback not found");
+            }
+
+            await _feedbackRepository.Remove(fbToDelete);
+            return new JsonResult(fbToDelete);
 
         }
 

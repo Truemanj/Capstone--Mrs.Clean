@@ -13,6 +13,8 @@ using MrsCleanCapstone.Data;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+
 namespace MrsCleanCapstone.Test
 {
     public class AppointmentControllerTests
@@ -23,8 +25,9 @@ namespace MrsCleanCapstone.Test
 
             //Arrange
             var repo = new Mock<IGenericRepository<Appointment>>();
+            var config = new Mock<IConfiguration>();
             var logger = new Mock<ILogger<AppointmentsController>>();
-            AppointmentsController controller = new AppointmentsController(logger.Object, repo.Object);
+            AppointmentsController controller = new AppointmentsController(logger.Object, repo.Object, config.Object);
             string expectedViewName = null;
 
             //Act
@@ -44,7 +47,7 @@ namespace MrsCleanCapstone.Test
             string DateTime = "19-09-2021";
             book.Add(new Appointment()
             {
-                Id = 1,
+                Id = Guid.NewGuid(),
                 AnyPetHair = false,
                 Date = DateTime,
                 PowerOutletAvailable = true,
@@ -58,10 +61,11 @@ namespace MrsCleanCapstone.Test
             var repo = new Mock<IGenericRepository<Appointment>>();
             repo.Setup(x => x.GetAll()).Returns(Task.FromResult<IEnumerable<Appointment>>(book));
             //repo.Verify();
+            var config = new Mock<IConfiguration>();
             var logger = new Mock<ILogger<AppointmentsController>>();
-            AppointmentsController controller = new AppointmentsController(logger.Object, repo.Object);
+            AppointmentsController controller = new AppointmentsController(logger.Object, repo.Object, config.Object);
             int expectedCount = 1;
-            String expectedDate = "19-09=2021";
+            String expectedDate = "19-09-2021";
             //Act
             ViewResult result = (ViewResult)controller.Book();
             int actualCount =book.Count;
@@ -74,6 +78,103 @@ namespace MrsCleanCapstone.Test
 
         }
 
+    [Fact]
+    public async void GetAllAppointments_Test()
+        {
+            //Arrange
+
+            var book = new List<Appointment>();
+            string DateTime = "19-09-2021";
+            book.Add(new Appointment()
+            {
+                Id = Guid.NewGuid(),
+                AnyPetHair = false,
+                Date = DateTime,
+                PowerOutletAvailable = true,
+                Vehicles = null,
+                WaterHoseAvailability = true,
+                WaterSupplyConnection = true,
+                Customerfk = new Customer()
+                       {
+                          Name=null,
+                          Address="",
+                          Email="abc@test.ca",
+                          PhoneNumber="none"
+                        },
+
+            });
+            var repoA = new Mock<IGenericRepository<Appointment>>();
+            var repoP = new Mock<IGenericRepository<Product>>();
+            var repoD = new Mock<IGenericRepository<Deal>>();
+            var repoC = new Mock<IGenericRepository<Customer>>();
+            var repoV = new Mock<IGenericRepository<Vehicle>>();
+            var repoF = new Mock<IGenericRepository<Feedback>>();
+            repoA.Setup(x => x.GetAll()).Returns(Task.FromResult<IEnumerable<Appointment>>(book));
+            var logger = new Mock<ILogger<AppointmentsController>>();
+            AdminController controller = new AdminController(repoP.Object,repoA.Object, repoD.Object,repoC.Object,repoV.Object,repoF.Object);
+            string expectedName = "19-09-2021";
+           
+
+             //Act
+            ViewResult result = (ViewResult)(controller.Bookings());
+            string actualName = DateTime;
+
+            //Assert
+            Assert.Equal(expectedName, actualName);
+
+           
+                 }
+
+    
+
+        //[Fact]
+        //public  void GetAppointmentById()
+        //{
+        //    var appointment = new Appointment()
+        //    {
+        //        Id=101, 
+        //        AnyPetHair=true,
+        //        WaterSupplyConnection=true,
+        //        WaterHoseAvailability=  true,
+        //        PowerOutletAvailable = false,
+        //        Customerfk=new Customer()
+        //        {
+        //            Id=111,
+        //            Name="Test User",
+        //            Email = "test@email.com",
+        //            PhoneNumber="29304723234",
+        //            Address="123 Mississaga Rd"
+        //        },
+        //        Vehicles=new List<Vehicle>()
+        //        {
+        //            new Vehicle()
+        //            {
+        //                Id=222,
+        //                Type="SUV",
+        //                ServiceType="INTERIOR",
+        //                Condition="Bad",
+        //                NumSeats=5
+        //            }
+        //        }
+        //    };
+            
+        //    var repo = new Mock<IGenericRepository<Appointment>>();
+        //    //repo.Setup(x => x.Get()).Returns(appointment.T);
+        //    //repo.Verify();
+        //    var logger = new Mock<ILogger<DealsController>>();
+        //    DealsController controller = new DealsController(logger.Object, repo.Object);
+        //    int expectedCount = 1;
+        //    String expectedDealTitle = "New Deal";
+        //    //Act
+        //    ViewResult result = (ViewResult)(await controller.Deals());
+        //    int actualCount = ((List<Deal>)result.Model).Count;
+        //    String actualDealTitle = ((List<Deal>)result.Model)[0].Title;
+
+
+        //    //Assert
+        //    Assert.Equal(expectedCount, actualCount);
+        //    Assert.Equal(expectedDealTitle, actualDealTitle);
+        //}
 
 
 

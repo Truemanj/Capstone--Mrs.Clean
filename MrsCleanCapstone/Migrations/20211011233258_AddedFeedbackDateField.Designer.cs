@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MrsCleanCapstone.Data;
 
 namespace MrsCleanCapstone.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211011233258_AddedFeedbackDateField")]
+    partial class AddedFeedbackDateField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,9 +225,10 @@ namespace MrsCleanCapstone.Migrations
 
             modelBuilder.Entity("MrsCleanCapstone.Models.Appointment", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("AnyPetHair")
                         .HasColumnType("bit");
@@ -373,8 +376,8 @@ namespace MrsCleanCapstone.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid?>("AppointmentId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("AppointmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Condition")
                         .HasColumnType("nvarchar(max)");
