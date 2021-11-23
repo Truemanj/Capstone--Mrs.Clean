@@ -160,7 +160,11 @@
             // SmartWizard initialize
             $('#smartwizard').smartWizard({
                 theme: 'arrows',
-                tramsitionEffect: 'fade'
+                tramsitionEffect: 'fade',
+                anchorSettings: {
+                    anchorClickable: false, // Enable/Disable anchor navigation
+                    enableAllAnchors: false, // Activates all anchors clickable all times
+                }
             });
 
             $("#smartwizard").on("leaveStep", function (e, anchorObject, currentStepNumber, nextStepNumber, stepDirection) {

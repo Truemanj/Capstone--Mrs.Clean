@@ -301,7 +301,7 @@ namespace MrsCleanCapstone.Controllers
 
             if (!ModelState.IsValid)
             {
-                return new JsonResult("Model is invalid");
+                return new JsonResult("Invalid");
             }
 
             if (customer.Id != 0)

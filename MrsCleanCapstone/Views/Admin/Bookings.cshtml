@@ -23,18 +23,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h3>Appointment Information</h3>
                 <input type="text" class="form-control mb-2" id="apptId" hidden />
-                <label>Date: </label>
-                <input type="text" class="form-control mb-2" id="apptDate" value="" />
-                <label>Any Pet Hair: </label>
-                <input type="checkbox" class="form-control mb-2" id="apptPetHair" value="" />
-                <label>Water Hose: </label>
-                <input type="checkbox" class="form-control mb-2" id="apptWaterHose" value="" />
-                <label>Water Supply: </label>
-                <input type="checkbox" class="form-control mb-2" id="apptWaterSupply" value="" />
-                <label>Power Outlet: </label>
-                <input type="checkbox" class="form-control mb-2" id="apptOutlet" value="" />
                 <h3>Customer Information</h3>
                 <input type="text" class="form-control mb-2" id="custId" hidden />
                 <label>Customer Name: </label>
@@ -45,14 +34,32 @@
                 <input type="text" class="form-control mb-2" id="apptEmail" value="" />
                 <label>Address: </label>
                 <input type="text" class="form-control mb-2" id="apptAddress" value="" />
-
+                <label>Date: </label>
+                <input type="text" class="form-control mb-2" id="apptDate" value="" />
+                <h3>Additional Information</h3>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="apptPetHair" value="" />
+                    <label class="form-check-label">Any Pet Hair: </label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="apptWaterHose" value="" />
+                    <label class="form-check-label">Water Hose: </label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="apptWaterSupply" value="" />
+                    <label class="form-check-label">Water Supply: </label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="apptOutlet" value="" />
+                    <label class="form-check-label">Power Outlet: </label>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="deletebtn" data-dismiss="modal">Close</button>
+                    <button type="button" class="mc-btn" onclick="saveAppointmentChanges()">Update Appointment </button>
+                    <button type="button" class="mc-btn" onclick="saveCustomerChanges()">Update Customer</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="deletebtn" data-dismiss="modal">Close</button>
-                <button type="button" class="mc-btn" onclick="saveAppointmentChanges()">Update Appointment </button>
-                <button type="button" class="mc-btn" onclick="saveCustomerChanges()">Update Customer</button>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -272,11 +279,11 @@
                     console.log("Success");
 
                     $("#apptId").val(response.id);
-                    $("#apptdate").val(response.date);
-                    $("#apptpethair").val(response.anyPetHair);
-                    $("#apptwaterhose").val(response.waterHouseAvailability);
-                    $("#apptwatersupply").val(response.waterSupplyConnection);
-                    $("#apptOutlet").val(response.powerOutletAvailable);
+                    $("#apptDate").val(response.date);
+                    $("#apptPetHair").prop('checked',response.anyPetHair);
+                    $("#apptWaterHose").prop('checked',response.waterHoseAvailability);
+                    $("#apptWaterSupply").prop('checked',response.waterSupplyConnection);
+                    $("#apptOutlet").prop('checked',response.powerOutletAvailable);
                     $("#apptName").val(response.customerfk.name);
                     $("#apptPhone").val(response.customerfk.phoneNumber);
                     $("#apptEmail").val(response.customerfk.email);
@@ -305,10 +312,11 @@
 
             appointment.Id = $("#apptId").val();
             appointment.Date = $("#apptDate").val();
-            appointment.PetHair = $("#apptPetHair").val();
-            appointment.WaterHose = $("#apptWaterHose").val();
-            appointment.WaterSupply = $("#apptWaterSupply").val();
-            appointment.Outlet = $("#apptOutlet").val();
+            console.log($("#apptPetHair").is(':checked'), $("#apptWaterHose").is(':checked'), $("#apptWaterSupply").is(':checked'))
+            appointment.AnyPetHair = $("#apptPetHair").is(':checked');
+            appointment.WaterHoseAvailability = $("#apptWaterHose").is(':checked');
+            appointment.WaterSupplyConnection = $("#apptWaterSupply").is(':checked');
+            appointment.PowerOutletAvailable = $("#apptOutlet").is(':checked');
 
 
             $.ajax({
@@ -345,6 +353,7 @@
             customer.Email = $('#apptEmail').val();
             customer.Address = $('#apptAddress').val();
 
+            console.log(customer);
 
 
             $.ajax({
@@ -355,6 +364,9 @@
                 dataType: "json",
                 success: function (response) {
                     console.log("Success");
+                    if (response === 'Invalid') {
+                        alert("Invalid Update")
+                    }
                     window.location.reload();
                 },
                 failure: function (response) {
