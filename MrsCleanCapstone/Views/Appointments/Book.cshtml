@@ -89,6 +89,7 @@
                 <div class="form-group">
                     <div class="list-group" id="vehicleList" style="height: 40vh; overflow-y: scroll">
                     </div>
+                    <p class="alert-danger" id="vehicle-alert">Add at least one vehicle for service</p>
                 </div>
             </div>
         </div>
@@ -129,8 +130,10 @@
             <h2>Select Available Date</h2>
             <div class="form-step-3" role="form" data-toggle="validator">
                 <div class="form-group form-inline">
-                    Date: <input type="text" class="form-control mr-3" id="datepicker">
+                    Date: <input type="text" class="form-control mr-3" id="datepicker" required>
                     <button id="bookAppt" class="form-control btn-success">Book Now</button>
+                    <p class="alert-danger" style="display:none" id="date-alert">Select a date</p>
+
                 </div>
             </div>
         </div>
@@ -154,7 +157,6 @@
 
             $("#datepicker").datepicker();
 
-            let allVehicles = [];
             // SmartWizard initialize
             $('#smartwizard').smartWizard({
                 theme: 'arrows',
@@ -162,7 +164,7 @@
             });
 
             $("#smartwizard").on("leaveStep", function (e, anchorObject, currentStepNumber, nextStepNumber, stepDirection) {
-
+                console.log(stepDirection);
                 if (stepDirection == "forward") {
                     if (currentStepNumber == 0) {
                         $("#customerForm").validate();
@@ -173,10 +175,17 @@
                         }
                         return false;
                     } else if (currentStepNumber == 1) {
-                        saveVehicleInformation()
-                        return true;
+                        return saveVehicleInformation();
                     } else if (currentStepNumber == 2) {
                         saveAdditionalInformation()
+                    }
+                }else if (stepDirection == "backward") {
+                    if (currentStepNumber == 1) {
+                        sessionStorage.removeItem("Customer");
+                    } else if (currentStepNumber == 2) {
+                        sessionStorage.removeItem("Vehicles");
+                    } else if (currentStepNumber == 3) {
+                        sessionStorage.removeItem("Additional");
                     }
                 }
 
@@ -204,6 +213,7 @@
                 sessionStorage.setItem("Customer", JSON.stringify({ "Customerfk": { Name, Email, PhoneNumber, Address } }));
             }
             let saveVehicleInformation = () => {
+                let allVehicles = [];
                 $('#vehicleList > a').each(function () {
                     var vehicleData = $(this).text().split(" - ");
                     let vehicleObj = {
@@ -214,8 +224,12 @@
                     }
                     allVehicles.push(vehicleObj);
                 });
-
-                sessionStorage.setItem("Vehicles", JSON.stringify({ "Vehicles": allVehicles }));
+                if (allVehicles.length != 0) {
+                    sessionStorage.setItem("Vehicles", JSON.stringify({ "Vehicles": allVehicles }));
+                    return true;
+                } else {
+                    return false;
+                }
             }
 
             $("#addVehicleBtn").on('click', (e) => {
@@ -231,6 +245,7 @@
                     var vehicleListItem = $("<a></a>").text(vehicleType + " - " + numSeats + " - " + serviceType + " - " + vehicleCondition);
                     vehicleListItem.addClass("list-group-item list-group-item-action");
                     $("#vehicleList").append(vehicleListItem);
+                    $("#vehicle-alert").hide();
                 } else {
                     return;
                 }
@@ -239,12 +254,19 @@
 
             $("#vehicleList").on('click', 'a', function (e) {
                 $(this).remove();
+                if ($("#vehicleList > a").length<=0) {
+                    $("#vehicle-alert").show();
+                }
             })
 
             $("#bookAppt").on('click', function (e) {
                 e.preventDefault();
                 console.log("HEllo")
                 var DateSelected = $("#datepicker").val();
+                if (DateSelected == "") {
+                    $("#date-alert").show();
+                    return;
+                }
                 sessionStorage.setItem("Date", JSON.stringify({ "Date": DateSelected }));
 
                 const customer = sessionStorage.getItem("Customer");

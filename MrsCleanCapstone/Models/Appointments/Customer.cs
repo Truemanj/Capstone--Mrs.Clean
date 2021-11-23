@@ -13,13 +13,17 @@ namespace MrsCleanCapstone.Models
 
         [Required]
         public string Name { get; set; }
-        
-        [Required]
+
+        [Required(ErrorMessage = "You must provide a phone number")]
+        [Display(Name = "Home Phone")]
         [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^(\d{10})$", ErrorMessage = "Not a valid phone number")]
         public string PhoneNumber { get; set; }
 
-        [Required]
-        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email address")]
+        [Required(ErrorMessage = "The email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [RegularExpression(@"\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b", ErrorMessage = "Invalid Email Address")]
         public string Email { get; set; }
 
         [Required]
