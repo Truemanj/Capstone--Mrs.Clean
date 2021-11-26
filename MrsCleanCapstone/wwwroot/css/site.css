@@ -839,6 +839,11 @@ header {
     }
 }
 
+.appointment_lookup__form {
+    display: block;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   border = 1rem black solid;
+}
 
 .appointmentsContainer{
     margin-top: 1em;
