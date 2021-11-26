@@ -1,7 +1,7 @@
 ﻿@model Login
 @{
     ViewBag.Title = "Log In";
-}
+               }
 
 <section class="auth">
     <div class="auth_content">
@@ -26,5 +26,7 @@
 </section>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+   
 }

@@ -40,15 +40,19 @@ namespace MrsCleanCapstone.Controllers
             var user = await _userManager.FindByNameAsync(loginDto.UserName);
             if (user != null)
             {
-              var signInResult = await _signInManager.PasswordSignInAsync(user, loginDto.Password, false, false);
+                var signInResult = await _signInManager.PasswordSignInAsync(user, loginDto.Password, false, false);
                 // sign in
                 if (signInResult.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
                 }
             }
+            else
+            {
+                return RedirectToAction("UnsuccessfulLogin", "Home");
+            }
 
-            return RedirectToAction("UnsuccessfulLogin","Home");
+                return RedirectToAction("UnsuccessfulLogin","Home");
         }
 
         [HttpPost]
