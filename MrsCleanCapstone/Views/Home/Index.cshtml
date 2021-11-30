@@ -91,11 +91,15 @@
                 </p>
                 <ul>
                     <li>Seven</li>
+                    <li>Two</li>
                     <li>Eight</li>
                     <li>Nine</li>
-                    <li>Ten</li>
-                    <li>Eleven</li>
-                    <li>Twelve</li>
+                    <li>Nine</li>
+                    <li>Nine</li>
+                    <li>Nine</li>
+                    <li>Nine</li>
+                    <li>Five</li>
+                    <li>Six</li>
                 </ul>
             </div>
         </div>
@@ -107,6 +111,7 @@
     </div>
     <div class="about_content">
         <div class="about_title">
+            <h3>HEYYYYYYY!!</h3>
             <h2>About Us</h2>
         </div>
         <p>
@@ -311,11 +316,7 @@
 
     <script>
         $(document).ready(function () {
-       @*@if (!string.IsNullOrEmpty(ViewData["MESSAGE"] as string))
-        {
-            @:alert("Hello");
-        }*@
-
+     
             var jsViewData = '@ViewData["MESSAGE"]';
             if (jsViewData && jsViewData == "SUCCESS") {
                 toastr.success("Thanks for the feedback");

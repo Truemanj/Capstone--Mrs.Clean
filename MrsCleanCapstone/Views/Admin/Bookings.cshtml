@@ -65,7 +65,7 @@
 
 @section Scripts{
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -86,26 +86,33 @@
                         sorting: true,
                         paging: true,
                         deleteItem: function (item) {
-                            if (confirm("Do you really want to delete the appointment?"))
-                            return $.ajax({
-                                type: "POST",
-                                url: "/admin/appointment/delete/" + item.id,
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "json",
-                                success: function (response) {
-                                    console.log("Success");
-                                    window.location.reload();
-                                },
-                                failure: function (response) {
-                                    console.log("Hello")
-                                    alert(response);
-                                },
-                                error: function (response) {
-                                    console.log("Hello error")
-                                    console.log(response)
-                                    alert(response);
-                                }
+                            bootbox.confirm({
+                                size: "medium",
+                                message: "Do you really want to delete the appointment?",
+                                callback: function (result) {
+                                    if (result) {
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "/admin/appointment/delete/" + item.id,
+                                            contentType: "application/json; charset=utf-8",
+                                            dataType: "json",
+                                            success: function (response) {
+                                                console.log("Success");
+                                                window.location.reload();
+                                            },
+                                            failure: function (response) {
+                                                console.log("Hello")
+                                                alert(response);
+                                            },
+                                            error: function (response) {
+                                                console.log("Hello error")
+                                                console.log(response)
+                                                alert(response);
+                                            }
 
+                                        })
+                                    }
+}
                             })
                         },
                         

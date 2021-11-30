@@ -316,11 +316,6 @@
 
     <script>
         $(document).ready(function () {
-       @*@if (!string.IsNullOrEmpty(ViewData["MESSAGE"] as string))
-        {
-            @:alert("Hello");
-        }*@
-
             var jsViewData = '@ViewData["MESSAGE"]';
             if (jsViewData && jsViewData == "SUCCESS") {
                 toastr.success("Thanks for the feedback");
