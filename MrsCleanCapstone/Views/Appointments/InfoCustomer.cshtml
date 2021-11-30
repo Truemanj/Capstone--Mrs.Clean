@@ -55,7 +55,7 @@
                 {
                     <div class="appointment_information_buttons">
                         <a class="btn" onclick="openEditModal('@Model.Id', '@Model.Customerfk.Name', '@Model.Customerfk.Email', '@Model.Customerfk.Address', '@Model.Customerfk.PhoneNumber', '@Model.AnyPetHair', '@Model.WaterHoseAvailability', '@Model.WaterSupplyConnection', '@Model.PowerOutletAvailable')" href="javascript:void(0)">Update</a>
-                        <a class="btn" onclick="deleteAppointment('@Model.Id')" href="javascript:void(0)">Delete</a>
+                        <a class="btn" onclick="deleteAppointment('@Model.Id')" href="javascript:void(0)">Cancel</a>
                     </div>
                 }
                 <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">

@@ -57,7 +57,7 @@ namespace MrsCleanCapstone.Controllers
             var sendGridClient = new SendGridClient(configuration.GetSection("SENDGRID_API_KEY").Value);
 
             var sendGridMessage = new SendGridMessage();
-            sendGridMessage.SetFrom(configuration.GetSection("SENDGRID_MAIL").Value, "Mrs CLean Auto Spa");
+            sendGridMessage.SetFrom(configuration.GetSection("SENDGRID_MAIL").Value, "Mrs Clean Auto Spa");
             sendGridMessage.AddTo(appt.Customerfk.Email, appt.Customerfk.Name);
             sendGridMessage.SetTemplateId(configuration.GetSection("SENDGRID_TEMPLATE_ID").Value);
             sendGridMessage.SetTemplateData(new ConfirmationEmail

@@ -13,9 +13,13 @@ namespace MrsCleanCapstone.Models
         
         [Required]
         public string Name { get; set; }
-        [Required]
+        [Display(Name = "Email address")]
+        [Required(ErrorMessage = "The email address is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [RegularExpression(@"\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b", ErrorMessage ="Invalid Email Address")]
         public string Email { get; set; }
         [Required]
+        [StringLength(300,MinimumLength = 4)]
         public string Message { get; set; }
         public DateTime DateSubmitted { get; set; }
 

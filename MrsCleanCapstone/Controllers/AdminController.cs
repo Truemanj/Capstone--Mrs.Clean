@@ -240,6 +240,16 @@ namespace MrsCleanCapstone.Controllers
             return appointments;
         }
 
+        [Route("{controller}/appointment/{id}")]
+
+        [HttpGet]
+        public async Task<IActionResult> GetAppointmentById(Guid? id)
+        {
+            var appointment = await _appointmentsRepository.Get().Include(m => m.Customerfk).Include(x => x.Vehicles).SingleOrDefaultAsync(x => x.Id == id);
+
+            return new JsonResult(appointment);
+        }
+
         [Route("{controller}/appointment/edit")]
         [HttpPost]
 
@@ -291,7 +301,7 @@ namespace MrsCleanCapstone.Controllers
 
             if (!ModelState.IsValid)
             {
-                return new JsonResult("Model is invalid");
+                return new JsonResult("Invalid");
             }
 
             if (customer.Id != 0)
@@ -325,15 +335,15 @@ namespace MrsCleanCapstone.Controllers
         [Route("{controller}/appointment/delete/{id}")]
         [HttpPost]
 
-        public async Task<IActionResult> DeleteAppointment(int? id)
+        public async Task<IActionResult> DeleteAppointment(Guid? id)
         {
 
-            if (id == 0)
+            if (!id.HasValue)
             {
                 return new JsonResult("Model is invalid");
             }
 
-            var apptToDelete = await _appointmentsRepository.GetById((int)id);
+            var apptToDelete = await _appointmentsRepository.GetByGuid((Guid)id);
 
 
             if (apptToDelete == null)

@@ -5,11 +5,11 @@
 }
 <div class="admin-appointments-grid">
     <div class="admin-appointments-grid-title">
-            <h3>Admin Panel</h3>
-            <h2>View Bookings</h2>
+        <h3>Admin Panel</h3>
+        <h2>View Bookings</h2>
     </div>
     <div class="appointmentsContainer">
-        <div id="dataGrid"></div>
+        <div id="jsGrid"></div>
     </div>
 </div>
 
@@ -23,18 +23,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h3>Appointment Information</h3>
                 <input type="text" class="form-control mb-2" id="apptId" hidden />
-                <label>Date: </label>
-                <input type="text" class="form-control mb-2" id="apptDate" value="" />
-                <label>Any Pet Hair: </label>
-                <input type="text" class="form-control mb-2" id="apptPetHair" value="" />
-                <label>Water Hose: </label>
-                <input type="text" class="form-control mb-2" id="apptWaterHose" value="" />
-                <label>Water Supply: </label>
-                <input type="text" class="form-control mb-2" id="apptWaterSupply" value="" />
-                <label>Power Outlet: </label>
-                <input type="text" class="form-control mb-2" id="apptOutlet" value="" />
                 <h3>Customer Information</h3>
                 <input type="text" class="form-control mb-2" id="custId" hidden />
                 <label>Customer Name: </label>
@@ -45,255 +34,295 @@
                 <input type="text" class="form-control mb-2" id="apptEmail" value="" />
                 <label>Address: </label>
                 <input type="text" class="form-control mb-2" id="apptAddress" value="" />
-
+                <label>Date: </label>
+                <input type="text" class="form-control mb-2" id="apptDate" value="" />
+                <h3>Additional Information</h3>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="apptPetHair" value="" />
+                    <label class="form-check-label">Any Pet Hair: </label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="apptWaterHose" value="" />
+                    <label class="form-check-label">Water Hose: </label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="apptWaterSupply" value="" />
+                    <label class="form-check-label">Water Supply: </label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="apptOutlet" value="" />
+                    <label class="form-check-label">Power Outlet: </label>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="deletebtn" data-dismiss="modal">Close</button>
+                    <button type="button" class="mc-btn" onclick="saveAppointmentChanges()">Update Appointment </button>
+                    <button type="button" class="mc-btn" onclick="saveCustomerChanges()">Update Customer</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="deletebtn" data-dismiss="modal">Close</button>
-                <button type="button" class="mc-btn" onclick="saveAppointmentChanges()">Update Appointment </button>
-                <button type="button" class="mc-btn" onclick="saveCustomerChanges()">Update Customer</button>
-            </div>
-        </div>
     </div>
 </div>
 
 @section Scripts{
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
 
-<script>
-    $(document).ready(function () {
+    <script>
+        $(document).ready(function () {
 
-        $.ajax({
-            url: '/admin/allappointments',
-            type: 'GET',
-            dataType: 'json', // added data type
-            success: function (res) {
-                console.log(res);
-                $("#dataGrid").dxDataGrid({
-                    dataSource: res,
-                    keyExpr: "id",
-                    columns: [
-                        {
-                            caption: "Customer Name",
-                            cellTemplate: function (container, options) {
-                                $('<a>' + options.data.customerfk.name + '</a>')
-                                    .attr('href', '/Appointments/Info/' + options.data.id)
-                                    .attr('target', '_blank')
-                                    .appendTo(container);
-                            },
-                            allowFiltering: "true",
-                            allowSorting: true
+            $.ajax({
+                url: '/admin/allappointments',
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function (res) {
+                    console.log(res);
+                    console.log("Here")
+                    $("#jsGrid").jsGrid({
+                        width: "100%",
+                        height: "400px",
+                        filtering: true,
+                        autoload: true,
+                        inserting: false,
+                        editing: false,
+                        sorting: true,
+                        paging: true,
+                        deleteItem: function (item) {
+                            if (confirm("Do you really want to delete the appointment?"))
+                            return $.ajax({
+                                type: "POST",
+                                url: "/admin/appointment/delete/" + item.id,
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (response) {
+                                    console.log("Success");
+                                    window.location.reload();
+                                },
+                                failure: function (response) {
+                                    console.log("Hello")
+                                    alert(response);
+                                },
+                                error: function (response) {
+                                    console.log("Hello error")
+                                    console.log(response)
+                                    alert(response);
+                                }
+
+                            })
                         },
-                        {
-                            caption: "Phone Number",
-                            calculateCellValue: function (rowData) {
-                                return rowData.customerfk.phoneNumber;
-                            },
-                            allowFiltering: "true",
-                            allowSorting: true
+                        
+
+                        data: res,
+                        editItem: function (item) {
+                            console.log("Update")
+                            openEditModal(item.id)
                         },
-                        {
-                            caption: "Email",
-                            calculateCellValue: function (rowData) {
-                                return rowData.customerfk.email;
-                            },
-                            allowFiltering: "true",
-                            allowSorting: true
+                        rowClick: function (args) {
+                            console.log(args.item)
+                            window.location.href ="/Appointments/Info/"+args.item.id
                         },
-                        {
-                            caption: "Address",
-                            calculateCellValue: function (rowData) {
-                                return rowData.customerfk.address;
+                        fields: [
+                            {
+                                name: "customerfk.name", title: "Name", type: "text", width: 70, validate: "required",
+                                itemTemplate: function (value) {
+                                    return value
+                                }
                             },
-                            allowFiltering: "true",
-                            allowSorting: true
-                        },
-                        {
-                            caption: "Appointment Date",
-                            calculateCellValue: function (rowData) {
-                                return rowData.date;
+                            { name: "customerfk.email", title: "Email", type: "text", width: 120 },
+                            { name: "customerfk.phoneNumber", title: "Phone#", type: "text", width: 80 },
+                            { name: "customerfk.address", title: "Address", type: "text", width: 150 },
+                            { name: "date", title: "Date", type: "text", width: 70 },
+                            {
+                                name: "vehicles", title: "Vehicles", type: "text", width: 100,
+                                itemTemplate: function (value) {
+                                    var allVehicles = "";
+                                    value.forEach((el) => {
+                                        allVehicles += el.type + " - " + el.numSeats + ", ";
+                                    });
+                                    return allVehicles == "" ? "No Vehicle" : allVehicles.substring(0, allVehicles.length - 2);
+                                }
                             },
-                            allowFiltering: "true",
-                            allowSorting: true
-                        },
-                        {
+                            { type: "control" }
+                        ],
+                    });
 
-                            caption: "Vehicle Type - #Seats",
-                            calculateCellValue: function (rowData) {
-                                var allVehicles = "";
-                                rowData.vehicles.forEach((el) => {
-                                    allVehicles += el.type+" - "+el.numSeats + ", ";
-                                });
-                                return allVehicles == "" ? "No Vehicle" : allVehicles.substring(0, allVehicles.length-2);
-                            },
-                            allowFiltering: "true",
-                            allowSorting: true,
-                            allowExporting: true
-                        },
-                        {
-                            caption: "Edit/Delete",
-                            cellTemplate: function (container, options) {
-                               
 
-                                $('<button>' + 'Edit' + '</button>')
-                                    .attr('onclick', 'openEditModal("'
-                                        + options.data.id + '`'
-                                        + options.data.date + '`'
-                                        + options.data.anyPetHair + '`'
-                                        + options.data.waterHoseAvailability + '`'
-                                        + options.data.waterSupplyConnection + '`'
-                                        + options.data.powerOutletAvailable + '`'
-                                        + options.data.customerfk.name + '`'
-                                        + options.data.customerfk.phoneNumber + '`'
-                                        + options.data.customerfk.email + '`'
-                                        + options.data.customerfk.address + '`'
-                                        + options.data.customerfk.id 
-                                        
-                                        
 
-                                        + '")')
-                                    .attr('target', '_blank')
-                                    .attr('class', 'mc-btn')
-                                    .appendTo(container);
+                    //    $("#dataGrid").dxDataGrid({
+                    //        dataSource: res,
+                    //        keyExpr: "id",
+                    //        columns: [
+                    //            {
+                    //                caption: "Customer Name",
+                    //                cellTemplate: function (container, options) {
+                    //                    $('<a>' + options.data.customerfk.name + '</a>')
+                    //                        .attr('href', '/Appointments/Info/' + options.data.id)
+                    //                        .attr('target', '_blank')
+                    //                        .appendTo(container);
+                    //                },
+                    //                allowFiltering: "true",
+                    //                allowSorting: true
+                    //            },
+                    //            {
+                    //                caption: "Phone Number",
+                    //                calculateCellValue: function (rowData) {
+                    //                    return rowData.customerfk.phoneNumber;
+                    //                },
+                    //                allowFiltering: "true",
+                    //                allowSorting: true
+                    //            },
+                    //            {
+                    //                caption: "Email",
+                    //                calculateCellValue: function (rowData) {
+                    //                    return rowData.customerfk.email;
+                    //                },
+                    //                allowFiltering: "true",
+                    //                allowSorting: true
+                    //            },
+                    //            {
+                    //                caption: "Address",
+                    //                calculateCellValue: function (rowData) {
+                    //                    return rowData.customerfk.address;
+                    //                },
+                    //                allowFiltering: "true",
+                    //                allowSorting: true
+                    //            },
+                    //            {
+                    //                caption: "Appointment Date",
+                    //                calculateCellValue: function (rowData) {
+                    //                    return rowData.date;
+                    //                },
+                    //                allowFiltering: "true",
+                    //                allowSorting: true
+                    //            },
+                    //            {
 
-                                $('<button>' + '  ' + 'Delete' + '</button>')
-                                    .attr('onclick', 'deleteAppointment("' + options.data.id + '")')
-                                    .attr('target', '_blank')
-                                    .attr('class', 'deletebtn')
-                                    .appendTo(container);
-                            },
-                            
-                            allowFiltering: "true",
-                            allowSorting: true
-                            
-                            
+                    //                caption: "Vehicle Type - #Seats",
+                    //                calculateCellValue: function (rowData) {
+                    //                    var allVehicles = "";
+                    //                    rowData.vehicles.forEach((el) => {
+                    //                        allVehicles += el.type + " - " + el.numSeats + ", ";
+                    //                    });
+                    //                    return allVehicles == "" ? "No Vehicle" : allVehicles.substring(0, allVehicles.length - 2);
+                    //                },
+                    //                allowFiltering: "true",
+                    //                allowSorting: true,
+                    //                allowExporting: true
+                    //            },
+                    //            {
+                    //                caption: "Edit/Delete",
+                    //                cellTemplate: function (container, options) {
 
-                            
-                        }
-                    ],
-                    summary: { groupItems: [{ summaryType: "count", displayFormat: "{0} records" }] },
-                    paging: { pageSize: 10 },
-                    allowColumnReordering: true,
-                    allowColumnResizing: true,
-                    filterRow: { visible: true, applyFilter: "auto" },
-                    headerFilter: { visible: true },
-                    columnChooser: { enabled: true },
-                    pager: { showPageSizeSelector: true, allowedPageSizes: [10, 25, 50], showInfo: true, showNavigationButtons: true },
-                    groupPanel: { visible: true },
-                    grouping: { autoExpandAll: false },
-                    export: { enabled: true, fileName: "AllAppointments", },
-                    noDataText: "No data", onContentReady: function () { $("#dataGrid > .dx-datagrid").addClass("dx-container"); },
-                    searchPanel: { visible: true },
 
-                    // Configuration goes here
-                });
-            }
+                    //                    $('<button>' + 'Edit' + '</button>')
+                    //                        .attr('onclick', 'openEditModal("'
+                    //                            + options.data.id + '`'
+                    //                            + options.data.date + '`'
+                    //                            + options.data.anyPetHair + '`'
+                    //                            + options.data.waterHoseAvailability + '`'
+                    //                            + options.data.waterSupplyConnection + '`'
+                    //                            + options.data.powerOutletAvailable + '`'
+                    //                            + options.data.customerfk.name + '`'
+                    //                            + options.data.customerfk.phoneNumber + '`'
+                    //                            + options.data.customerfk.email + '`'
+                    //                            + options.data.customerfk.address + '`'
+                    //                            + options.data.customerfk.id
+
+
+
+                    //                            + '")')
+                    //                        .attr('target', '_blank')
+                    //                        .attr('class', 'mc-btn')
+                    //                        .appendTo(container);
+
+                    //                    $('<button>' + '  ' + 'Delete' + '</button>')
+                    //                        .attr('onclick', 'deleteAppointment("' + options.data.id + '")')
+                    //                        .attr('target', '_blank')
+                    //                        .attr('class', 'deletebtn')
+                    //                        .appendTo(container);
+                    //                },
+
+                    //                allowFiltering: "true",
+                    //                allowSorting: true
+
+
+
+
+                    //            }
+                    //        ],
+                    //        summary: { groupItems: [{ summaryType: "count", displayFormat: "{0} records" }] },
+                    //        paging: { pageSize: 10 },
+                    //        allowColumnReordering: true,
+                    //        allowColumnResizing: true,
+                    //        filterRow: { visible: true, applyFilter: "auto" },
+                    //        headerFilter: { visible: true },
+                    //        columnChooser: { enabled: true },
+                    //        pager: { showPageSizeSelector: true, allowedPageSizes: [10, 25, 50], showInfo: true, showNavigationButtons: true },
+                    //        groupPanel: { visible: true },
+                    //        grouping: { autoExpandAll: false },
+                    //        export: { enabled: true, fileName: "AllAppointments", },
+                    //        noDataText: "No data", onContentReady: function () { $("#dataGrid > .dx-datagrid").addClass("dx-container"); },
+                    //        searchPanel: { visible: true },
+
+                    //        // Configuration goes here
+                    //    });
+                }
+            });
+
+
         });
 
+        function openEditModal(apptId) {
+            $.ajax({
+                type: "GET",
+                url: "/admin/appointment/" + apptId,
+                dataType: "json",
+                success: function (response) {
+                    console.log("Success");
 
-    });
+                    $("#apptId").val(response.id);
+                    $("#apptDate").val(response.date);
+                    $("#apptPetHair").prop('checked',response.anyPetHair);
+                    $("#apptWaterHose").prop('checked',response.waterHoseAvailability);
+                    $("#apptWaterSupply").prop('checked',response.waterSupplyConnection);
+                    $("#apptOutlet").prop('checked',response.powerOutletAvailable);
+                    $("#apptName").val(response.customerfk.name);
+                    $("#apptPhone").val(response.customerfk.phoneNumber);
+                    $("#apptEmail").val(response.customerfk.email);
+                    $("#apptAddress").val(response.customerfk.address);
+                    $("#custId").val(response.customerfk.id);
 
-    function openEditModal(apptId) {
-        console.log(apptId);
-        var apptToEdit = apptId.split("`");
-        console.log(apptToEdit);
 
-        $("#apptId").val(apptToEdit[0]);
-        $("#apptDate").val(apptToEdit[1]);
-        $("#apptPetHair").val(apptToEdit[2]);
-        $("#apptWaterHose").val(apptToEdit[3]);
-        $("#apptWaterSupply").val(apptToEdit[4]);
-        $("#apptOutlet").val(apptToEdit[5]);
-        $("#apptName").val(apptToEdit[6]);
-        $("#apptPhone").val(apptToEdit[7]);
-        $("#apptEmail").val(apptToEdit[8]);
-        $("#apptAddress").val(apptToEdit[9]);
-        $("#custId").val(apptToEdit[10]);
-       
-       
-        $('#bookingModal').modal('show')
-    }
+                    $('#bookingModal').modal('show')                },
+                failure: function (response) {
+                    console.log("Hello")
+                    alert(response);
+                },
+                error: function (response) {
+                    console.log("Hello error")
+                    console.log(response)
+                    alert(response);
+                }
 
-    function saveAppointmentChanges() {
+            })
 
-        var appointment = {}
-        
-        appointment.Id = $("#apptId").val();
-        appointment.Date = $("#apptDate").val();
-        appointment.PetHair = $("#apptPetHair").val();
-        appointment.WaterHose = $("#apptWaterHose").val();
-        appointment.WaterSupply = $("#apptWaterSupply").val();
-        appointment.Outlet = $("#apptOutlet").val();
-        
+        }
 
-        $.ajax({
-            type: "POST",
-            url: "/admin/appointment/edit",
-            data: JSON.stringify(appointment),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                console.log("Success");
-                window.location.reload();
-            },
-            failure: function (response) {
-                console.log("Hello")
-                alert(response);
-            },
-            error: function (response) {
-                console.log("Hello error")
-                console.log(response)
-                alert(response);
-            }
+        function saveAppointmentChanges() {
 
-        })
+            var appointment = {}
 
-    }
+            appointment.Id = $("#apptId").val();
+            appointment.Date = $("#apptDate").val();
+            console.log($("#apptPetHair").is(':checked'), $("#apptWaterHose").is(':checked'), $("#apptWaterSupply").is(':checked'))
+            appointment.AnyPetHair = $("#apptPetHair").is(':checked');
+            appointment.WaterHoseAvailability = $("#apptWaterHose").is(':checked');
+            appointment.WaterSupplyConnection = $("#apptWaterSupply").is(':checked');
+            appointment.PowerOutletAvailable = $("#apptOutlet").is(':checked');
 
-    function saveCustomerChanges() {
-        
-        var customer = {};
-
-        customer.Id = $('#custId').val();
-        customer.Name = $('#apptName').val();
-        customer.PhoneNumber = $('#apptPhone').val();
-        customer.Email = $('#apptEmail').val();
-        customer.Address = $('#apptAddress').val();
-
-        
-
-        $.ajax({
-            type: "POST",
-            url: "/admin/customer/edit",
-            data: JSON.stringify(customer),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                console.log("Success");
-                window.location.reload();
-            },
-            failure: function (response) {
-                console.log("Hello")
-                alert(response);
-            },
-            error: function (response) {
-                console.log("Hello error")
-                console.log(response)
-                alert(response);
-            }
-
-        })
-
-    }
-
-    function deleteAppointment(id) {
-
-       
-        var choice = confirm("Are you sure you wish to delete this appointment?");
-
-        if (choice == true) {
 
             $.ajax({
                 type: "POST",
-                url: "/admin/appointment/delete/" + id,
+                url: "/admin/appointment/edit",
+                data: JSON.stringify(appointment),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
@@ -311,7 +340,77 @@
                 }
 
             })
+
         }
-    }
-</script>
+
+        function saveCustomerChanges() {
+
+            var customer = {};
+
+            customer.Id = $('#custId').val();
+            customer.Name = $('#apptName').val();
+            customer.PhoneNumber = $('#apptPhone').val();
+            customer.Email = $('#apptEmail').val();
+            customer.Address = $('#apptAddress').val();
+
+            console.log(customer);
+
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/customer/edit",
+                data: JSON.stringify(customer),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log("Success");
+                    if (response === 'Invalid') {
+                        alert("Invalid Update")
+                    }
+                    window.location.reload();
+                },
+                failure: function (response) {
+                    console.log("Hello")
+                    alert(response);
+                },
+                error: function (response) {
+                    console.log("Hello error")
+                    console.log(response)
+                    alert(response);
+                }
+
+            })
+
+        }
+
+        //function deleteAppointment(id) {
+
+
+        //    var choice = confirm("Are you sure you wish to delete this appointment?");
+
+        //    if (choice == true) {
+
+        //        $.ajax({
+        //            type: "POST",
+        //            url: "/admin/appointment/delete/" + id,
+        //            contentType: "application/json; charset=utf-8",
+        //            dataType: "json",
+        //            success: function (response) {
+        //                console.log("Success");
+        //                window.location.reload();
+        //            },
+        //            failure: function (response) {
+        //                console.log("Hello")
+        //                alert(response);
+        //            },
+        //            error: function (response) {
+        //                console.log("Hello error")
+        //                console.log(response)
+        //                alert(response);
+        //            }
+
+        //        })
+        //    }
+        //}
+    </script>
 }
