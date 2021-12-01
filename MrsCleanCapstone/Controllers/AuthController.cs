@@ -44,7 +44,7 @@ namespace MrsCleanCapstone.Controllers
                 // sign in
                 if (signInResult.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Admin");
                 }
             }
             else

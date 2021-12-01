@@ -52,25 +52,6 @@ namespace MrsCleanCapstone.Controllers
             CurrentCategory = category
         });
 
-        // GET: Products/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var product = await _repository
-        //        .FirstOrDefault(m => m.ProductID == id);
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(product);
-        //}
-
-        // GET: Products/AddProduct
         [Authorize]
         public IActionResult Add()
         {
@@ -78,8 +59,7 @@ namespace MrsCleanCapstone.Controllers
         }
 
         // POST: Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -116,35 +96,10 @@ namespace MrsCleanCapstone.Controllers
 
             }
 
-
-
-            //if (ModelState.IsValid)
-            //{
-            //    if (product.ProductImage != null)
-            //    {
-            //        //Save image to wwwroot
-            //        string wwwrootPath = _hostEnvironment.WebRootPath;
-            //        string filename = Path.GetFileNameWithoutExtension(product.ProductImage.FileName);
-            //        string extension = Path.GetExtension(product.ProductImage.FileName);
-
-            //        product.ProductImageName = filename = filename + DateTime.Now.ToString("yymmssfff") + extension;
-
-            //        string path = Path.Combine(wwwrootPath + "/images/", filename);
-
-            //        using (var fileStream = new FileStream(path, FileMode.Create))
-            //        {
-            //            await product.ProductImage.CopyToAsync(fileStream);
-            //        }
-            //    }
-            //    await _repository.Add(product);
-            //    return RedirectToAction("Index", "Products");
-            //}
-
             return View();
         }
 
-        // POST: Products/Edit/5
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Products/Edit/{id}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("ProductID,ProductName,Quantity,Price,Category,description,ProductImageName, ProductImage")] Product product)
@@ -176,33 +131,6 @@ namespace MrsCleanCapstone.Controllers
             }
             return View(product);
         }
-
-        // GET: Products/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var product = await _repository.FirstOrDefault(m => m.ProductID == id);
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(product);
-        //}
-
-        //// POST: Products/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var product = await _repository.GetById(id);
-        //    await _repository.Remove(product);
-        //    return RedirectToAction(nameof(Index));
-        //}
 
         public bool ProductExists(int id)
         {

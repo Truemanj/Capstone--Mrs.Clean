@@ -4,11 +4,10 @@ namespace MrsCleanCapstone.Actions
 {
     public class AdminActions
     {
-        public static KeyValuePair<string, string> ManageProducts = new KeyValuePair<string, string>("Manage Products", "Lorem Ipsum");
-        public static KeyValuePair<string, string> ManageDeals = new KeyValuePair<string, string>("Manage Deals", "Lorem Ipsum");
-        //public static KeyValuePair<string, string> ManageServices = new KeyValuePair<string, string>("Manage Services", "Lorem Ipsum");
-        public static KeyValuePair<string, string> ManageBookings = new KeyValuePair<string, string>("Manage Bookings", "Lorem Ipsum");
-        public static KeyValuePair<string, string> ViewFeedbacks = new KeyValuePair<string, string>("View Feedbacks", "Lorem Ipsum");
+        public static KeyValuePair<string, string> ManageProducts = new KeyValuePair<string, string>("Manage Products", "Add, Edit, or Delete products from the application");
+        public static KeyValuePair<string, string> ManageDeals = new KeyValuePair<string, string>("Manage Deals", "Add, Edit, or Delete deals from the application");
+        public static KeyValuePair<string, string> ManageBookings = new KeyValuePair<string, string>("Manage Bookings", "Add, Edit, or Delete booked appointments from the application");
+        public static KeyValuePair<string, string> ViewFeedbacks = new KeyValuePair<string, string>("View Feedback", "Add, Edit, or Delete feedback from the application");
 
         private AdminActions(KeyValuePair<string, string> kvp)
         {
@@ -22,7 +21,6 @@ namespace MrsCleanCapstone.Actions
 
         new AdminActions(ManageProducts),
         new AdminActions(ManageDeals),
-        //new AdminActions(ManageServices),
         new AdminActions(ManageBookings),
         new AdminActions(ViewFeedbacks)
     };

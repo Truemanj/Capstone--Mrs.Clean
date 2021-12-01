@@ -3,7 +3,7 @@
     @foreach (var action in AdminActions.Actions)
     {
         <div class="admin-action" onclick="goToPage('@action.Name.ToString().Split(" ")[1]')">
-            <p>@action.Name.ToString()</p>
+            <h3>@action.Name.ToString()</h3>
             <p>@action.Description.ToString()</p>
         </div>
     }

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MrsCleanCapstone.Data;
-// using MrsCleanCapstone.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +25,6 @@ namespace MrsCleanCapstone.Controllers
         private IGenericRepository<Appointment> _appointmentsRepository;
         private IGenericRepository<Feedback> _feedbackRepository;
         private IGenericRepository<Product> _productsRepository;
-        //private IGenericRepository<Service> _servicesRepository;
         private IGenericRepository<Customer> _customerRepository;
         private IGenericRepository<Vehicle> _vehicleRepository;
 
@@ -57,7 +55,6 @@ namespace MrsCleanCapstone.Controllers
 
         public IActionResult Products()
         {
-            //var products = _productsRepository.Get().ToList();
             var manageProductsVM = new ManageProductsViewModel()
             {
                 ProductsList = _productsRepository.Get().ToList(),
@@ -69,7 +66,6 @@ namespace MrsCleanCapstone.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        //[Route("{controller}/products/edit")]
 
         public async Task<IActionResult> EditProduct([Bind("ProductID,ProductName,Quantity,Price,Category,Description,ProductImage")] Product product, IFormFile ProductImage)
         {
@@ -124,6 +120,13 @@ namespace MrsCleanCapstone.Controllers
 
                         }
                     }
+
+                    if (ProductImage == null)
+                    {
+                        
+
+                    }
+                    
                     await _productsRepository.Update(product);
                     return RedirectToAction("Products", "Admin");
                 }
@@ -142,7 +145,6 @@ namespace MrsCleanCapstone.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        //[ValidateAntiForgeryToken]
 
         public async Task<IActionResult> EditDeal([Bind]Deal deal)
         {
