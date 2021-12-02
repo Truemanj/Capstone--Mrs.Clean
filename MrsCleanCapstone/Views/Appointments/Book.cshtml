@@ -141,7 +141,7 @@
 </div>
 @section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -152,7 +152,7 @@
     <script src="https://cdn.jsdelivr.net/npm/smartwizard@5/dist/js/jquery.smartWizard.min.js"
             type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -294,9 +294,16 @@
                     dataType: "json",
                     success: function (response) {
                         console.log("Success");
-                        bootbox.alert("Booking Successful")
                         sessionStorage.clear();
-                        window.location.href = "/"
+
+                        bootbox.alert({
+                            size: "medium",
+                            title: "Booking Successful",
+                            message: "Your booking is successful. A confirmation email has been sent to you.",
+                            callback: function () {
+                                window.location.href = "/"
+                            }
+                        })
                     },
                     failure: function (response) {
                         console.log("Hello")
