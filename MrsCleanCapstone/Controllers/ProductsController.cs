@@ -31,7 +31,6 @@ namespace MrsCleanCapstone.Controllers
             _repository = repository;
         }
 
-        // GET: Products
         public IActionResult Index(string category, int productPage = 1) => View(nameof(Index), new ProductListViewModel
         {
             Products = _repository.Get()
@@ -57,8 +56,6 @@ namespace MrsCleanCapstone.Controllers
         {
             return View(nameof(Add));
         }
-
-        // POST: Products/Create
         
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -73,7 +70,8 @@ namespace MrsCleanCapstone.Controllers
                 {
                     if (Image.Length > 0)
 
-                    //Convert Image to byte and save to database
+                    
+
                     {
                         byte[] imageData = null;
                         using (var fs1 = Image.OpenReadStream())
@@ -96,8 +94,7 @@ namespace MrsCleanCapstone.Controllers
 
             return View();
         }
-
-        // POST: Products/Edit/{id}
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("ProductID,ProductName,Quantity,Price,Category,description,ProductImageName, ProductImage")] Product product)

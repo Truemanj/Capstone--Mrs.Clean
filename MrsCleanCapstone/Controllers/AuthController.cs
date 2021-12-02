@@ -31,7 +31,6 @@ namespace MrsCleanCapstone.Controllers
             return View();
         }
 
-        //[HttpPost("{controller}/{action}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
 
@@ -41,7 +40,7 @@ namespace MrsCleanCapstone.Controllers
             if (user != null)
             {
                 var signInResult = await _signInManager.PasswordSignInAsync(user, loginDto.Password, false, false);
-                // sign in
+                
                 if (signInResult.Succeeded)
                 {
                     return RedirectToAction("Index", "Admin");
@@ -70,9 +69,9 @@ namespace MrsCleanCapstone.Controllers
 
             if (result.Succeeded)
             {
-                // sign user here
+                
                 var signInResult = await _signInManager.PasswordSignInAsync(user, registerDto.Password, false, false);
-                // sign in
+                
                 if (signInResult.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");

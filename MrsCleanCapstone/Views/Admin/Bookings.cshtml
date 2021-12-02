@@ -67,12 +67,13 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jsgrid/1.5.3/jsgrid.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
     <script>
+
         $(document).ready(function () {
 
             $.ajax({
                 url: '/admin/allappointments',
                 type: 'GET',
-                dataType: 'json', // added data type
+                dataType: 'json', 
                 success: function (res) {
                     console.log(res);
                     console.log("Here")
@@ -115,8 +116,7 @@
                                 }
                             })
                         },
-
-
+                        
                         data: res,
                         editItem: function (item) {
                             console.log("Update")
@@ -152,8 +152,6 @@
                     });
                 }
             });
-
-
         });
 
         function openEditModal(apptId) {
@@ -188,9 +186,7 @@
                     console.log(response)
                     alert(response);
                 }
-
             })
-
         }
 
         function saveAppointmentChanges() {
@@ -204,7 +200,6 @@
             appointment.WaterHoseAvailability = $("#apptWaterHose").is(':checked');
             appointment.WaterSupplyConnection = $("#apptWaterSupply").is(':checked');
             appointment.PowerOutletAvailable = $("#apptOutlet").is(':checked');
-
 
             $.ajax({
                 type: "POST",
@@ -225,9 +220,7 @@
                     console.log(response)
                     alert(response);
                 }
-
             })
-
         }
 
         function saveCustomerChanges() {
@@ -239,9 +232,6 @@
             customer.PhoneNumber = $('#apptPhone').val();
             customer.Email = $('#apptEmail').val();
             customer.Address = $('#apptAddress').val();
-
-            console.log(customer);
-
 
             $.ajax({
                 type: "POST",
@@ -269,5 +259,6 @@
             })
 
         }
+
     </script>
 }

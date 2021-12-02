@@ -21,7 +21,7 @@ namespace MrsCleanCapstone.Controllers
             _logger = logger;
             _repository = repository;
         }
-        // GET: DealsController
+       
         [Route("/{controller}/")]
         public async Task<IActionResult> Deals()
         {

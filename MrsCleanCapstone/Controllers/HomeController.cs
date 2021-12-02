@@ -13,7 +13,6 @@ using MrsCleanCapstone.GenericRepository;
 namespace MrsCleanCapstone.Controllers
 {
     
-
     public class HomeController : Controller
     {
         private readonly IGenericRepository<Product> _repository;
@@ -43,7 +42,6 @@ namespace MrsCleanCapstone.Controllers
             return View(nameof(Index), homePageViewModel);
         }
         
-
         [Authorize]
         public IActionResult Privacy()
         {

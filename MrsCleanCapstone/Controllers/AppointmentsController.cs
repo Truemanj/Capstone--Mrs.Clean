@@ -52,6 +52,7 @@ namespace MrsCleanCapstone.Controllers
             {
                 return new JsonResult("Error");
             }
+            
             await _repository.Add(appt);
 
             var sendGridClient = new SendGridClient(configuration.GetSection("SENDGRID_API_KEY").Value);
@@ -131,6 +132,7 @@ namespace MrsCleanCapstone.Controllers
                     return new JsonResult("Error!! Appointment not found");
 
                 }
+                
                 apptToUpdate.AnyPetHair = appointment.AnyPetHair;
                 apptToUpdate.WaterHoseAvailability = appointment.WaterHoseAvailability;
                 apptToUpdate.WaterHoseAvailability = appointment.WaterHoseAvailability;
@@ -162,7 +164,6 @@ namespace MrsCleanCapstone.Controllers
             }
 
             var apptToDelete = await _repository.GetByGuid((Guid)id);
-
 
             if (apptToDelete == null)
             {

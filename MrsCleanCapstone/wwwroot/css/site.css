@@ -761,6 +761,17 @@ header {
         background: #413f3f;
         margin: 0 40px;
     }
+
+.no_success_box {
+    position: relative;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    margin:auto;
+}
+
 @media(max-width: 991px) {
     .main {
         padding: 40px;
@@ -1228,6 +1239,7 @@ header {
     padding: 10px;
     margin: 0 auto;
     width: 50%;
+    display: block;
     
 }
 
@@ -1292,6 +1304,7 @@ header {
     overflow: auto;
     height: 200px;
 }
+
 
 /* Zebra striping */
 .feedback-table tr:nth-of-type(odd) {
