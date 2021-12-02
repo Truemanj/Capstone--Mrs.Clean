@@ -95,6 +95,7 @@ header {
 
 .navigation {
     display: flex;
+    flex-wrap: wrap;
 }
 
     .navigation li {
@@ -189,11 +190,11 @@ header {
         }
 
 .footer {
-    position: absolute;
+    position: relative;
     bottom: 0;
     width: 100%;
     display: flex;
-    padding: 20px 100px 20px 100px;
+    padding: 20px 20px 20px 20px;
     justify-content: space-between;
     align-items: flex-end;
     z-index: 1;
@@ -346,12 +347,13 @@ header {
 
 .about_image img {
     height: 50vh;
-    border: 10px solid black;
+    border: 2px solid #fff;
     max-height : 500px;
     max-width: 500px;
 }
 
-.about_content {
+
+.about_content, .about_image {
     padding: 2em;
 }
 
@@ -465,7 +467,6 @@ header {
 
 .benefits_content {
     position: relative;
-    width: 50%;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -528,12 +529,15 @@ header {
     border-radius: 50%;
     padding: inherit;
     margin-bottom: 20px;
+    height:180px;
+    width: 180px;
     box-shadow: 0px 10px 34px 0px rgb(71 119 164 / 25%);
 }
 
     .benefit_icon ion-icon {
         font-size: 5em;
         color: #df0505;
+        margin: 33px;
     }
 
 
@@ -876,9 +880,23 @@ header {
         .toggle.active::after {
             transform: translateY(0px) rotate(-45deg);
         }
+
+        .benefits{
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+    /*.image_card {
+        width: 243px;
+        height: 243px;
+    }*/
+
+    .image_grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
 }
 
-@media only screen and (max-width: 1870px) {
+@media only screen and (max-width: 736px) {
     header, .main {
         padding: 20px;
     }
@@ -903,7 +921,10 @@ header {
     .sci {
         margin-top: 40px;
     }
-
+    .services{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
     .services_cards {
         display: block;
         margin-top: 5em;
@@ -974,7 +995,6 @@ header {
     }
     .benefits_content {
         position: relative;
-        width: 50%;
         display: block;
         justify-content: center;
         flex-direction: column;
@@ -1053,6 +1073,11 @@ header {
         flex-direction: column;
     }
 
+    .team{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
     .team_title {
         border: solid #df0505;
         border-width: 4px 0 4px 0px;
@@ -1089,11 +1114,13 @@ header {
     .member_card {
         background-color: #ffffff;
         border-radius: 30px;
-        width: 100%;
+        width: 60%;
+        text-align: center;
         transition-duration: 0.4s;
         box-shadow: 0px 10px 34px 0px rgb(71 119 164 / 25%);
         padding-bottom: 30px;
-        max-width: 500px;
+        /* max-width: 500px; */
+        margin: auto;
     }
 
         .member_card img {
@@ -1346,4 +1373,14 @@ and also iPads specifically.
             color: #000;
             font-weight: bold;
         }
+}
+
+@media (max-width: 380px){
+    .contact_content{
+        padding: 0;
+    }
+
+ 
+
+
 }

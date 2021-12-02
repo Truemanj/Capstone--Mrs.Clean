@@ -73,15 +73,14 @@ namespace MrsCleanCapstone.Controllers
                     
 
                     {
-
-                        byte[] p1 = null;
+                        byte[] imageData = null;
                         using (var fs1 = Image.OpenReadStream())
                         using (var ms1 = new MemoryStream())
                         {
                             fs1.CopyTo(ms1);
-                            p1 = ms1.ToArray();
+                            imageData = ms1.ToArray();
                         }
-                        product.ProductImage = p1;
+                        product.ProductImage = imageData;
 
                     }
 

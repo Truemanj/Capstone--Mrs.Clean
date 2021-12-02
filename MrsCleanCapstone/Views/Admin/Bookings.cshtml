@@ -53,13 +53,13 @@
                     <input type="checkbox" class="form-check-input" id="apptOutlet" value="" />
                     <label class="form-check-label">Power Outlet: </label>
                 </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="deletebtn" data-dismiss="modal">Close</button>
-                    <button type="button" class="mc-btn" onclick="saveAppointmentChanges()">Update Appointment </button>
-                    <button type="button" class="mc-btn" onclick="saveCustomerChanges()">Update Customer</button>
-                </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="deletebtn" data-dismiss="modal">Close</button>
+                <button type="button" class="mc-btn" onclick="saveAppointmentChanges()">Update Appointment </button>
+                <button type="button" class="mc-btn" onclick="saveCustomerChanges()">Update Customer</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -113,7 +113,7 @@
 
                                         })
                                     }
-}
+                                }
                             })
                         },
                         
@@ -124,7 +124,7 @@
                         },
                         rowClick: function (args) {
                             console.log(args.item)
-                            window.location.href ="/Appointments/Info/"+args.item.id
+                            window.location.href = "/Appointments/Info/" + args.item.id
                         },
                         fields: [
                             {
@@ -164,10 +164,10 @@
 
                     $("#apptId").val(response.id);
                     $("#apptDate").val(response.date);
-                    $("#apptPetHair").prop('checked',response.anyPetHair);
-                    $("#apptWaterHose").prop('checked',response.waterHoseAvailability);
-                    $("#apptWaterSupply").prop('checked',response.waterSupplyConnection);
-                    $("#apptOutlet").prop('checked',response.powerOutletAvailable);
+                    $("#apptPetHair").prop('checked', response.anyPetHair);
+                    $("#apptWaterHose").prop('checked', response.waterHoseAvailability);
+                    $("#apptWaterSupply").prop('checked', response.waterSupplyConnection);
+                    $("#apptOutlet").prop('checked', response.powerOutletAvailable);
                     $("#apptName").val(response.customerfk.name);
                     $("#apptPhone").val(response.customerfk.phoneNumber);
                     $("#apptEmail").val(response.customerfk.email);
@@ -175,7 +175,8 @@
                     $("#custId").val(response.customerfk.id);
 
 
-                    $('#bookingModal').modal('show')                },
+                    $('#bookingModal').modal('show')
+                },
                 failure: function (response) {
                     console.log("Hello")
                     alert(response);
