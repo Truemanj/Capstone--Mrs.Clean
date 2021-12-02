@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace MrsCleanCapstone.Middlewares
 {
-    // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class MaintenanceMiddleware
     {
         private readonly RequestDelegate _next;
@@ -26,7 +25,7 @@ namespace MrsCleanCapstone.Middlewares
         {
             if (_window.Enabled)
             {
-                // set the code to 503 for SEO reasons
+                
                 httpContext.Response.StatusCode = (int)HttpStatusCode.ServiceUnavailable;
                 httpContext.Response.Headers.Add("Retry-After", _window.RetryAfterInSeconds.ToString());
                 httpContext.Response.ContentType = _window.ContentType;
@@ -56,7 +55,6 @@ namespace MrsCleanCapstone.Middlewares
         public string ContentType { get; set; } = "text/html";
     }
 
-    // Extension method used to add the middleware to the HTTP request pipeline.
     public static class MaintenanceMiddlewareExtensions
     {
         public static IServiceCollection AddMaintenance(this IServiceCollection services, MaintenanceWindow window)

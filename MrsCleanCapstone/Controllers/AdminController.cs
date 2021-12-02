@@ -18,7 +18,6 @@ namespace MrsCleanCapstone.Controllers
 {
 
     [Authorize]
-
     public class AdminController : Controller
     {
         private IGenericRepository<Deal> _dealsRepository;
@@ -66,7 +65,6 @@ namespace MrsCleanCapstone.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-
         public async Task<IActionResult> EditProduct([Bind("ProductID,ProductName,Quantity,Price,Category,Description,ProductImage")] Product product, IFormFile ProductImage)
         {
             if (ModelState.IsValid)
@@ -77,9 +75,6 @@ namespace MrsCleanCapstone.Controllers
 
                     {
                         if (ProductImage.Length > 0)
-
-                        //Convert Image to byte and save to database
-
                         {
 
                             byte[] p1 = null;
@@ -104,9 +99,6 @@ namespace MrsCleanCapstone.Controllers
 
                     {
                         if (ProductImage.Length > 0)
-
-                        //Convert Image to byte and save to database
-
                         {
 
                             byte[] p1 = null;
@@ -145,7 +137,6 @@ namespace MrsCleanCapstone.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-
         public async Task<IActionResult> EditDeal([Bind]Deal deal)
         {
             if (!ModelState.IsValid)
@@ -181,7 +172,6 @@ namespace MrsCleanCapstone.Controllers
 
         [Route("{controller}/deals/delete/{id}")]
         [HttpPost]
-
         public async Task<IActionResult> DeleteDeal(int? id)
         {
             if (id == 0)
@@ -202,7 +192,6 @@ namespace MrsCleanCapstone.Controllers
 
         [Route("{controller}/products/delete/{id}")]
         [HttpPost]
-
         public async Task<IActionResult> DeleteProduct(int? id)
         {
             if (id == 0)
@@ -233,7 +222,6 @@ namespace MrsCleanCapstone.Controllers
         }
 
         [Route("{controller}/allappointments/")]
-
         [HttpGet]
         public JsonResult GetAllAppointments()
         {
@@ -243,7 +231,6 @@ namespace MrsCleanCapstone.Controllers
         }
 
         [Route("{controller}/appointment/{id}")]
-
         [HttpGet]
         public async Task<IActionResult> GetAppointmentById(Guid? id)
         {
@@ -254,8 +241,6 @@ namespace MrsCleanCapstone.Controllers
 
         [Route("{controller}/appointment/edit")]
         [HttpPost]
-
-
         public async Task<IActionResult> EditAppointment([FromBody] Appointment appointment)
         {
 
@@ -296,7 +281,6 @@ namespace MrsCleanCapstone.Controllers
 
         [Route("{controller}/customer/edit")]
         [HttpPost]
-
         public async Task<IActionResult> EditCustomer([FromBody] Customer customer)
         {
             Console.Write(customer);
@@ -379,16 +363,14 @@ namespace MrsCleanCapstone.Controllers
                     return new JsonResult("Error!! Feedback not found");
 
                 }
+                
                 fbToUpdate.Name = feedback.Name;
                 fbToUpdate.Email = feedback.Email;
                 fbToUpdate.Message = feedback.Message;
-                
-
 
                 await _feedbackRepository.Update(fbToUpdate);
 
                 return new JsonResult(fbToUpdate);
-
 
             }
             else
@@ -401,7 +383,6 @@ namespace MrsCleanCapstone.Controllers
 
         [Route("{controller}/feedback/delete/{id}")]
         [HttpPost]
-
         public async Task<IActionResult> DeleteFeedback(int? id)
         {
 
