@@ -15,7 +15,6 @@ namespace MrsCleanCapstone.Models
         public bool WaterHoseAvailability { get; set; }
         public bool WaterSupplyConnection { get; set; }
         public bool PowerOutletAvailable { get; set; }
-
         public List<Vehicle> Vehicles { get; set; }
         public Customer Customerfk { get; set; }
     }

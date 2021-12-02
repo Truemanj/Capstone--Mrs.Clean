@@ -14,17 +14,13 @@ namespace MrsCleanCapstone
         {
             var host = CreateHostBuilder(args).Build().Migrate<ApplicationDbContext>();
 
-            // migrate the database.  Best practice = in Main, using service scope
+            
             using (var scope = host.Services.CreateScope())
             {
                 try
                 {
                     var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-                    // for demo purposes, delete the database & migrate on startup so 
-                    // we can start with a clean slate
-                    //context.Database.EnsureDeleted();
-                    
-                    //context.Database.Migrate();
+                   
                 }
                 catch (Exception ex)
                 {
@@ -33,7 +29,6 @@ namespace MrsCleanCapstone
                 }
             }
 
-            // run the web app
             host.Run();
         }
 
