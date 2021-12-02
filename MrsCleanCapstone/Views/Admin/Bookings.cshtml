@@ -103,20 +103,21 @@
                                             },
                                             failure: function (response) {
                                                 console.log("Hello")
-                                                alert(response);
+                                                bootbox.alert(response);
                                             },
                                             error: function (response) {
                                                 console.log("Hello error")
                                                 console.log(response)
-                                                alert(response);
+                                                bootbox.alert(response);
                                             }
 
                                         })
                                     }
-                                }
+                                  }
                             })
                         },
                         
+
                         data: res,
                         editItem: function (item) {
                             console.log("Update")
@@ -179,12 +180,12 @@
                 },
                 failure: function (response) {
                     console.log("Hello")
-                    alert(response);
+                    bootbox.alert(response);
                 },
                 error: function (response) {
                     console.log("Hello error")
                     console.log(response)
-                    alert(response);
+                    bootbox.alert(response);
                 }
             })
         }
@@ -202,23 +203,23 @@
             appointment.PowerOutletAvailable = $("#apptOutlet").is(':checked');
 
             $.ajax({
-                type: "POST",
+                type: "POST", ntment),
+                contentType: "application/json; 
                 url: "/admin/appointment/edit",
-                data: JSON.stringify(appointment),
-                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(appoi
+                    window.location.reload();charset=utf-8",
                 dataType: "json",
                 success: function (response) {
                     console.log("Success");
-                    window.location.reload();
                 },
                 failure: function (response) {
                     console.log("Hello")
-                    alert(response);
+                    bootbox.alert(response);
                 },
                 error: function (response) {
                     console.log("Hello error")
                     console.log(response)
-                    alert(response);
+                    bootbox.alert(response);
                 }
             })
         }
@@ -242,18 +243,18 @@
                 success: function (response) {
                     console.log("Success");
                     if (response === 'Invalid') {
-                        alert("Invalid Update")
+                        bootbox.alert("Invalid Update")
                     }
                     window.location.reload();
                 },
                 failure: function (response) {
                     console.log("Hello")
-                    alert(response);
+                    bootbox.alert(response);
                 },
                 error: function (response) {
                     console.log("Hello error")
                     console.log(response)
-                    alert(response);
+                    bootbox.alert(response);
                 }
 
             })
