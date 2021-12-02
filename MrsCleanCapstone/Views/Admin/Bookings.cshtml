@@ -102,17 +102,18 @@
                                             },
                                             failure: function (response) {
                                                 console.log("Hello")
-                                                alert(response);
+                                                bootbox.alert(response);
                                             },
                                             error: function (response) {
                                                 console.log("Hello error")
                                                 console.log(response)
-                                                alert(response);
+                                                bootbox.alert(response);
                                             }
 
                                         })
                                     }
-}
+                                }
+                            
                             })
                         },
                         
@@ -301,12 +302,12 @@
                     $('#bookingModal').modal('show')                },
                 failure: function (response) {
                     console.log("Hello")
-                    alert(response);
+                    bootbox.alert(response);
                 },
                 error: function (response) {
                     console.log("Hello error")
                     console.log(response)
-                    alert(response);
+                    bootbox.alert(response);
                 }
 
             })
@@ -338,12 +339,12 @@
                 },
                 failure: function (response) {
                     console.log("Hello")
-                    alert(response);
+                    bootbox.alert(response);
                 },
                 error: function (response) {
                     console.log("Hello error")
                     console.log(response)
-                    alert(response);
+                    bootbox.alert(response);
                 }
 
             })
@@ -372,18 +373,18 @@
                 success: function (response) {
                     console.log("Success");
                     if (response === 'Invalid') {
-                        alert("Invalid Update")
+                        bootbox.alert("Invalid Update")
                     }
                     window.location.reload();
                 },
                 failure: function (response) {
                     console.log("Hello")
-                    alert(response);
+                    bootbox.alert(response);
                 },
                 error: function (response) {
                     console.log("Hello error")
                     console.log(response)
-                    alert(response);
+                    bootbox.alert(response);
                 }
 
             })

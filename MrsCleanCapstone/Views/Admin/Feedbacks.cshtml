@@ -28,23 +28,23 @@
                 <tbody>
                     @foreach (var fb in Model)
                     {
-                        
+
                         <tr>
                             <td>@fb.Name</td>
                             <td>@fb.Email</td>
                             <td>@fb.DateSubmitted.Date.ToShortDateString()</td>
                             <td>@fb.Message</td>
                             <td>
-                            <button class ="mc-btn" onclick="openEditModal('@fb.Id' + '`' + '@fb.Name' + '`' + '@fb.Email' + '`' + '@fb.Message')">Edit</button>
-                            <button  class ="deletebtn" onclick="deleteFeedback(@fb.Id)">Delete</button>
+                                <button class="mc-btn" onclick="openEditModal('@fb.Id' + '`' + '@fb.Name' + '`' + '@fb.Email' + '`' + '@fb.Message')">Edit</button>
+                                <button class="deletebtn" onclick="deleteFeedback(@fb.Id)">Delete</button>
                             </td>
                         </tr>
                     }
 
                 </tbody>
             </table>
-            </div>
         </div>
+    </div>
 </section>
 
 <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="dealsModalLabel" aria-hidden="true">
@@ -65,7 +65,7 @@
                 <input type="text" class="form-control mb-2" id="email" value="" />
                 <label>Feedback: </label>
                 <input type="text" class="form-control mb-2" id="feedback" value="" />
-                
+
 
             </div>
             <div class="modal-footer">
@@ -76,18 +76,20 @@
     </div>
 </div>
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
+
 <script>
 
     function openEditModal(feedback) {
 
         console.log(feedback);
         var fbToEdit = feedback.split("`");
-        
+
         $("#fbId").val(fbToEdit[0]);
         $("#name").val(fbToEdit[1]);
         $("#email").val(fbToEdit[2]);
         $("#feedback").val(fbToEdit[3]);
-    
+
         $('#feedbackModal').modal('show')
     }
 
@@ -112,12 +114,12 @@
             },
             failure: function (response) {
                 console.log("Hello")
-                alert(response);
+                bootbox.alert(response);
             },
             error: function (response) {
                 console.log("Hello error")
                 console.log(response)
-                alert(response);
+                bootbox.alert(response);
             }
 
         })
@@ -126,32 +128,38 @@
 
     function deleteFeedback(id) {
 
-        var choice = confirm("Are you sure you wish to delete this feedback?");
+        bootbox.confirm({
+            size: "medium",
+            message: "Are you sure you wish to delete this feedback?",
+            callback: function (result) {
+                if (result) {
 
-        if (choice == true) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/admin/feedback/delete/" + id,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            console.log("Success");
+                            window.location.reload();
+                        },
+                        failure: function (response) {
+                            console.log("Hello")
+                            bootbox.alert(response);
+                        },
+                        error: function (response) {
+                            console.log("Hello error")
+                            console.log(response)
+                            bootbox.alert(response);
+                        }
 
-            $.ajax({
-                type: "POST",
-                url: "/admin/feedback/delete/" + id,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    console.log("Success");
-                    window.location.reload();
-                },
-                failure: function (response) {
-                    console.log("Hello")
-                    alert(response);
-                },
-                error: function (response) {
-                    console.log("Hello error")
-                    console.log(response)
-                    alert(response);
+                    })
                 }
+            }
+        })
 
-            })
-        }
     }
+
 </script>
 
 
