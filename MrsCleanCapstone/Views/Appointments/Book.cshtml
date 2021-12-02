@@ -141,6 +141,7 @@
 </div>
 @section Scripts{
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
             integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -183,7 +184,7 @@
                     } else if (currentStepNumber == 2) {
                         saveAdditionalInformation()
                     }
-                }else if (stepDirection == "backward") {
+                } else if (stepDirection == "backward") {
                     if (currentStepNumber == 1) {
                         sessionStorage.removeItem("Customer");
                     } else if (currentStepNumber == 2) {
@@ -253,12 +254,12 @@
                 } else {
                     return;
                 }
-              
+
             });
 
             $("#vehicleList").on('click', 'a', function (e) {
                 $(this).remove();
-                if ($("#vehicleList > a").length<=0) {
+                if ($("#vehicleList > a").length <= 0) {
                     $("#vehicle-alert").show();
                 }
             })
@@ -293,18 +294,18 @@
                     dataType: "json",
                     success: function (response) {
                         console.log("Success");
-                        alert("Booking Successful")
+                        bootbox.alert("Booking Successful")
                         sessionStorage.clear();
                         window.location.href = "/"
                     },
                     failure: function (response) {
                         console.log("Hello")
-                        alert("Booking Unsuccessful");
+                        bootbox.alert("Booking Unsuccessful");
                     },
                     error: function (response) {
                         console.log("Hello error")
                         console.log(response)
-                        alert(response);
+                        bootbox.alert(response);
                     }
 
                 })
