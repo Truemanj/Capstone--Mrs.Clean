@@ -220,7 +220,7 @@ namespace MrsCleanCapstone.Controllers
             return new JsonResult(productToDelete);
         }
 
-        public async Task<IActionResult> Feedbacks()
+        public async Task<IActionResult> Feedback()
         {
             var feedbacksList = (await _feedbackRepository.GetAll()).ToList();
             return View(feedbacksList);
