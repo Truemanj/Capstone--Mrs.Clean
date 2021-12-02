@@ -53,13 +53,13 @@
                     <input type="checkbox" class="form-check-input" id="apptOutlet" value="" />
                     <label class="form-check-label">Power Outlet: </label>
                 </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="deletebtn" data-dismiss="modal">Close</button>
-                    <button type="button" class="mc-btn" onclick="saveAppointmentChanges()">Update Appointment </button>
-                    <button type="button" class="mc-btn" onclick="saveCustomerChanges()">Update Customer</button>
-                </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="deletebtn" data-dismiss="modal">Close</button>
+                <button type="button" class="mc-btn" onclick="saveAppointmentChanges()">Update Appointment </button>
+                <button type="button" class="mc-btn" onclick="saveCustomerChanges()">Update Customer</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -112,10 +112,10 @@
 
                                         })
                                     }
-}
+                                }
                             })
                         },
-                        
+
 
                         data: res,
                         editItem: function (item) {
@@ -124,7 +124,7 @@
                         },
                         rowClick: function (args) {
                             console.log(args.item)
-                            window.location.href ="/Appointments/Info/"+args.item.id
+                            window.location.href = "/Appointments/Info/" + args.item.id
                         },
                         fields: [
                             {
@@ -150,127 +150,6 @@
                             { type: "control" }
                         ],
                     });
-
-
-
-                    //    $("#dataGrid").dxDataGrid({
-                    //        dataSource: res,
-                    //        keyExpr: "id",
-                    //        columns: [
-                    //            {
-                    //                caption: "Customer Name",
-                    //                cellTemplate: function (container, options) {
-                    //                    $('<a>' + options.data.customerfk.name + '</a>')
-                    //                        .attr('href', '/Appointments/Info/' + options.data.id)
-                    //                        .attr('target', '_blank')
-                    //                        .appendTo(container);
-                    //                },
-                    //                allowFiltering: "true",
-                    //                allowSorting: true
-                    //            },
-                    //            {
-                    //                caption: "Phone Number",
-                    //                calculateCellValue: function (rowData) {
-                    //                    return rowData.customerfk.phoneNumber;
-                    //                },
-                    //                allowFiltering: "true",
-                    //                allowSorting: true
-                    //            },
-                    //            {
-                    //                caption: "Email",
-                    //                calculateCellValue: function (rowData) {
-                    //                    return rowData.customerfk.email;
-                    //                },
-                    //                allowFiltering: "true",
-                    //                allowSorting: true
-                    //            },
-                    //            {
-                    //                caption: "Address",
-                    //                calculateCellValue: function (rowData) {
-                    //                    return rowData.customerfk.address;
-                    //                },
-                    //                allowFiltering: "true",
-                    //                allowSorting: true
-                    //            },
-                    //            {
-                    //                caption: "Appointment Date",
-                    //                calculateCellValue: function (rowData) {
-                    //                    return rowData.date;
-                    //                },
-                    //                allowFiltering: "true",
-                    //                allowSorting: true
-                    //            },
-                    //            {
-
-                    //                caption: "Vehicle Type - #Seats",
-                    //                calculateCellValue: function (rowData) {
-                    //                    var allVehicles = "";
-                    //                    rowData.vehicles.forEach((el) => {
-                    //                        allVehicles += el.type + " - " + el.numSeats + ", ";
-                    //                    });
-                    //                    return allVehicles == "" ? "No Vehicle" : allVehicles.substring(0, allVehicles.length - 2);
-                    //                },
-                    //                allowFiltering: "true",
-                    //                allowSorting: true,
-                    //                allowExporting: true
-                    //            },
-                    //            {
-                    //                caption: "Edit/Delete",
-                    //                cellTemplate: function (container, options) {
-
-
-                    //                    $('<button>' + 'Edit' + '</button>')
-                    //                        .attr('onclick', 'openEditModal("'
-                    //                            + options.data.id + '`'
-                    //                            + options.data.date + '`'
-                    //                            + options.data.anyPetHair + '`'
-                    //                            + options.data.waterHoseAvailability + '`'
-                    //                            + options.data.waterSupplyConnection + '`'
-                    //                            + options.data.powerOutletAvailable + '`'
-                    //                            + options.data.customerfk.name + '`'
-                    //                            + options.data.customerfk.phoneNumber + '`'
-                    //                            + options.data.customerfk.email + '`'
-                    //                            + options.data.customerfk.address + '`'
-                    //                            + options.data.customerfk.id
-
-
-
-                    //                            + '")')
-                    //                        .attr('target', '_blank')
-                    //                        .attr('class', 'mc-btn')
-                    //                        .appendTo(container);
-
-                    //                    $('<button>' + '  ' + 'Delete' + '</button>')
-                    //                        .attr('onclick', 'deleteAppointment("' + options.data.id + '")')
-                    //                        .attr('target', '_blank')
-                    //                        .attr('class', 'deletebtn')
-                    //                        .appendTo(container);
-                    //                },
-
-                    //                allowFiltering: "true",
-                    //                allowSorting: true
-
-
-
-
-                    //            }
-                    //        ],
-                    //        summary: { groupItems: [{ summaryType: "count", displayFormat: "{0} records" }] },
-                    //        paging: { pageSize: 10 },
-                    //        allowColumnReordering: true,
-                    //        allowColumnResizing: true,
-                    //        filterRow: { visible: true, applyFilter: "auto" },
-                    //        headerFilter: { visible: true },
-                    //        columnChooser: { enabled: true },
-                    //        pager: { showPageSizeSelector: true, allowedPageSizes: [10, 25, 50], showInfo: true, showNavigationButtons: true },
-                    //        groupPanel: { visible: true },
-                    //        grouping: { autoExpandAll: false },
-                    //        export: { enabled: true, fileName: "AllAppointments", },
-                    //        noDataText: "No data", onContentReady: function () { $("#dataGrid > .dx-datagrid").addClass("dx-container"); },
-                    //        searchPanel: { visible: true },
-
-                    //        // Configuration goes here
-                    //    });
                 }
             });
 
@@ -287,10 +166,10 @@
 
                     $("#apptId").val(response.id);
                     $("#apptDate").val(response.date);
-                    $("#apptPetHair").prop('checked',response.anyPetHair);
-                    $("#apptWaterHose").prop('checked',response.waterHoseAvailability);
-                    $("#apptWaterSupply").prop('checked',response.waterSupplyConnection);
-                    $("#apptOutlet").prop('checked',response.powerOutletAvailable);
+                    $("#apptPetHair").prop('checked', response.anyPetHair);
+                    $("#apptWaterHose").prop('checked', response.waterHoseAvailability);
+                    $("#apptWaterSupply").prop('checked', response.waterSupplyConnection);
+                    $("#apptOutlet").prop('checked', response.powerOutletAvailable);
                     $("#apptName").val(response.customerfk.name);
                     $("#apptPhone").val(response.customerfk.phoneNumber);
                     $("#apptEmail").val(response.customerfk.email);
@@ -298,7 +177,8 @@
                     $("#custId").val(response.customerfk.id);
 
 
-                    $('#bookingModal').modal('show')                },
+                    $('#bookingModal').modal('show')
+                },
                 failure: function (response) {
                     console.log("Hello")
                     alert(response);
@@ -389,35 +269,5 @@
             })
 
         }
-
-        //function deleteAppointment(id) {
-
-
-        //    var choice = confirm("Are you sure you wish to delete this appointment?");
-
-        //    if (choice == true) {
-
-        //        $.ajax({
-        //            type: "POST",
-        //            url: "/admin/appointment/delete/" + id,
-        //            contentType: "application/json; charset=utf-8",
-        //            dataType: "json",
-        //            success: function (response) {
-        //                console.log("Success");
-        //                window.location.reload();
-        //            },
-        //            failure: function (response) {
-        //                console.log("Hello")
-        //                alert(response);
-        //            },
-        //            error: function (response) {
-        //                console.log("Hello error")
-        //                console.log(response)
-        //                alert(response);
-        //            }
-
-        //        })
-        //    }
-        //}
     </script>
 }
