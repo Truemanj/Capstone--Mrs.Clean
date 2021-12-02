@@ -19,7 +19,7 @@ namespace MrsCleanCapstone.Models
         
         [Column (TypeName = "decimal(8,2)")]
         [Required]
-        [Display(Name = "Product Description")]
+        [Display(Name = "Product Price")]
         public decimal Price { get; set; }
         
         [Required]

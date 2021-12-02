@@ -36,7 +36,7 @@
                     <h4>@item.Price.ToString("c")</h4>
                     <p>@item.Description</p>
                     <span class="link-text">
-                        <a onclick="openEditModal('@item.ProductID', '@item.ProductName', '@item.Description', '@item.Category', '@item.Price', '@item.ProductImageName')" href="javascript:void(0)"><i class="material-icons">mode_edit</i></a>
+                        <a onclick="openEditModal('@item.ProductID', '@item.ProductName', '@item.Description', '@item.Category', '@item.Price')" href="javascript:void(0)"><i class="material-icons">mode_edit</i></a>
                         <a onclick="deleteProduct('@item.ProductID')" href="javascript:void(0)"><i class="large material-icons">delete</i></a>
                     </span>
                 </div>
@@ -127,7 +127,7 @@
             })
         }
 
-        function openEditModal(id, name, description, category, price, imageName) {
+        function openEditModal(id, name, description, category, price) {
             $("#ProductData_ProductID").val(parseInt(id));
             $("#ProductData_ProductName").val(name);
             $("#ProductData_Description").val(description);
@@ -137,12 +137,12 @@
         }
 
         function openAddModel() {
-            $("#ProductId").val(0);
-            $("#ProductName").val("");
-            $("#ProductDescription").val("");
-            $("#ProductPrice").val(0);
-            $("#ProductCategory").val("");
-            $("#ProductImage").val(null);
+            $("#ProductData_ProductID").val(0);
+            $("#ProductData_ProductName").val("");
+            $("#ProductData_Description").val("");
+            $("#ProductData_Price").val(0);
+            $("#ProductData_Category").val("");
+            $("#ProductData_ProductImage").val(null);
             $('#productsModal').modal('show')
         }
 

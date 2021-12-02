@@ -65,7 +65,7 @@ namespace MrsCleanCapstone.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> EditProduct([Bind("ProductID,ProductName,Quantity,Price,Category,Description,ProductImage")] Product product, IFormFile ProductImage)
+        public async Task<IActionResult> EditProduct([Bind("ProductID,ProductName,Price,Category,Description,ProductImage")] Product product, IFormFile ProductImage)
         {
             if (ModelState.IsValid)
             {
@@ -77,14 +77,14 @@ namespace MrsCleanCapstone.Controllers
                         if (ProductImage.Length > 0)
                         {
 
-                            byte[] p1 = null;
+                            byte[] imageData = null;
                             using (var fs1 = ProductImage.OpenReadStream())
                             using (var ms1 = new MemoryStream())
                             {
                                 fs1.CopyTo(ms1);
-                                p1 = ms1.ToArray();
+                                imageData = ms1.ToArray();
                             }
-                            product.ProductImage = p1;
+                            product.ProductImage = imageData;
 
                         }
 
@@ -95,31 +95,31 @@ namespace MrsCleanCapstone.Controllers
                 }
                 else if (product.ProductID != 0)
                 {
+
+                    var productToUpdate = await _productsRepository.GetById(product.ProductID);
+                    productToUpdate.ProductName = product.ProductName;
+                    productToUpdate.Category = product.Category;
+                    productToUpdate.Price = product.Price;
+                    productToUpdate.Description = product.Description;
                     if (ProductImage != null)
 
                     {
                         if (ProductImage.Length > 0)
                         {
 
-                            byte[] p1 = null;
+                            byte[] imageData = null;
                             using (var fs1 = ProductImage.OpenReadStream())
                             using (var ms1 = new MemoryStream())
                             {
                                 fs1.CopyTo(ms1);
-                                p1 = ms1.ToArray();
+                                imageData = ms1.ToArray();
                             }
-                            product.ProductImage = p1;
+                            productToUpdate.ProductImage = imageData;
 
                         }
                     }
-
-                    if (ProductImage == null)
-                    {
-                        
-
-                    }
-                    
-                    await _productsRepository.Update(product);
+                  
+                    await _productsRepository.Update(productToUpdate);
                     return RedirectToAction("Products", "Admin");
                 }
                 else
