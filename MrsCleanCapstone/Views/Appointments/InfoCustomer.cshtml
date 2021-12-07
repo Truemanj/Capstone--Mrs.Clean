@@ -5,7 +5,7 @@
 <section class="admin_container">
     <div class="admin_content">
         <div class="admin_content_title">
-            <h3>Admin Panel</h3>
+            <h3>Customer Lookup</h3>
             <h2>Appointment Info</h2>
         </div>
         <div class="admin_appointment_information">
@@ -58,68 +58,6 @@
                         <a class="btn" onclick="deleteAppointment('@Model.Id')" href="javascript:void(0)">Cancel</a>
                     </div>
                 }
-                <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="ModalLabel">Manage appointment</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="appointmentUpdateForm" asp-action="EditAppointment" asp-controller="Appointments" method="POST">
-                                    <div asp-validation-summary="All" class="text-danger"></div>
-                                    <input asp-for="@Model.Id" name="Id" type="text" hidden>
-                                    <div class="form-group">
-                                        <label asp-for="@Model.Customerfk.Name" class="control-label"></label>
-                                        <input asp-for="@Model.Customerfk.Name" class="form-control" />
-                                        <span class="text-danger field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="@Model.Customerfk.Email" class="control-label"></label>
-                                        <input asp-for="@Model.Customerfk.Email" class="form-control" />
-                                        <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="@Model.Customerfk.Address" class="control-label"></label>
-                                        <input asp-for="@Model.Customerfk.Address" class="form-control" />
-                                        <span class="text-danger field-validation-valid" data-valmsg-for="Address" data-valmsg-replace="true"></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <label asp-for="@Model.Customerfk.PhoneNumber" class="control-label"></label>
-                                        <input asp-for="@Model.Customerfk.PhoneNumber" class="form-control" />
-                                        <span class="text-danger field-validation-valid" data-valmsg-for="PhoneNumber" data-valmsg-replace="true"></span>
-                                    </div>
-                                    <div class="form-check">
-                                        <input asp-for="@Model.PowerOutletAvailable" name="PowerOutletAvailable" class="form-check-input" />
-                                        <label asp-for="@Model.PowerOutletAvailable" class="form-check-label"></label>
-                                        <span class="text-danger field-validation-valid" data-valmsg-for="PowerOutletAvailable" data-valmsg-replace="true"></span>
-                                    </div>
-                                    <div class="form-check">
-                                        <input asp-for="@Model.WaterSupplyConnection" name="WaterSupplyConnection" class="form-check-input" />
-                                        <label asp-for="@Model.WaterSupplyConnection" class="form-check-label"></label>
-                                        <span class="text-danger field-validation-valid" data-valmsg-for="WaterSupplyConnection" data-valmsg-replace="true"></span>
-                                    </div>
-                                    <div class="form-check">
-                                        <input asp-for="@Model.WaterHoseAvailability" name="WaterHoseAvailability" class="form-check-input" />
-                                        <label asp-for="@Model.WaterHoseAvailability" class="form-check-label"></label>
-                                        <span class="text-danger field-validation-valid" data-valmsg-for="WaterHoseAvailability" data-valmsg-replace="true"></span>
-                                    </div>
-                                    <div class="form-check">
-                                        <input asp-for="@Model.AnyPetHair" name="AnyPetHair" class="form-check-input" />
-                                        <label asp-for="@Model.AnyPetHair" class="form-check-label"></label>
-                                        <span class="text-danger field-validation-valid" data-valmsg-for="AnyPetHair" data-valmsg-replace="true"></span>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="saveChanges()">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
             }
             else
@@ -131,7 +69,71 @@
 
         </div>
     </div>
+
 </section>
+<div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="appointmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Manage appointment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="appointmentUpdateForm" asp-action="EditAppointment" asp-controller="Appointments" method="POST">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input asp-for="@Model.Id" name="Id" type="text" hidden>
+                    <div class="form-group">
+                        <label asp-for="@Model.Customerfk.Name" class="control-label"></label>
+                        <input asp-for="@Model.Customerfk.Name" class="form-control" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Customerfk.Email" class="control-label"></label>
+                        <input asp-for="@Model.Customerfk.Email" class="form-control" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Customerfk.Address" class="control-label"></label>
+                        <input asp-for="@Model.Customerfk.Address" class="form-control" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Address" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Customerfk.PhoneNumber" class="control-label"></label>
+                        <input asp-for="@Model.Customerfk.PhoneNumber" class="form-control" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="PhoneNumber" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="@Model.PowerOutletAvailable" name="PowerOutletAvailable" class="form-check-input" />
+                        <label asp-for="@Model.PowerOutletAvailable" class="form-check-label"></label>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="PowerOutletAvailable" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="@Model.WaterSupplyConnection" name="WaterSupplyConnection" class="form-check-input" />
+                        <label asp-for="@Model.WaterSupplyConnection" class="form-check-label"></label>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="WaterSupplyConnection" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="@Model.WaterHoseAvailability" name="WaterHoseAvailability" class="form-check-input" />
+                        <label asp-for="@Model.WaterHoseAvailability" class="form-check-label"></label>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="WaterHoseAvailability" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="@Model.AnyPetHair" name="AnyPetHair" class="form-check-input" />
+                        <label asp-for="@Model.AnyPetHair" class="form-check-label"></label>
+                        <span class="text-danger field-validation-valid" data-valmsg-for="AnyPetHair" data-valmsg-replace="true"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveChanges()">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts{
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.5.2/bootbox.min.js"></script>

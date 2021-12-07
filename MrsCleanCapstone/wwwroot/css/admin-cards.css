@@ -194,12 +194,12 @@
 .admin_appointment_information {
     background-color: #ffffff;
     border-radius: 30px;
-    width: 30%;
+    /* width: 30%; */
+    margin-top: 30px;
     transition-duration: 0.4s;
     box-shadow: 0px 10px 34px 0px rgb(71 119 164 / 25%);
     padding-bottom: 30px;
     min-width: 300px;
-    margin: auto;
 }
 
 @-webkit-keyframes point {
@@ -241,7 +241,6 @@
         border-width: 4px 0 4px 0px;
         padding: 10px;
         margin: auto;
-        width: 110%;
         display: flex;
         flex-direction: column;
         justify-content: center;
