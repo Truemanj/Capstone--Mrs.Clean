@@ -69,14 +69,14 @@ namespace MrsCleanCapstone.Controllers
         {
             if (ModelState.IsValid)
             {
+                // adding a product
                 if (product.ProductID == 0)
                 {
+                    // read product image binary data
                     if (ProductImage != null)
-
                     {
                         if (ProductImage.Length > 0)
                         {
-
                             byte[] imageData = null;
                             using (var fs1 = ProductImage.OpenReadStream())
                             using (var ms1 = new MemoryStream())
@@ -87,12 +87,11 @@ namespace MrsCleanCapstone.Controllers
                             product.ProductImage = imageData;
 
                         }
-
                         await _productsRepository.Add(product);
                         return RedirectToAction("Products", "Admin");
                     }
-
                 }
+                //updating a product
                 else if (product.ProductID != 0)
                 {
 
@@ -101,6 +100,7 @@ namespace MrsCleanCapstone.Controllers
                     productToUpdate.Category = product.Category;
                     productToUpdate.Price = product.Price;
                     productToUpdate.Description = product.Description;
+                    //update product image if provided
                     if (ProductImage != null)
 
                     {

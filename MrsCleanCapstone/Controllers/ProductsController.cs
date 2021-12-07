@@ -31,6 +31,7 @@ namespace MrsCleanCapstone.Controllers
             _repository = repository;
         }
 
+        //GET PRODUCTS BY CATEGORY AND PAGE NUMBER
         public IActionResult Index(string category, int productPage = 1) => View(nameof(Index), new ProductListViewModel
         {
             Products = _repository.Get()

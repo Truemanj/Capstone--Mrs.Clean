@@ -98,16 +98,12 @@
                                             contentType: "application/json; charset=utf-8",
                                             dataType: "json",
                                             success: function (response) {
-                                                console.log("Success");
                                                 window.location.reload();
                                             },
                                             failure: function (response) {
-                                                console.log("Hello")
                                                 bootbox.alert(response);
                                             },
                                             error: function (response) {
-                                                console.log("Hello error")
-                                                console.log(response)
                                                 bootbox.alert(response);
                                             }
 
